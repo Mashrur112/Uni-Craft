@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "932823267060",
+    "project_id": "uni-craft-2c6b8",
+    "storage_bucket": "uni-craft-2c6b8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:932823267060:android:b89b70a8b6d60c149c10a1",
+        "android_client_info": {
+          "package_name": "com.example.uni_craft"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOTn1hp7mgNLyiVfTyfLNm_ZLCV7izh6o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
