@@ -1,46 +1,32 @@
-import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:uni_craft/Homepage.dart';
+import 'package:uni_craft/auth-page.dart';
 
-void main() {
-  runApp( Craft());
+import 'firebase_options.dart';
+import 'package:flutter/material.dart';
+import 'package:uni_craft/LoginPage.dart';
+
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(Craft());
 }
-class Craft extends StatelessWidget{
+
+class Craft extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    double screenW=MediaQuery.of(context).size.width;
+    double screenH=MediaQuery.of(context).size.height;
     // TODO: implement build
-    return MaterialApp(
+    return const MaterialApp(
       title: "Uni Craft",
       debugShowCheckedModeBanner: true,
-      theme: ThemeData(
-          primarySwatch: Colors.blue
-      ),
-      home: Homepage(),
-    );
 
-  }
-
-
-}
-class Homepage extends StatelessWidget{
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return Scaffold(
-        appBar: AppBar(
-          title: Text("Dashboard"),
-
-        ),
-        body: Center(
-          child: Container(
-              width: 200,
-              height: 200,
-              child: Center(child: Text("Mashrur")),
-              color: Colors.blue.shade50
-
-          ),
-        )
+      home: Authpage(),
     );
   }
-
 }
-
 
