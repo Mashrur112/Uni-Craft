@@ -1,4 +1,5 @@
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:uni_craft/Forgotpass.dart';
 import 'package:uni_craft/main.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -295,12 +296,18 @@ class _LoginState extends State<Login> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text(
-                    "Forgot Password?",
-                    style: TextStyle(
-                      color: Color(0xffd42020),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17,
+                  GestureDetector(
+                    onTap:(){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>Forgot_pass()));
+
+            },
+                    child: Text(
+                      "Forgot Password?",
+                      style: TextStyle(
+                        color: Color(0xffd42020),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 17,
+                      ),
                     ),
                   ),
                 ],
