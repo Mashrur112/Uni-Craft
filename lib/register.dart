@@ -428,7 +428,7 @@ if(!t){
 
              ],
            ),
-           Container(height:  (30/872.72)*screenH,),
+           Container(height:  (10/872.72)*screenH,),
            //register
            Row(
              mainAxisAlignment: MainAxisAlignment.center,
