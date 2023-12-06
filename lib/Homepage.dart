@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -31,6 +32,7 @@ class _HomepageState extends State<Homepage> {
   final currentUser = FirebaseAuth.instance;
   bool check_for_save = false;
   var data = 1;
+
   Uint8List? _image;
 
   String email1 = FirebaseAuth.instance.currentUser!.email.toString();
@@ -78,12 +80,15 @@ class _HomepageState extends State<Homepage> {
                     .where('uid', isEqualTo: currentUser.currentUser!.uid)
                     .snapshots(),
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  data=1;
                   data = snapshot.data!.docs.length;
+
+                  //data1=snapshot.data!.docs[0]['uid'];
 
                   if (snapshot.hasData) {
                     return Text("SUCCESS");
                   } else {
-                    check_for_save = false;
+                    //check_for_save = false;
                     return Text("failed");
                   }
                 },
@@ -281,10 +286,20 @@ class _HomepageState extends State<Homepage> {
                   // Navigator.pop(context);
                   // Navigator.push(context,MaterialPageRoute(builder: (context)=>Dashboard()) );
 
-count=1;
-                  print(count);
-                  print(data);
-                  if (data == 0 && count == 1) {
+                  try {
+                    final result = await InternetAddress.lookup('google.com');
+                    if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+                      check_for_save=true;
+                    }
+                  } on SocketException catch (_) {
+                    check_for_save=false;
+                  }
+
+
+//print (data);
+                  //print (data1);
+                  if (data == 0 && count == 1 && check_for_save) {
+
                     var name1 = name.text;
                     var age1 = age.text;
                     var roll1 = roll.text;
