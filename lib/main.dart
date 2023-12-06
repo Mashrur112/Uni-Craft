@@ -1,6 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:uni_craft/Homepage.dart';
 import 'package:uni_craft/auth-page.dart';
+import 'package:uni_craft/dependency_injection.dart';
 
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +16,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(Craft());
+DependencyInjection.init();
 }
 
 class Craft extends StatelessWidget {
@@ -21,7 +25,9 @@ class Craft extends StatelessWidget {
     double screenW=MediaQuery.of(context).size.width;
     double screenH=MediaQuery.of(context).size.height;
     // TODO: implement build
-    return const MaterialApp(
+    // SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
+
+    return const GetMaterialApp(
       title: "Uni Craft",
       debugShowCheckedModeBanner: true,
 
