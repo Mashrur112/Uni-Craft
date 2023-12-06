@@ -1,8 +1,10 @@
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 
 final FirebaseStorage _storage = FirebaseStorage.instance;
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -19,17 +21,22 @@ class StoreData {
   Future<String> savedData(
       {required var name,required var roll,required var email , required var age, required Uint8List file}) async {
     String resp = "Some Error Occured";
+    final auth = FirebaseAuth.instance;
+
 
     try{
-      if(name.isNotEmpty || age.isNotEmpty || roll.isNotEmpty || email.isNotEmpty) {
+      if(name.isNotEmpty && age.isNotEmpty && roll.isNotEmpty && email.isNotEmpty) {
         String imageUrl = await uploadImagetoStorage('profileImage', file);
         await _firestore.collection('userProfile').add({
           'name1': name,
           'age1': age,
           'roll':roll,
           'email': email,
+          'uid':auth.currentUser!.uid,
           'imageLink': imageUrl,
         });
+
+
         resp = 'Success';
       }
     }
@@ -40,4 +47,5 @@ class StoreData {
         return resp;
 
   }
+
 }

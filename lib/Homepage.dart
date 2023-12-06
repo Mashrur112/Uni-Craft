@@ -1,10 +1,13 @@
 import 'dart:typed_data';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:uni_craft/LoginPage.dart';
+import 'package:uni_craft/dashboard.dart';
 import 'package:uni_craft/resources/data.dart';
 import 'package:uni_craft/utils.dart';
 
@@ -24,6 +27,10 @@ class _HomepageState extends State<Homepage> {
   var age = TextEditingController();
   var roll = TextEditingController();
   var email = TextEditingController();
+  var count = 0;
+  final currentUser = FirebaseAuth.instance;
+  bool check_for_save = false;
+  var data = 1;
   Uint8List? _image;
 
   String email1 = FirebaseAuth.instance.currentUser!.email.toString();
@@ -40,9 +47,8 @@ class _HomepageState extends State<Homepage> {
       _image = img;
     });
   }
-  void saveProfile(){
 
-  }
+  void saveProfile() {}
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +70,25 @@ class _HomepageState extends State<Homepage> {
         ),
         body: Column(
           children: [
+            Container(
+              height: 0,
+              child: StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection("userProfile")
+                    .where('uid', isEqualTo: currentUser.currentUser!.uid)
+                    .snapshots(),
+                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  data = snapshot.data!.docs.length;
+
+                  if (snapshot.hasData) {
+                    return Text("SUCCESS");
+                  } else {
+                    check_for_save = false;
+                    return Text("failed");
+                  }
+                },
+              ),
+            ),
             SizedBox.fromSize(size: Size(0, (15 / 872) * screenH)),
             Text(
               "Set up you profile!",
@@ -72,14 +97,14 @@ class _HomepageState extends State<Homepage> {
                   fontSize: 25,
                   color: Colors.white),
             ),
-            SizedBox.fromSize(size: Size(0, (21 / 872) * screenH)),
+            SizedBox.fromSize(size: Size(0, 21/ 872) * screenH),
             Stack(
               children: [
                 _image != null
                     ? CircleAvatar(
-                  radius: 51,
-                  backgroundImage: MemoryImage(_image!),
-                )
+                        radius: 51,
+                        backgroundImage: MemoryImage(_image!),
+                      )
                     : CircleAvatar(
                         radius: 51,
                         backgroundImage:
@@ -232,6 +257,7 @@ class _HomepageState extends State<Homepage> {
               ),
             ),
             SizedBox.fromSize(size: Size(0, (31 / 872) * screenH)),
+
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     elevation: 6,
@@ -240,12 +266,37 @@ class _HomepageState extends State<Homepage> {
                       borderRadius: BorderRadius.circular(21),
                     )),
                 onPressed: () async {
-                  var name1=name.text;
-                  var age1=age.text;
-                  var roll1=roll.text;
-                  var email1=email.text;
-                  String resp = await StoreData().savedData(name: name1, age: age1, file: _image!, roll: roll1, email: email1);
-                  formKey.currentState!.validate();
+                  if (formKey.currentState!.validate() && _image != null)
+                    count++;
+                  //Navigator.push(context, MaterialPageRoute(builder: (context)=>Dashboard()));
+                  // showDialog(
+                  //     context: context,
+                  //     builder: (context) {
+                  //       return AlertDialog(
+                  //         title: Text(
+                  //           "sdfsdf",
+                  //         ),
+                  //       );
+                  //     });
+                  // Navigator.pop(context);
+                  // Navigator.push(context,MaterialPageRoute(builder: (context)=>Dashboard()) );
+
+count=1;
+                  print(count);
+                  print(data);
+                  if (data == 0 && count == 1) {
+                    var name1 = name.text;
+                    var age1 = age.text;
+                    var roll1 = roll.text;
+                    var email1 = email.text;
+
+                    String resp = await StoreData().savedData(
+                        name: name1,
+                        age: age1,
+                        file: _image!,
+                        roll: roll1,
+                        email: email1);
+                  }
                 },
                 child: Text(
                   "Save Profile",
