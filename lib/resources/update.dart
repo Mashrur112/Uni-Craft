@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 final FirebaseStorage _storage = FirebaseStorage.instance;
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-class StoreData {
+class UpdateData {
   Future<String> uploadImagetoStorage(String childname, Uint8List file) async {
     Reference ref = _storage.ref().child(childname);
     UploadTask uploadTask = ref.putData(file);
@@ -19,20 +19,16 @@ class StoreData {
   }
 
   Future<String> savedData(
-      {required var name,required var roll,required var email , required var age, required Uint8List file}) async {
+      { required Uint8List file}) async {
     String resp = "Some Error Occured";
     final auth = FirebaseAuth.instance;
 
 
     try{
-      if(name.isNotEmpty && age.isNotEmpty && roll.isNotEmpty && email.isNotEmpty) {
+      if(true) {
         String imageUrl = await uploadImagetoStorage('profileImage', file);
-        await _firestore.collection('userProfile').doc(auth.currentUser!.uid).set({
-          'name1': name,
-          'age1': age,
-          'roll':roll,
-          'email': email,
-          'uid':auth.currentUser!.uid,
+        await _firestore.collection('userProfile').doc(auth.currentUser!.uid).update({
+
           'imageLink': imageUrl,
         });
 
@@ -40,11 +36,11 @@ class StoreData {
         resp = 'Success';
       }
     }
-        catch(err){
+    catch(err){
       resp=err.toString();
 
-        }
-        return resp;
+    }
+    return resp;
 
   }
 

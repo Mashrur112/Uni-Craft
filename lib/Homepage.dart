@@ -33,6 +33,7 @@ class _HomepageState extends State<Homepage> {
   bool check_for_save = false;
   var data = 1;
 
+
   Uint8List? _image;
 
   String email1 = FirebaseAuth.instance.currentUser!.email.toString();
@@ -74,26 +75,34 @@ class _HomepageState extends State<Homepage> {
           children: [
             Container(
               height: 0,
-              child: StreamBuilder(
+
+              child: StreamBuilder (
                 stream: FirebaseFirestore.instance
                     .collection("userProfile")
                     .where('uid', isEqualTo: currentUser.currentUser!.uid)
                     .snapshots(),
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                   data=1;
-                  data = snapshot.data!.docs.length;
+
+                  data=snapshot.data!.docs.length;
+                  return Text("Null");
+
+
+
 
                   //data1=snapshot.data!.docs[0]['uid'];
 
-                  if (snapshot.hasData) {
-                    return Text("SUCCESS");
-                  } else {
-                    //check_for_save = false;
-                    return Text("failed");
-                  }
+                  // if (snapshot.hasData) {
+                  //   return Text("SUCCESS");
+                  // } else {
+                  //   //check_for_save = false;
+                  //   return Text("failed");
+                  // }
                 },
               ),
             ),
+
+
             SizedBox.fromSize(size: Size(0, (15 / 872) * screenH)),
             Text(
               "Set up you profile!",
@@ -298,7 +307,7 @@ class _HomepageState extends State<Homepage> {
 
 //print (data);
                   //print (data1);
-                  if (data == 0 && count == 1 && check_for_save) {
+                  if (data == 0 &&  check_for_save) {
 
                     var name1 = name.text;
                     var age1 = age.text;
@@ -317,6 +326,9 @@ class _HomepageState extends State<Homepage> {
                   "Save Profile",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 )),
+
+
+
           ],
         ));
   }
