@@ -43,6 +43,7 @@ class _LoginState extends State<Login> {
   }
 
   Future<UserCredential> signInWithGoogle() async {
+    print ("fsdf");
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
@@ -400,6 +401,7 @@ class _LoginState extends State<Login> {
               children: [
                 GestureDetector(
                     onTap: () async {
+                      print("done");
                       await signInWithGoogle();
 
 

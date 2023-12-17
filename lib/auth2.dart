@@ -13,12 +13,17 @@ import 'Homepage.dart';
 class Authpage2 extends StatefulWidget {
   const Authpage2({super.key});
 
+
+
   @override
   State<Authpage2> createState() => _AuthpageState2();
 }
 
 class _AuthpageState2 extends State<Authpage2> {
   final currentUser = FirebaseAuth.instance;
+  var role1="Administrator",role2="Co-Administrator",role3="General member";
+  var c1=false,c2=false,c3=false;
+  String collect1=" ";
 
   @override
   Widget build(BuildContext context) {
@@ -27,24 +32,41 @@ class _AuthpageState2 extends State<Authpage2> {
     // TODO: implement build
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Container(
-        height: screenH,
-        width: screenW,
+      body:
+      SingleChildScrollView(
+        child: Column(
+          children: [
 
-        child: StreamBuilder(
-          stream: FirebaseFirestore.instance
-              .collection("userProfile")
-              .where('uid', isEqualTo: currentUser.currentUser!.uid)
-              .snapshots(),
-          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            //var data= snapshot.data!.docs[0];
 
-            if (snapshot.hasData && snapshot.data!.docs.length >= 1) {
-              return Dashboard();
-            } else {
-              return Homepage();
-            }
-          },
+
+            Container(
+              height: screenH,
+              width: screenW,
+
+              child: StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection('Profile' )
+                    .where('uid', isEqualTo: currentUser.currentUser!.uid)
+                    .snapshots(),
+                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  //var data= snapshot.data!.docs[0];
+                 //print(collect1);
+
+                  if (snapshot.hasData && snapshot.data!.docs.length >= 1 ) {
+
+
+                    return Dashboard();
+                  } else {
+
+
+
+                    return Homepage();
+
+                  }
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
