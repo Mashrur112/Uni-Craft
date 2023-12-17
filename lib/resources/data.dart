@@ -19,7 +19,7 @@ class StoreData {
   }
 
   Future<String> savedData(
-      {required var name,required var roll,required var email , required var age, required Uint8List file}) async {
+      {required var name,required var roll,required var email , required var age, required Uint8List file,required role,required code}) async {
     String resp = "Some Error Occured";
     final auth = FirebaseAuth.instance;
 
@@ -27,13 +27,15 @@ class StoreData {
     try{
       if(name.isNotEmpty && age.isNotEmpty && roll.isNotEmpty && email.isNotEmpty) {
         String imageUrl = await uploadImagetoStorage('profileImage', file);
-        await _firestore.collection('userProfile').doc(auth.currentUser!.uid).set({
+        await _firestore.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).set({
           'name1': name,
           'age1': age,
           'roll':roll,
           'email': email,
           'uid':auth.currentUser!.uid,
           'imageLink': imageUrl,
+          'role':role,
+          'code':code.toString(),
         });
 
 

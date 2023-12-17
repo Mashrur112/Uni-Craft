@@ -27,9 +27,10 @@ class UpdateData {
     try{
       if(true) {
         String imageUrl = await uploadImagetoStorage('profileImage', file);
-        await _firestore.collection('userProfile').doc(auth.currentUser!.uid).update({
+        await _firestore.collection('Profile').doc(FirebaseAuth.instance.currentUser!.uid).update({
 
           'imageLink': imageUrl,
+
         });
 
 

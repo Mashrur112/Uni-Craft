@@ -20,6 +20,7 @@ DependencyInjection.init();
 }
 
 class Craft extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     double screenW=MediaQuery.of(context).size.width;
