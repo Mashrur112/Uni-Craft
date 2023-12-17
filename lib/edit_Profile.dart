@@ -366,7 +366,7 @@ class _edit_profileState extends State<edit_profile> {
                   SizedBox.fromSize(size: Size((10/392)*screenW, 0),),
                   ElevatedButton(onPressed: () async {
                     try {
-                      final result = await InternetAddress.lookup('https://www.youtube.com/');
+                      final result = await InternetAddress.lookup('google.com');
                       if (result.isNotEmpty &&
                           result[0].rawAddress.isNotEmpty) {
                         check_for_save = true;
