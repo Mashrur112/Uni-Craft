@@ -14,6 +14,8 @@ import 'package:uni_craft/widget/uploadFile.dart';
 import 'Homepage.dart';
 
 class Dashboard extends StatefulWidget {
+  var role;
+  Dashboard(this.role);
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -24,9 +26,10 @@ class _DashboardState extends State<Dashboard> {
   var view_more=false;
   var c=0;
   var check=true;
-  var role;
+
 
   var profile_info = [];
+
 
 
   Future<void> signout() async {
@@ -51,25 +54,10 @@ class _DashboardState extends State<Dashboard> {
       ),
        body:Column(
          children: [
-           StreamBuilder(stream: FirebaseFirestore.instance.collection("Profile").snapshots(), builder: (context,snapshots){
-             if(snapshots.hasData)
-               {
-                 final res=snapshots.data!.docs.toList();
-                 for(var r in res!)
-                   {
-                     if(r['uid']==FirebaseAuth.instance.currentUser!.uid)
-                       {
-                         role=r['role'];
-                         break;
-                       }
-                   }
 
-
-               }
-             return Center();
-           }),
            SizedBox.fromSize(size: Size(0, ((20/872)*screenH)),),
-           role=="Administrator"?
+           widget.role=="Administrator"?
+
            GestureDetector(
              onTap: (){
                Navigator.push(context, MaterialPageRoute(builder: (context)=>uploadFile()));
