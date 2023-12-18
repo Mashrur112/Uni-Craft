@@ -21,9 +21,10 @@ class Authpage2 extends StatefulWidget {
 
 class _AuthpageState2 extends State<Authpage2> {
   final currentUser = FirebaseAuth.instance;
-  var role1="Administrator",role2="Co-Administrator",role3="General member";
+
   var c1=false,c2=false,c3=false;
   String collect1=" ";
+  var role;
 
   @override
   Widget build(BuildContext context) {
@@ -54,8 +55,18 @@ class _AuthpageState2 extends State<Authpage2> {
 
                   if (snapshot.hasData && snapshot.data!.docs.length >= 1 ) {
 
+                    final res=snapshot.data!.docs.toList();
+                    for(var r in res!)
+                      {
+                        if(r['uid']==currentUser.currentUser!.uid)
+                          {
+                            role=r['role'];
+                            break;
+                          }
+                      }
 
-                    return Dashboard();
+
+                    return Dashboard(role);
                   } else {
 
 
