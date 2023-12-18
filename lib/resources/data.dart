@@ -28,6 +28,7 @@ class StoreData {
       if(name.isNotEmpty && age.isNotEmpty && roll.isNotEmpty && email.isNotEmpty) {
         String imageUrl = await uploadImagetoStorage('profileImage', file);
         await _firestore.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).set({
+
           'name1': name,
           'age1': age,
           'roll':roll,

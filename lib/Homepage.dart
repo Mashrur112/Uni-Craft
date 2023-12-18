@@ -547,9 +547,12 @@ class _HomepageState extends State<Homepage> {
                           var roll1 = roll.text;
                           var email1 = email.text;
 
+
                           if(dropdownvalue=='Administrator'){
 
+
                           String resp = await StoreData().savedData(
+
                             name: name1,
                             age: age1,
                             file: _image!,
@@ -558,9 +561,15 @@ class _HomepageState extends State<Homepage> {
                             role: dropdownvalue,
 
                             code: x,
-                          );}
+                          );
+                          FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
+                            '0':"",
+                            '1':"",
+                          });
+                          }
                           else{
                             String resp = await StoreData().savedData(
+
                               name: name1,
                               age: age1,
                               file: _image!,

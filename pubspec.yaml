@@ -48,6 +48,9 @@ dependencies:
   file_picker: ^3.0.1
   xid: ^1.0.12
   flutter_plugin_android_lifecycle: ^2.0.17
+  url_launcher: ^6.2.2
+
+
 
 
 dev_dependencies:

@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:uni_craft/edit_Profile.dart';
+import 'package:uni_craft/study_Materials.dart';
 
 import 'package:uni_craft/widget/uploadFile.dart';
 
@@ -23,6 +24,7 @@ class _DashboardState extends State<Dashboard> {
   var view_more=false;
   var c=0;
   var check=true;
+  var role;
 
   var profile_info = [];
 
@@ -49,7 +51,25 @@ class _DashboardState extends State<Dashboard> {
       ),
        body:Column(
          children: [
-           SizedBox.fromSize(size: Size(0, 20),),
+           StreamBuilder(stream: FirebaseFirestore.instance.collection("Profile").snapshots(), builder: (context,snapshots){
+             if(snapshots.hasData)
+               {
+                 final res=snapshots.data!.docs.toList();
+                 for(var r in res!)
+                   {
+                     if(r['uid']==FirebaseAuth.instance.currentUser!.uid)
+                       {
+                         role=r['role'];
+                         break;
+                       }
+                   }
+
+
+               }
+             return Center();
+           }),
+           SizedBox.fromSize(size: Size(0, ((20/872)*screenH)),),
+           role=="Administrator"?
            GestureDetector(
              onTap: (){
                Navigator.push(context, MaterialPageRoute(builder: (context)=>uploadFile()));
@@ -62,6 +82,7 @@ class _DashboardState extends State<Dashboard> {
 
                  decoration: BoxDecoration(
                    color: Colors.grey,
+
                    borderRadius: BorderRadius.circular(30),
                    boxShadow:[ BoxShadow(
                      color: Colors.black54,
@@ -71,6 +92,65 @@ class _DashboardState extends State<Dashboard> {
 
 
                    )]
+
+                 ),
+
+               ),
+             ),
+           ):
+           Container(
+             height: (70/872)*screenH,
+             width: (380/392)*screenW,
+             child: Row(
+               mainAxisAlignment: MainAxisAlignment.center,
+               children: [
+                 Icon(Icons.lock),
+                 SizedBox.fromSize(size: Size(((10/392)*screenW),0)),
+                 Text("Upload file",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+               ],
+             ),
+
+             decoration: BoxDecoration(
+                 color: Colors.grey,
+                 borderRadius: BorderRadius.circular(30),
+                 boxShadow:[ BoxShadow(
+                   color: Colors.black54,
+                   offset: Offset(0, 7),
+                   spreadRadius: 0,
+                   blurRadius: 2,
+
+
+                 )]
+
+             ),
+
+           )
+
+           ,
+
+
+           SizedBox.fromSize(size: Size(0, ((20/872)*screenH)),),
+           GestureDetector(
+             onTap: (){
+               Navigator.push(context, MaterialPageRoute(builder: (context)=>study_Materials()));
+             },
+             child: Center(
+               child: Container(
+                 height: (70/872)*screenH,
+                 width: (380/392)*screenW,
+                 child: Center(child: Text("Study Materials",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)),
+
+                 decoration: BoxDecoration(
+                     color: Colors.grey,
+                     borderRadius: BorderRadius.circular(30),
+                     boxShadow:[ BoxShadow(
+                       color: Colors.black54,
+                       offset: Offset(0, 7),
+                       spreadRadius: 0,
+                       blurRadius: 2,
+
+
+                     )]
 
                  ),
 
