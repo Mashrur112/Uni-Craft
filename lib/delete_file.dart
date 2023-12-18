@@ -56,7 +56,20 @@ class _delete_fileState extends State<delete_file> {
               }
             }
           }
-        return Center();
+        return
+               AlertDialog(
+
+                elevation: 51,
+                shadowColor: Colors.black26,
+                icon: Icon(Icons.warning_amber),
+                iconColor: Colors.red,
+                backgroundColor: Colors.blueGrey,
+                title: Text(
+                  "Delete Successfull",
+                  style: TextStyle(color: Colors.white),
+                ),
+              );
+
       }),
 
     );
