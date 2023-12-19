@@ -23,7 +23,7 @@ class members extends StatelessWidget{
         child: StreamBuilder(stream: FirebaseFirestore.instance.collection('Profile').snapshots(), builder: (context,snapshots){
           if(snapshots.hasData)
             {
-              final res=snapshots.data!.docs.toList();
+              final res=snapshots.data!.docs.reversed.toList();
               for (var r in res)
                 {
                   if(r['uid']==FirebaseAuth.instance.currentUser!.uid)
@@ -44,7 +44,8 @@ class members extends StatelessWidget{
                       prfl_inf.insert(2, r['roll']);
                       prfl_inf.insert(3, r['email']);
                       prfl_inf.insert(4, r['imageLink']);
-                     for(int i=0;i<5;i++)
+                      prfl_inf.insert(5, r['uid']);
+                     for(int i=0;i<6;i++)
                        {
 
                          prsn.insert(pr, prfl_inf[i]);
@@ -54,7 +55,7 @@ class members extends StatelessWidget{
 
                     }
                 }
-               d=(pr)/5;
+               d=(pr)/6;
               s=d.toInt();
 
             }
@@ -63,17 +64,17 @@ class members extends StatelessWidget{
               itemCount: s,
 
               itemBuilder: (BuildContext context,int index){
-                print(index);
 
 
 
-            if (prsn[index*5]!=name && prsn[(index*5)+1]=="General member") {
+
+            if (prsn[index*6]!=name && prsn[(index*6)+1]=="General member") {
               return Container(
-              height: (190/872)*screenH,
+              height: (250/872)*screenH,
 
               child: Card(
                 elevation: 10,
-                margin: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                margin: EdgeInsets.fromLTRB(((10/392)*screenW), ((10/872)*screenH), ((10/392)*screenW), ((0/872)*screenH)),
 
                 child: Column(
                   children: [
@@ -83,31 +84,47 @@ class members extends StatelessWidget{
 
                         CircleAvatar(
                           radius: 31,
-                          backgroundImage: CachedNetworkImageProvider(prsn[(index*5)+4]),
+                          backgroundImage: CachedNetworkImageProvider(prsn[(index*6)+4]),
                         )
                       ],
 
 
                     ),
-                    Text("Name: "+prsn[index*5]),
-                    Text("Role: "+prsn[(index*5)+1]),
-                    Text("roll: "+prsn[(index*5)+2]),
-                    Text("Email: "+prsn[(index*5)+3]),
+                    Text("Name: "+prsn[index*6]),
+                    Text("Role: "+prsn[(index*6)+1]),
+                    Text("roll: "+prsn[(index*6)+2]),
+                    Text("Email: "+prsn[(index*6)+3]),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: ElevatedButton(onPressed: (){
+                            FirebaseFirestore.instance.collection("Profile").doc(prsn[(index*6)+5]).delete();
+
+
+
+
+                          }, child: Text("Delete")),
+                        ),
+                      ],
+                    ),
+
                   ],
                 ),
 
               ),
             );
             }
-            if(prsn[index*5]!=name && prsn[(index*5)+1]=="Administrator")
+            if(prsn[index*6]!=name && prsn[(index*6)+1]=="Administrator")
               {
                 return Container(
-                  height: (190/872)*screenH,
+                  height: (250/872)*screenH,
 
                   child: Card(
                     color: Colors.blue.shade200,
                     elevation: 10,
-                    margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                    margin: EdgeInsets.fromLTRB(((10/392)*screenW), ((10/872)*screenH), ((10/392)*screenW), ((0/872)*screenH)),
 
                     child: Column(
                       children: [
@@ -117,30 +134,30 @@ class members extends StatelessWidget{
 
                             CircleAvatar(
                               radius: 31,
-                              backgroundImage: CachedNetworkImageProvider(prsn[(index*5)+4]),
+                              backgroundImage: CachedNetworkImageProvider(prsn[(index*6)+4]),
                             )
                           ],
 
 
                         ),
-                        Text("Name: "+prsn[index*5]),
-                        Text("Role: "+prsn[(index*5)+1]),
-                        Text("roll: "+prsn[(index*5)+2]),
-                        Text("Email: "+prsn[(index*5)+3]),
+                        Text("Name: "+prsn[index*6]),
+                        Text("Role: "+prsn[(index*6)+1]),
+                        Text("roll: "+prsn[(index*6)+2]),
+                        Text("Email: "+prsn[(index*6)+3]),
                       ],
                     ),
 
                   ),
                 );
               }
-            if (prsn[index*5]!=name && prsn[(index*5)+1]=="Co-Administrator"){
+            if (prsn[index*6]!=name && prsn[(index*6)+1]=="Co-Administrator"){
               return Container(
-              height: (190/872)*screenH,
+              height: (250/872)*screenH,
 
               child: Card(
                 color: Colors.yellow.shade200,
                 elevation: 10,
-                margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                margin: EdgeInsets.fromLTRB(((10/392)*screenW), ((10/872)*screenH), ((10/392)*screenW), ((0/872)*screenH)),
 
                 child: Column(
                   children: [
@@ -150,25 +167,40 @@ class members extends StatelessWidget{
 
                         CircleAvatar(
                           radius: 31,
-                          backgroundImage: CachedNetworkImageProvider(prsn[(index*5)+4]),
+                          backgroundImage: CachedNetworkImageProvider(prsn[(index*6)+4]),
                         )
                       ],
 
 
                     ),
-                    Text("Name: "+prsn[index*5]),
-                    Text("Role: "+prsn[(index*5)+1]),
-                    Text("roll: "+prsn[(index*5)+2]),
-                    Text("Email: "+prsn[(index*5)+3]),
+                    Text("Name: "+prsn[index*6]),
+                    Text("Role: "+prsn[(index*6)+1]),
+                    Text("roll: "+prsn[(index*6)+2]),
+                    Text("Email: "+prsn[(index*6)+3]),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: ElevatedButton(onPressed: (){
+                            FirebaseFirestore.instance.collection("Profile").doc(prsn[(index*6)+5]).delete();
+
+
+
+
+                          }, child: Text("Delete")),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
 
               ),
             );
             }
-                if (prsn[index*5]==name && prsn[(index*5)+1]=="General member") {
+                if (prsn[index*6]==name && prsn[(index*6)+1]=="General member") {
                   return Container(
-                    height: (190/872)*screenH,
+                    height: (250/872)*screenH,
 
 
 
@@ -176,10 +208,11 @@ class members extends StatelessWidget{
                       shape: RoundedRectangleBorder(
                         side: BorderSide(
                           color: Colors.black,
-                        )
+                        ),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                       elevation: 10,
-                      margin: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                      margin: EdgeInsets.fromLTRB(((10/392)*screenW), ((10/872)*screenH), ((10/392)*screenW), ((0/872)*screenH)),
 
                       child: Column(
                         children: [
@@ -189,37 +222,40 @@ class members extends StatelessWidget{
 
                               CircleAvatar(
                                 radius: 31,
-                                backgroundImage: CachedNetworkImageProvider(prsn[(index*5)+4]),
+                                backgroundImage: CachedNetworkImageProvider(prsn[(index*6)+4]),
                               )
                             ],
 
 
                           ),
-                          Text("Name: "+prsn[index*5]),
-                          Text("Role: "+prsn[(index*5)+1]),
-                          Text("roll: "+prsn[(index*5)+2]),
-                          Text("Email: "+prsn[(index*5)+3]),
+                          Text("Name: "+prsn[index*6]),
+                          Text("Role: "+prsn[(index*6)+1]),
+                          Text("roll: "+prsn[(index*6)+2]),
+                          Text("Email: "+prsn[(index*6)+3]),
                         ],
                       ),
 
                     ),
                   );
                 }
-                if(prsn[index*5]==name && prsn[(index*5)+1]=="Administrator")
+                if(prsn[index*6]==name && prsn[(index*6)+1]=="Administrator")
                 {
                   return Container(
-                    height: (190/872)*screenH,
+                    height: (250/872)*screenH,
 
 
                     child: Card(
                       shape: RoundedRectangleBorder(
                           side: BorderSide(
                             color: Colors.black,
-                          )
+                            width: 2,
+                          ),
+                        borderRadius: BorderRadius.circular(12),
+
                       ),
                       color: Colors.blue.shade200,
                       elevation: 10,
-                      margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                      margin: EdgeInsets.fromLTRB(((10/392)*screenW), ((10/872)*screenH), ((10/392)*screenW), ((0/872)*screenH)),
 
                       child: Column(
                         children: [
@@ -228,39 +264,41 @@ class members extends StatelessWidget{
                             children: [
 
                               CircleAvatar(
+
                                 radius: 31,
-                                backgroundImage: CachedNetworkImageProvider(prsn[(index*5)+4]),
+                                backgroundImage: CachedNetworkImageProvider(prsn[(index*6)+4]),
                               )
                             ],
 
 
                           ),
-                          Text("Name: "+prsn[index*5]),
-                          Text("Role: "+prsn[(index*5)+1]),
-                          Text("roll: "+prsn[(index*5)+2]),
-                          Text("Email: "+prsn[(index*5)+3]),
+                          Text("Name: "+prsn[index*6]),
+                          Text("Role: "+prsn[(index*6)+1]),
+                          Text("roll: "+prsn[(index*6)+2]),
+                          Text("Email: "+prsn[(index*6)+3]),
                         ],
                       ),
 
                     ),
                   );
                 }
-                if (prsn[index*5]==name && prsn[(index*5)+1]=="Co-Administrator"){
+                if (prsn[index*6]==name && prsn[(index*6)+1]=="Co-Administrator"){
                   return Container(
-                    height: (190/872)*screenH,
+                    height: (250/872)*screenH,
 
 
                     child: Card(
                       shape: RoundedRectangleBorder(
                           side: BorderSide(
                             color: Colors.black,
+                            width: 2,
 
                           ),
                               borderRadius: BorderRadius.circular(12),
                       ),
                       color: Colors.yellow.shade200,
                       elevation: 10,
-                      margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                      margin: EdgeInsets.fromLTRB(((10/392)*screenW), ((10/872)*screenH), ((10/392)*screenW), ((0/872)*screenH)),
 
                       child: Column(
                         children: [
@@ -270,16 +308,17 @@ class members extends StatelessWidget{
 
                               CircleAvatar(
                                 radius: 31,
-                                backgroundImage: CachedNetworkImageProvider(prsn[(index*5)+4]),
+                                backgroundImage: CachedNetworkImageProvider(prsn[(index*6)+4]),
                               )
                             ],
 
 
                           ),
-                          Text("Name: "+prsn[index*5]),
-                          Text("Role: "+prsn[(index*5)+1]),
-                          Text("roll: "+prsn[(index*5)+2]),
-                          Text("Email: "+prsn[(index*5)+3]),
+                          Text("Name: "+prsn[index*6]),
+                          Text("Role: "+prsn[(index*6)+1]),
+                          Text("roll: "+prsn[(index*6)+2]),
+                          Text("Email: "+prsn[(index*6)+3]),
+
                         ],
                       ),
 
