@@ -14,6 +14,8 @@ class members extends StatelessWidget{
   var name;
   @override
   Widget build(BuildContext context) {
+    double screenW = MediaQuery.of(context).size.width;
+    double screenH = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
@@ -65,9 +67,9 @@ class members extends StatelessWidget{
 
 
 
-            if (prsn[index*5]!=name && prsn[(index*5)+1]!="Administrator") {
+            if (prsn[index*5]!=name && prsn[(index*5)+1]=="General member") {
               return Container(
-              height: 190,
+              height: (190/872)*screenH,
 
               child: Card(
                 elevation: 10,
@@ -97,10 +99,10 @@ class members extends StatelessWidget{
               ),
             );
             }
-            if(prsn[(index*5)+1]=="Administrator")
+            if(prsn[index*5]!=name && prsn[(index*5)+1]=="Administrator")
               {
                 return Container(
-                  height: 190,
+                  height: (190/872)*screenH,
 
                   child: Card(
                     color: Colors.blue.shade200,
@@ -131,9 +133,9 @@ class members extends StatelessWidget{
                   ),
                 );
               }
-            if (prsn[index*5]==name && prsn[(index*5)+1]!="Administrator"){
+            if (prsn[index*5]!=name && prsn[(index*5)+1]=="Co-Administrator"){
               return Container(
-              height: 190,
+              height: (190/872)*screenH,
 
               child: Card(
                 color: Colors.yellow.shade200,
@@ -164,10 +166,131 @@ class members extends StatelessWidget{
               ),
             );
             }
+                if (prsn[index*5]==name && prsn[(index*5)+1]=="General member") {
+                  return Container(
+                    height: (190/872)*screenH,
 
 
 
-          });
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          color: Colors.black,
+                        )
+                      ),
+                      elevation: 10,
+                      margin: EdgeInsets.fromLTRB(10, 5, 10, 5),
+
+                      child: Column(
+                        children: [
+                          SizedBox.fromSize(size: Size(0,20),),
+                          Stack(
+                            children: [
+
+                              CircleAvatar(
+                                radius: 31,
+                                backgroundImage: CachedNetworkImageProvider(prsn[(index*5)+4]),
+                              )
+                            ],
+
+
+                          ),
+                          Text("Name: "+prsn[index*5]),
+                          Text("Role: "+prsn[(index*5)+1]),
+                          Text("roll: "+prsn[(index*5)+2]),
+                          Text("Email: "+prsn[(index*5)+3]),
+                        ],
+                      ),
+
+                    ),
+                  );
+                }
+                if(prsn[index*5]==name && prsn[(index*5)+1]=="Administrator")
+                {
+                  return Container(
+                    height: (190/872)*screenH,
+
+
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            color: Colors.black,
+                          )
+                      ),
+                      color: Colors.blue.shade200,
+                      elevation: 10,
+                      margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+
+                      child: Column(
+                        children: [
+                          SizedBox.fromSize(size: Size(0,20),),
+                          Stack(
+                            children: [
+
+                              CircleAvatar(
+                                radius: 31,
+                                backgroundImage: CachedNetworkImageProvider(prsn[(index*5)+4]),
+                              )
+                            ],
+
+
+                          ),
+                          Text("Name: "+prsn[index*5]),
+                          Text("Role: "+prsn[(index*5)+1]),
+                          Text("roll: "+prsn[(index*5)+2]),
+                          Text("Email: "+prsn[(index*5)+3]),
+                        ],
+                      ),
+
+                    ),
+                  );
+                }
+                if (prsn[index*5]==name && prsn[(index*5)+1]=="Co-Administrator"){
+                  return Container(
+                    height: (190/872)*screenH,
+
+
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            color: Colors.black,
+
+                          ),
+                              borderRadius: BorderRadius.circular(12),
+                      ),
+                      color: Colors.yellow.shade200,
+                      elevation: 10,
+                      margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+
+                      child: Column(
+                        children: [
+                          SizedBox.fromSize(size: Size(0,20),),
+                          Stack(
+                            children: [
+
+                              CircleAvatar(
+                                radius: 31,
+                                backgroundImage: CachedNetworkImageProvider(prsn[(index*5)+4]),
+                              )
+                            ],
+
+
+                          ),
+                          Text("Name: "+prsn[index*5]),
+                          Text("Role: "+prsn[(index*5)+1]),
+                          Text("roll: "+prsn[(index*5)+2]),
+                          Text("Email: "+prsn[(index*5)+3]),
+                        ],
+                      ),
+
+                    ),
+                  );
+                }
+
+
+
+
+              });
 
 
         }),
