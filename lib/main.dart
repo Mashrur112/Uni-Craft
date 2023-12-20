@@ -11,6 +11,7 @@ import 'package:uni_craft/dependency_injection.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:uni_craft/LoginPage.dart';
+import 'splash.dart';
 
 
 
@@ -36,7 +37,7 @@ class Craft extends StatelessWidget {
       title: "Uni Craft",
       debugShowCheckedModeBanner: true,
 
-      home:Authpage(),
+      home:Splash(),
     );
   }
 }
