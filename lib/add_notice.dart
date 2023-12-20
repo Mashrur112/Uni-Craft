@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 import 'Homepage.dart';
 
@@ -17,8 +18,11 @@ class _add_noticeState extends State<add_notice> {
   var caption = TextEditingController();
 
   var count = "";
-  int c = 1;
+  int c = 0;
   var strm_opn=false;
+  String? string;
+
+
 
 
   @override
@@ -43,8 +47,9 @@ class _add_noticeState extends State<add_notice> {
                       for (var r in res) {
                         if (r['uid'] ==
                             FirebaseAuth.instance.currentUser!.uid) {
-                          c = 1;
+                          c = 0;
                           int t = c + 1;
+                          int d=t+1;
                           while(true) {
                             try {
                               if (r['notice' + c.toString()]=="" ) {
@@ -55,6 +60,7 @@ class _add_noticeState extends State<add_notice> {
                                     .update({
                                   'notice' + c.toString():caption.text.toString(),
                                   'notice' + t.toString(): text.text.toString(),
+                                  'notice' + d.toString(): string,
                                 });
 
                                 strm_opn=false;
@@ -63,7 +69,9 @@ class _add_noticeState extends State<add_notice> {
                               else{
 
                                 c = c + 2;
-                                t = c + 1;}
+                                t = c + 1;
+                              d=t+1;
+                              }
 
                             } catch (e) {
 
@@ -73,6 +81,7 @@ class _add_noticeState extends State<add_notice> {
                                   .update({
                                 'notice' + c.toString():caption.text.toString(),
                                 'notice' + t.toString(): text.text.toString(),
+                                'notice' + d.toString(): string,
                               });
                               strm_opn=false;
                               break;
@@ -183,12 +192,16 @@ class _add_noticeState extends State<add_notice> {
 
 
                     ElevatedButton(onPressed: () {
-                      formKey.currentState!.validate();
-                      //Navigator.pop(context);
-                      setState(() {
+                     if(formKey.currentState!.validate()){
+
+
+                       DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
+                       string = dateFormat.format(DateTime.now());
+                       Navigator.pop(context);
+                       setState(() {
                         strm_opn=true;
 
-                      });
+                      });}
 
 
 
