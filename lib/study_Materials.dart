@@ -10,8 +10,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:video_player/video_player.dart';
 
-import 'delete_file.dart';
-import 'delete_link.dart';
+
 
 class study_Materials extends StatefulWidget {
   @override
@@ -21,6 +20,11 @@ class study_Materials extends StatefulWidget {
 class _study_MaterialsState extends State<study_Materials> {
   var join_code;
   var show = false;
+  var index3;
+  void delete1(ind)
+  {
+    index3=ind;
+  }
 
   int c = 0;
   int b = 0;
@@ -36,6 +40,8 @@ class _study_MaterialsState extends State<study_Materials> {
   int index1=0;
   var link_cap=[];
   var link_l=[];
+  var del_1=false,del_2=false,del_3=false;
+
 
 
   @override
@@ -90,8 +96,11 @@ class _study_MaterialsState extends State<study_Materials> {
                               while (true) {
                                 try {
                                   if (r[c.toString()] == "")
-                                    break;
-                                  else {
+                                  break;
+
+                                  else{
+
+
                                     link.insert(
                                         count1,
                                         snapshot.data!.docs[count][c.toString()]
@@ -121,10 +130,12 @@ class _study_MaterialsState extends State<study_Materials> {
                                       image_nidx++;
                                       img_lidx++;
                                     }
-                                    count1++;
-                                    c = c + 2;
-                                    b = c + 1;
+
                                   }
+                                  count1++;
+                                  c=c+2;
+                                  b=c+1;
+
                                 } catch (e) {
                                   break;
                                 }
@@ -133,6 +144,45 @@ class _study_MaterialsState extends State<study_Materials> {
                               count++;
                           }
                         }
+                        if(del_1==true)
+                        {
+                          int idx_link=index3;
+                          final res=snapshot.data!.docs.toList();
+                          for(var r in res!) {
+                            if (r['uid'] == FirebaseAuth.instance.currentUser!.uid) {
+
+                              while(true){
+                                print(index3);
+                                print(count1);
+                                if(index3==count1)
+                                  break;
+                                else{
+
+                                  if(index3==(count1-1)) {
+                                    FirebaseFirestore.instance.collection("Profile").doc(
+                                        FirebaseAuth.instance.currentUser!.uid).update({
+                                      (2*index3).toString(): "",
+                                      ((2*index3) + 1).toString(): "",
+                                    });
+                                    break;
+                                  }
+                                  else{
+                                    idx_link=idx_link+1;
+
+                                    FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
+                                      (2*index3).toString():link[idx_link].toString(),
+                                      ((2*index3)+1).toString():name[idx_link].toString(),
+                                    });
+
+                                    index3++;}}
+                              }
+                            }
+                          }
+                          del_1=false;
+                        }
+
+
+
 
                         return Padding(
                           padding: EdgeInsets.fromLTRB(
@@ -197,12 +247,18 @@ class _study_MaterialsState extends State<study_Materials> {
 
 
                                               }
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        delete_file(name, link,
-                                                            index1, count1)));
+                                            // int total=count1-index1-1;
+                                            delete1(index1);
+                                            setState(() {
+                                              del_1=true;
+
+                                            });
+                                            // Navigator.push(
+                                            //     context,
+                                            //     MaterialPageRoute(
+                                            //         builder: (context) =>
+                                            //             delete_file(name, link,
+                                            //                 index1, count1)));
                                           },
                                           child: Text("Delete"))
                                       : Container(),
@@ -282,6 +338,42 @@ class _study_MaterialsState extends State<study_Materials> {
                               count++;
                           }
                         }
+                        if(del_2==true)
+                        {
+                          int idx_link=index3;
+                          final res=snapshot.data!.docs.toList();
+                          for(var r in res!) {
+                            if (r['uid'] == FirebaseAuth.instance.currentUser!.uid) {
+
+                              while(true){
+                                print(index3);
+                                print(count1);
+                                if(index3==count1)
+                                  break;
+                                else{
+
+                                  if(index3==(count1-1)) {
+                                    FirebaseFirestore.instance.collection("Profile").doc(
+                                        FirebaseAuth.instance.currentUser!.uid).update({
+                                      (2*index3).toString(): "",
+                                      ((2*index3) + 1).toString(): "",
+                                    });
+                                    break;
+                                  }
+                                  else{
+                                    idx_link=idx_link+1;
+
+                                    FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
+                                      (2*index3).toString():link[idx_link].toString(),
+                                      ((2*index3)+1).toString():name[idx_link].toString(),
+                                    });
+
+                                    index3++;}}
+                              }
+                            }
+                          }
+                          del_2=false;
+                        }
 
                         return Padding(
                           padding: EdgeInsets.fromLTRB(
@@ -332,14 +424,19 @@ class _study_MaterialsState extends State<study_Materials> {
 
 
                                             }
+                                            delete1(index1);
+                                            setState(() {
+                                              del_2=true;
+
+                                            });
 
 
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        delete_file(name, link,
-                                                            index1, count1)));
+                                            // Navigator.push(
+                                            //     context,
+                                            //     MaterialPageRoute(
+                                            //         builder: (context) =>
+                                            //             delete_file(name, link,
+                                            //                 index1, count1)));
                                           },
                                           child: Text("Delete"))
                                       : Container(),
@@ -408,6 +505,42 @@ class _study_MaterialsState extends State<study_Materials> {
                               count3++;
                           }
                         }
+                        if(del_3==true)
+                        {
+                          int idx_link=index3;
+                          final res=snapshot.data!.docs.toList();
+                          for(var r in res!) {
+                            if (r['uid'] == FirebaseAuth.instance.currentUser!.uid) {
+
+                              while(true){
+                                // print(widget.index);
+                                // print(widget.count1);
+                                if(index3==count2)
+                                  break;
+                                else{
+
+                                  if(index3==(count2-1)) {
+                                    FirebaseFirestore.instance.collection("Profile").doc(
+                                        FirebaseAuth.instance.currentUser!.uid).update({
+                                      'link'+(2*index3).toString(): "",
+                                      'link'+((2*index3) + 1).toString(): "",
+                                    });
+                                    break;
+                                  }
+                                  else{
+                                    idx_link=idx_link+1;
+
+                                    FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
+                                      'link'+ (2*index3).toString():link_cap[idx_link].toString(),
+                                      'link'+((2*index3)+1).toString():link_l[idx_link].toString(),
+                                    });
+
+                                    index3++;}}
+                              }
+                            }
+                          }
+                          del_3=false;
+                        }
 
                         return Padding(
                           padding: EdgeInsets.fromLTRB(
@@ -450,16 +583,20 @@ class _study_MaterialsState extends State<study_Materials> {
                                   role == "Administrator"
                                       ? ElevatedButton(
                                       onPressed: () {
+                                        delete1(index);
+                                        setState(() {
+                                          del_3=true;
+                                        });
 
 
 
 
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    delete_link(link_cap, link_l,
-                                                        index, count2)));
+                                        // Navigator.push(
+                                        //     context,
+                                        //     MaterialPageRoute(
+                                        //         builder: (context) =>
+                                        //             delete_link(link_cap, link_l,
+                                        //                 index, count2)));
                                       },
                                       child: Text("Delete"))
                                       : Container(),
