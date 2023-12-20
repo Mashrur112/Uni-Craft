@@ -1,19 +1,20 @@
-import 'dart:typed_data';
+
+
+
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:uni_craft/edit_Profile.dart';
-import 'package:uni_craft/members.dart';
 import 'package:uni_craft/study_Materials.dart';
-
 import 'package:uni_craft/widget/uploadFile.dart';
 
 import 'Homepage.dart';
+import 'edit_Profile.dart';
+import 'members.dart';
+import 'notice.dart';
 
 class Dashboard extends StatefulWidget {
   var role;
@@ -203,6 +204,39 @@ class _DashboardState extends State<Dashboard> {
                         )
                       ]),
                 ),
+          SizedBox.fromSize(
+            size: Size(0, ((20 / 872) * screenH)),
+          ),
+
+          GestureDetector(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => notice()));
+            },
+            child: Center(
+              child: Container(
+                height: (70 / 872) * screenH,
+                width: (380 / 392) * screenW,
+                child: Center(
+                    child: Text(
+                      "Notice",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 20),
+                    )),
+                decoration: BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black54,
+                        offset: Offset(0, 7),
+                        spreadRadius: 0,
+                        blurRadius: 2,
+                      )
+                    ]),
+              ),
+            ),
+          )
         ],
       ),
       drawer: Drawer(
