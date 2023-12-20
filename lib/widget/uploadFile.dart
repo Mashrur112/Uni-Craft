@@ -1,5 +1,6 @@
 import 'dart:io';
 
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,7 +10,9 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:path/path.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../Homepage.dart';
 import '../api/firebase_api.dart';
@@ -28,6 +31,9 @@ class _uploadFileState extends State<uploadFile> {
   var caption = TextEditingController();
   var link = TextEditingController();
   var check_for_save=false;
+  String string="";
+  var date=[];
+
 
 
   @override
@@ -57,13 +63,15 @@ class _uploadFileState extends State<uploadFile> {
                             r['role'] == "Administrator") {
                           int c = 0;
                           int b = c + 1;
+                          int d=b+1;
                           while (true) {
                             try {
                               if (r[c.toString()] == "") {
                                 break;
                               } else {
-                                c = c + 2;
+                                c = c + 3;
                                 b = c + 1;
+                                d=b+1;
                               }
                             } catch (e) {
                               break;
@@ -76,6 +84,7 @@ class _uploadFileState extends State<uploadFile> {
                               .update({
                             c.toString(): urlDownload.toString(),
                             b.toString(): fileName.toString(),
+                            d.toString():string.toString(),
                           });
                           upload_check = false;
                         }
@@ -89,13 +98,15 @@ class _uploadFileState extends State<uploadFile> {
                             r['role'] == "Administrator") {
                           int l = 0;
                           int l1 = l + 1;
+                          int l2=l1+1;
                           while (true) {
                             try {
                               if (r['link'+l.toString()] == "") {
                                 break;
                               } else {
-                                l = l + 2;
+                                l = l + 3;
                                 l1 = l + 1;
+                                l2=l1+1;
                               }
                             } catch (e) {
                               break;
@@ -108,6 +119,7 @@ class _uploadFileState extends State<uploadFile> {
                               .update({
                            'link'+ l.toString(): caption.text.toString(),
                             'link'+l1.toString(): link.text.toString(),
+                            'link'+l2.toString():string,
                           });
                           link_up = false;
                         }
@@ -216,7 +228,9 @@ class _uploadFileState extends State<uploadFile> {
                         )),
                     ElevatedButton(
                         onPressed: () async {
-                          formKey.currentState!.validate();
+
+                          if(formKey.currentState!.validate())
+                          {
                           try {
                             final result = await InternetAddress.lookup('google.com');
                             if (result.isNotEmpty &&
@@ -227,10 +241,12 @@ class _uploadFileState extends State<uploadFile> {
                             check_for_save = false;
                           }
                           if(check_for_save==true){
+                            DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
+                            string = dateFormat.format(DateTime.now());
                           setState(() {
                             link_up=true;
                           });}
-                        },
+                        }},
                         child: Text(
                           "Upload link",
                           style: TextStyle(color: Colors.white),
@@ -246,6 +262,23 @@ class _uploadFileState extends State<uploadFile> {
   }
 
   Future selectFile() async {
+    final permissionStatus = await Permission.storage.status;
+    if (permissionStatus.isDenied) {
+      // Here just ask for the permission for the first time
+      await Permission.storage.request();
+
+      // I noticed that sometimes popup won't show after user press deny
+      // so I do the check once again but now go straight to appSettings
+      if (permissionStatus.isDenied) {
+        await openAppSettings();
+      }
+    } else if (permissionStatus.isPermanentlyDenied) {
+      // Here open app settings for user to manually enable permission in case
+      // where permission was permanently denied
+      await openAppSettings();
+    } else {
+      // Do stuff that require permission here
+    }
     final result = await FilePicker.platform.pickFiles(allowMultiple: false);
 
     if (result == null) return;
@@ -256,6 +289,12 @@ class _uploadFileState extends State<uploadFile> {
   }
 
   Future uploadFile() async {
+
+    DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
+     string = dateFormat.format(DateTime.now());
+
+
+
     if (file == null) return;
 
     final fileName = basename(file!.path);
