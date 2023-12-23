@@ -68,7 +68,7 @@ class _add_noticeState extends State<add_notice> {
                               }
                               else{
 
-                                c = c + 2;
+                                c = c + 3;
                                 t = c + 1;
                               d=t+1;
                               }

@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:uni_craft/widget/uploadFile.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:video_player/video_player.dart';
@@ -13,7 +14,12 @@ import 'package:video_player/video_player.dart';
 
 
 class study_Materials extends StatefulWidget {
+  var r1 ;
+  study_Materials(this.r1);
+
   @override
+
+
   State<study_Materials> createState() => _study_MaterialsState();
 }
 
@@ -55,6 +61,19 @@ class _study_MaterialsState extends State<study_Materials> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
+          actions: [
+widget.r1=="Administrator"?
+            IconButton(onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>uploadFile()));
+              
+              
+              
+            }, icon: Icon(Icons.file_upload_outlined)
+            ):Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+              child: Icon(Icons.file_upload_off),
+            ),
+          ],
           title: Text("Study Materials"),
         ),
         body: Column(

@@ -102,7 +102,7 @@ class _noticeState extends State<notice> {
                                 .toString());
 
                         count2++;
-                        l = l + 2;
+                        l = l + 3;
                         l1 = l + 1;
                         d=l1+1;
                       }
