@@ -1,7 +1,3 @@
-
-
-
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -45,266 +41,425 @@ class _DashboardState extends State<Dashboard> {
     double screenH = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      backgroundColor: Colors.black54,
+      backgroundColor: Color(0xff4f6367),
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        backgroundColor: Colors.grey,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight((170 / 872) * screenH),
+        child: AppBar(
+          flexibleSpace: Image.asset(
+            "assets/images/logo1.png",
+            fit: BoxFit.cover,
+          ),
+
+          // leading: Builder(
+          //   builder: (context) => GestureDetector(
+          //     child: Stack(
+          //       children: [
+          //         Positioned(
+          //           bottom: (5/872)*screenH,
+          //           left: (5/391)*screenW,
+          //           child: CircleAvatar(
+          //             radius: 17,
+          //             backgroundColor: Color(0xffBFC8C9),
+          //
+          //             child: Icon(Icons.person,size: 33,color: Color(0xff3352ff),),
+          //           ),
+          //         )
+          //       ],
+          //     ),
+          //     onTap: () => Scaffold.of(context).openDrawer(),
+          //   ),
+          // ),
+          backgroundColor: Color(0xff7a9e9f),
+          elevation: 4,
+          shadowColor: Colors.black,
+        ),
       ),
-      body: Column(
+      body: Stack(
         children: [
-          SizedBox.fromSize(
-            size: Size(0, ((20 / 872) * screenH)),
-          ),
-          widget.role == "Administrator"
-          /* Button 01*/     ? GestureDetector(
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) =>  uploadFile()));
-            },
-            child: Center(
-              child: Container(
-                height: (70 / 872) * screenH,
-                width: (380 / 392) * screenW,
-                decoration: BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.circular(30),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black54,
-                        offset: Offset(0, 7),
-                        spreadRadius: 0,
-                        blurRadius: 2,
-                      )
-                    ]),
-                child: const Center(
-                    child: Text(
-                      "Upload file",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 20),
-                    )),
-              ),
-            ),
-          )
-              : Container(
-            height: (70 / 872) * screenH,
-            width: (380 / 392) * screenW,
-            decoration: BoxDecoration(
-                color: Colors.grey,
-                borderRadius: BorderRadius.circular(30),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black54,
-                    offset: Offset(0, 7),
-                    spreadRadius: 0,
-                    blurRadius: 2,
-                  )
-                ]),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.lock),
-                SizedBox.fromSize(size: Size(((10 / 392) * screenW), 0)),
-                const Text(
-                  "Upload file",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 20),
+          Container(
+            height: 1000,
+            child: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(0, ((30 / 872) * screenH), 0, 0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox.fromSize(
+                      size: Size(0, ((0 / 872) * screenH)),
+                    ),
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        study_Materials(widget.role)));
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.fromLTRB(
+                                (35 / 392) * screenW, 0, 0, 0),
+                            child: Container(
+                                height: (150 / 872) * screenH,
+                                width: (140 / 392) * screenW,
+                                decoration: BoxDecoration(
+                                    color: Color(0xffb8d8d8),
+                                    borderRadius: BorderRadius.circular(14),
+                                    boxShadow: const [
+                                      BoxShadow(
+                                        color: Colors.black54,
+                                        offset: Offset(0, 7),
+                                        spreadRadius: 0,
+                                        blurRadius: 2,
+                                      )
+                                    ]),
+                                child: Stack(children: [
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(
+                                        (20 / 392) * screenW,
+                                        (14 / 872) * screenH,
+                                        0,
+                                        0),
+                                    child: Image.asset(
+                                      "assets/images/material.png",
+                                      height: (100 / 872) * screenH,
+                                      width: (100 / 392) * screenW,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(
+                                        (30 / 392) * screenW,
+                                        (115 / 872) * screenH,
+                                        0,
+                                        0),
+                                    child: Text(
+                                      " Materials",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 17,
+                                          color: Colors.grey.shade900),
+                                    ),
+                                  ),
+                                ])),
+                          ),
+                        ),
+
+                        //Chat Button
+
+                        SizedBox.fromSize(
+                          size: Size(
+                              (40 / 392) * screenW, ((20 / 872) * screenH)),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Calendar()));
+                          },
+                          child: Container(
+                            height: (150 / 872) * screenH,
+                            width: (140 / 392) * screenW,
+                            decoration: BoxDecoration(
+                                color: Color(0xffb8d8d8),
+                                borderRadius: BorderRadius.circular(14),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Colors.black54,
+                                    offset: Offset(0, 7),
+                                    spreadRadius: 0,
+                                    blurRadius: 2,
+                                  )
+                                ]),
+                            child: Stack(children: [
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(
+                                    (27 / 392) * screenW,
+                                    (17 / 872) * screenH,
+                                    0,
+                                    0),
+                                child: Image.asset(
+                                  "assets/images/calendar.png",
+                                  height: (100 / 872) * screenH,
+                                  width: (100/ 392) * screenW,
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(
+                                    (35 / 392) * screenW,
+                                    (115 / 872) * screenH,
+                                    0,
+                                    0),
+                                child: Text(
+                                  "Calendar",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17),
+                                ),
+                              ),
+                            ]),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox.fromSize(
+                      size: Size(0, ((40 / 872) * screenH)),
+                    ),
+                    widget.role !="General member"
+                        ? GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => members()));
+                            },
+                            child: Row(
+                              children: [
+                                SizedBox.fromSize(
+                                  size: Size((40 / 392) * screenW,
+                                      ((20 / 872) * screenH)),
+                                ),
+                                Container(
+                                  height: (150 / 872) * screenH,
+                                  width: (140 / 392) * screenW,
+                                  decoration: BoxDecoration(
+                                      color: Color(0xffb8d8d8),
+                                      borderRadius: BorderRadius.circular(14),
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          color: Colors.black54,
+                                          offset: Offset(0, 7),
+                                          spreadRadius: 0,
+                                          blurRadius: 2,
+                                        )
+                                      ]),
+                                  child: Stack(children: [
+                                    Padding(
+                                      padding: EdgeInsets.fromLTRB(
+                                          (0 / 392) * screenW,
+                                          (0 / 872) * screenH,
+                                          (12 / 392) * screenW,
+                                          0),
+                                      child: Image.asset(
+                                        "assets/images/members.png",
+                                        height: (140 / 872) * screenH,
+                                        width: (140 / 392) * screenW,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.fromLTRB(
+                                          (35 / 392) * screenW,
+                                          (115 / 872) * screenH,
+                                          0,
+                                          0),
+                                      child: Text(
+                                        "Members",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 17),
+                                      ),
+                                    ),
+                                  ]),
+                                ),
+                                SizedBox.fromSize(
+                                  size: Size((40 / 392) * screenW,
+                                      ((20 / 872) * screenH)),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => notice()));
+                                  },
+                                  child: Center(
+                                    child: Container(
+                                      height: (150 / 872) * screenH,
+                                      width: (140 / 392) * screenW,
+                                      decoration: BoxDecoration(
+                                          color: Color(0xffb8d8d8),
+                                          borderRadius:
+                                              BorderRadius.circular(14),
+                                          boxShadow: const [
+                                            BoxShadow(
+                                              color: Colors.black54,
+                                              offset: Offset(0, 7),
+                                              spreadRadius: 0,
+                                              blurRadius: 2,
+                                            )
+                                          ]),
+                                      child: Stack(children: [
+                                        Padding(
+                                          padding: EdgeInsets.fromLTRB(
+                                              (10 / 392) * screenW,
+                                              (2 / 872) * screenH,
+                                              0,
+                                              0),
+                                          child: Image.asset(
+                                            "assets/images/Notice.png",
+                                            height: (115 / 872) * screenH,
+                                            width: (115 / 392) * screenW,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.fromLTRB(
+                                              (45 / 392) * screenW,
+                                              (115 / 872) * screenH,
+                                              0,
+                                              0),
+                                          child: Text(
+                                            "Notice",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 17),
+                                          ),
+                                        ),
+                                      ]),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        : Row(
+                            children: [
+                              SizedBox.fromSize(
+                                size: Size((40 / 392) * screenW,
+                                    ((20 / 872) * screenH)),
+                              ),
+                              Container(
+                                height: (150 / 872) * screenH,
+                                width: (140 / 392) * screenW,
+                                decoration: BoxDecoration(
+                                    color: Color(0xffb8d8d8),
+                                    borderRadius: BorderRadius.circular(14),
+                                    boxShadow: const [
+                                      BoxShadow(
+                                        color: Colors.black54,
+                                        offset: Offset(0, 7),
+                                        spreadRadius: 0,
+                                        blurRadius: 2,
+                                      )
+                                    ]),
+                                child: Stack(children: [
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(
+                                        (0 / 392) * screenW,
+                                        (0 / 872) * screenH,
+                                        (12 / 392) * screenW,
+                                        0),
+                                    child: Image.asset(
+                                      "assets/images/members.png",
+                                      height: (140 / 872) * screenH,
+                                      width: (140 / 392) * screenW,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(
+                                        (25 / 392) * screenW,
+                                        (115 / 872) * screenH,
+                                        0,
+                                        0),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          "Members",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 17),
+                                        ),
+                                        SizedBox.fromSize(
+                                          size: Size((10 / 392) * screenW,
+                                              (0)),
+                                        ),
+                                        Icon(Icons.lock,size: 20,),
+                                      ],
+                                    ),
+
+                                  ),
+                                ]),
+                              ),
+                              SizedBox.fromSize(
+                                size: Size((40 / 392) * screenW,
+                                    ((20 / 872) * screenH)),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => notice()));
+                                },
+                                child: Center(
+                                  child: Container(
+                                    height: (150 / 872) * screenH,
+                                    width: (140 / 392) * screenW,
+                                    decoration: BoxDecoration(
+                                        color: Color(0xffb8d8d8),
+                                        borderRadius: BorderRadius.circular(14),
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            color: Colors.black54,
+                                            offset: Offset(0, 7),
+                                            spreadRadius: 0,
+                                            blurRadius: 2,
+                                          )
+                                        ]),
+                                    child: Stack(children: [
+                                      Padding(
+                                        padding: EdgeInsets.fromLTRB(
+                                            (10 / 392) * screenW,
+                                            (2 / 872) * screenH,
+                                            0,
+                                            0),
+                                        child: Image.asset(
+                                          "assets/images/Notice.png",
+                                          height: (115 / 872) * screenH,
+                                          width: (115 / 392) * screenW,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.fromLTRB(
+                                            (45 / 392) * screenW,
+                                            (115 / 872) * screenH,
+                                            0,
+                                            0),
+                                        child: Text(
+                                          "Notice",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 17),
+                                        ),
+                                      ),
+                                    ]),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-          SizedBox.fromSize(
-            size: Size(0, ((20 / 872) * screenH)),
-          ),
-          GestureDetector(
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) =>  study_Materials()));
-            },
-            child: Center(
-              child: Container(
-                height: (70 / 872) * screenH,
-                width: (380 / 392) * screenW,
-                decoration: BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.circular(30),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black54,
-                        offset: Offset(0, 7),
-                        spreadRadius: 0,
-                        blurRadius: 2,
-                      )
-                    ]),
-                child: const Center(
-                    child: Text(
-                      "Study Materials",
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                    )),
               ),
             ),
           ),
-          SizedBox.fromSize(
-            size: Size(0, ((20 / 872) * screenH)),
-          ),
-          //Chat Button
-          GestureDetector(
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ChatApp()));
-            },
-            child: Center(
-              child: Container(
-                height: (70 / 872) * screenH,
-                width: (380 / 392) * screenW,
-                decoration: BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.circular(30),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black54,
-                        offset: Offset(0, 7),
-                        spreadRadius: 0,
-                        blurRadius: 2,
-                      )
-                    ]),
-                child: const Center(
-                    child: Text(
-                      "Chat",
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                    )),
+          Positioned(
+            bottom: (30 / 872) * screenH,
+            right: (20 / 392) * screenW,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ChatApp()));
+              },
+              child: Icon(
+                Icons.chat_outlined,
+                size: 50,
+                color: Color(0xffeef5db),
               ),
             ),
           ),
-          SizedBox.fromSize(
-            size: Size(0, ((20 / 872) * screenH)),
-          ),
-          GestureDetector(
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Calendar()));
-            },
-            child: Center(
-              child: Container(
-                height: (70 / 872) * screenH,
-                width: (380 / 392) * screenW,
-                decoration: BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.circular(30),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black54,
-                        offset: Offset(0, 7),
-                        spreadRadius: 0,
-                        blurRadius: 2,
-                      )
-                    ]),
-                child: const Center(
-                    child: Text(
-                      "Calendar",
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                    )),
-              ),
-            ),
-          ),
-          SizedBox.fromSize(
-            size: Size(0, ((20 / 872) * screenH)),
-          ),
-
-
-
-          widget.role != "General member"
-              ? GestureDetector(
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => members()));
-            },
-            child: Center(
-              child: Container(
-                height: (70 / 872) * screenH,
-                width: (380 / 392) * screenW,
-                decoration: BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.circular(30),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black54,
-                        offset: Offset(0, 7),
-                        spreadRadius: 0,
-                        blurRadius: 2,
-                      )
-                    ]),
-                child: const Center(
-                    child: Text(
-                      "Members",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 20),
-                    )),
-              ),
-            ),
-          )
-              : Container(
-            height: (70 / 872) * screenH,
-            width: (380 / 392) * screenW,
-            decoration: BoxDecoration(
-                color: Colors.grey,
-                borderRadius: BorderRadius.circular(30),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black54,
-                    offset: Offset(0, 7),
-                    spreadRadius: 0,
-                    blurRadius: 2,
-                  )
-                ]),
-            child: const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.lock,
-                  color: Colors.black,
-                ),
-                Text(
-                  "Members",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 20),
-                ),
-              ],
-            ),
-          ),
-          SizedBox.fromSize(
-            size: Size(0, ((20 / 872) * screenH)),
-          ),
-
-
-          GestureDetector(
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) =>  notice()));
-            },
-            child: Center(
-              child: Container(
-                height: (70 / 872) * screenH,
-                width: (380 / 392) * screenW,
-                decoration: BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.circular(30),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black54,
-                        offset: Offset(0, 7),
-                        spreadRadius: 0,
-                        blurRadius: 2,
-                      )
-                    ]),
-                child: const Center(
-                    child: Text(
-                      "Notice",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 20),
-                    )),
-              ),
-            ),
-          )
         ],
       ),
       drawer: Drawer(
@@ -314,6 +469,7 @@ class _DashboardState extends State<Dashboard> {
             // SizedBox.fromSize(
             //   size: Size(200, 100),
             // ),
+
             SizedBox(
               height: (659 / 872) * screenH,
               width: screenW,
@@ -378,7 +534,7 @@ class _DashboardState extends State<Dashboard> {
                                     style: const TextStyle(color: Colors.white),
                                   )),
                               Positioned(
-                                bottom: (120 / 872) * screenH,
+                                bottom: (140 / 872) * screenH,
                                 left: (120 / 392) * screenW,
                                 child: Text(
                                   profile_info[5],
@@ -397,42 +553,43 @@ class _DashboardState extends State<Dashboard> {
                                       view_more = !view_more;
                                     });
                                   },
-                                  icon: const Icon(Icons.remove_red_eye_rounded),
+                                  icon:
+                                      const Icon(Icons.remove_red_eye_rounded),
                                   color: Colors.white,
                                 ),
                               ),
                               view_more == true
                                   ? Positioned(
-                                bottom: (90 / 872) * screenH,
-                                left: (160 / 392) * screenW,
-                                child: Text(
-                                  "Age: " + profile_info[2],
-                                  style: const TextStyle(
-                                      color: Colors.grey, fontSize: 18),
-                                ),
-                              )
+                                      bottom: (110 / 872) * screenH,
+                                      left: (160 / 392) * screenW,
+                                      child: Text(
+                                        "Age: " + profile_info[2],
+                                        style: const TextStyle(
+                                            color: Colors.grey, fontSize: 18),
+                                      ),
+                                    )
                                   : const Center(),
                               view_more == true
                                   ? Positioned(
-                                bottom: (60 / 872) * screenH,
-                                left: (90 / 392) * screenW,
-                                child: Text(
-                                  "Joining code: " + profile_info[6],
-                                  style: const TextStyle(
-                                      color: Colors.grey, fontSize: 16),
-                                ),
-                              )
+                                      bottom: (200 / 872) * screenH,
+                                      left: (90 / 392) * screenW,
+                                      child: Text(
+                                        "Joining code: " + profile_info[6],
+                                        style: const TextStyle(
+                                            color: Colors.grey, fontSize: 16),
+                                      ),
+                                    )
                                   : const Center(),
                               view_more == true
                                   ? Positioned(
-                                bottom: (18 / 872) * screenH,
-                                left: (16 / 392) * screenW,
-                                child: Text(profile_info[4],
-                                    style: const TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold)),
-                              )
+                                      bottom: (18 / 872) * screenH,
+                                      left: (16 / 392) * screenW,
+                                      child: Text(profile_info[4],
+                                          style: const TextStyle(
+                                              color: Colors.grey,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold)),
+                                    )
                                   : const Center(),
                             ],
                           ),
@@ -440,7 +597,7 @@ class _DashboardState extends State<Dashboard> {
                       ),
                     );
                   } else {
-                    return  Homepage();
+                    return Homepage();
                   }
                 },
               ),
@@ -467,4 +624,3 @@ class _DashboardState extends State<Dashboard> {
     );
   }
 }
-
