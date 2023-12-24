@@ -505,42 +505,47 @@ class _DashboardState extends State<Dashboard> {
                         children: [
                           Stack(
                             children: [
-                              Image.asset("assets/images/p_bg.jpg"),
+                              Image.asset("assets/images/bg02.jpg"),
                               Positioned(
                                 bottom: (100 / 872) * screenH,
                                 left: (12 / 392) * screenW,
+                                child: ColorFiltered(
+                                  colorFilter: ColorFilter.mode(
+                                    Colors.white.withOpacity(0.2), // Adjust the opacity here (0.0 to 1.0)
+                                    BlendMode.srcATop,
+                                  ),
                                 child: CircleAvatar(
                                   backgroundImage: CachedNetworkImageProvider(
                                       profile_info[0]),
                                   radius: 42,
                                 ),
-                              ),
+                              ),),
                               Positioned(
                                 bottom: (60 / 872) * screenH,
                                 left: (17 / 392) * screenW,
                                 child: Text(
                                   profile_info[1],
-                                  style: const TextStyle(
-                                      fontSize: 21,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                              Positioned(
+                                  style: TextStyle(
+                                    fontSize: 21,
+                                    color: Colors.white.withOpacity(0.9),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),),
+                                Positioned(
                                   bottom: (40 / 872) * screenH,
                                   left: (17 / 392) * screenW,
                                   child: Text(
                                     profile_info[3],
-                                    style: const TextStyle(color: Colors.white),
+                                    style: const TextStyle(color: Colors.white54),
                                   )),
                               Positioned(
                                 bottom: (140 / 872) * screenH,
                                 left: (120 / 392) * screenW,
                                 child: Text(
                                   profile_info[5],
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.cyanAccent,
+                                      color: Colors.cyanAccent.shade400.withOpacity(0.9),
                                       fontSize: 20),
                                 ),
                               ),
@@ -565,7 +570,7 @@ class _DashboardState extends State<Dashboard> {
                                       child: Text(
                                         "Age: " + profile_info[2],
                                         style: const TextStyle(
-                                            color: Colors.grey, fontSize: 18),
+                                            color: Colors.white, fontSize: 18,fontWeight: FontWeight.bold),
                                       ),
                                     )
                                   : const Center(),
@@ -576,7 +581,8 @@ class _DashboardState extends State<Dashboard> {
                                       child: Text(
                                         "Joining code: " + profile_info[6],
                                         style: const TextStyle(
-                                            color: Colors.grey, fontSize: 16),
+                                            color: Colors.black, fontSize: 16,
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     )
                                   : const Center(),
@@ -586,12 +592,12 @@ class _DashboardState extends State<Dashboard> {
                                       left: (16 / 392) * screenW,
                                       child: Text(profile_info[4],
                                           style: const TextStyle(
-                                              color: Colors.grey,
+                                              color: Colors.white,
                                               fontSize: 15,
                                               fontWeight: FontWeight.bold)),
                                     )
                                   : const Center(),
-                            ],
+                              ],
                           ),
                         ],
                       ),
