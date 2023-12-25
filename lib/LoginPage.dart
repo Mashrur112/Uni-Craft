@@ -31,6 +31,7 @@ class _LoginState extends State<Login> {
   }
 
   Future<UserCredential> signInWithGoogle() async {
+    print("fsdf");
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
@@ -69,31 +70,41 @@ class _LoginState extends State<Login> {
       Navigator.pop(context);
       //print(e.code);
 
-      if (e.code == 'INVALID_LOGIN_CREDENTIALS') {
-        wrongCred();
-      } else if (e.code == 'invalid-email') {
-        wrongEmail();
-      }
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              elevation: 51,
+              shadowColor: Colors.black26,
+              icon: Icon(Icons.warning_amber),
+              iconColor: Colors.red,
+              backgroundColor: Colors.blueGrey,
+              title: Text(
+                e.code,
+                style: TextStyle(color: Colors.white),
+              ),
+            );
+          });
     }
   }
 
-  void wrongCred() {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            elevation: 51,
-            shadowColor: Colors.black26,
-            icon: Icon(Icons.warning_amber),
-            iconColor: Colors.red,
-            backgroundColor: Colors.blueGrey,
-            title: Text(
-              "Incorrect Email Or Password!",
-              style: TextStyle(color: Colors.white),
-            ),
-          );
-        });
-  }
+  // void wrongCred() {
+  //   showDialog(
+  //       context: context,
+  //       builder: (context) {
+  //         return AlertDialog(
+  //           elevation: 51,
+  //           shadowColor: Colors.black26,
+  //           icon: Icon(Icons.warning_amber),
+  //           iconColor: Colors.red,
+  //           backgroundColor: Colors.blueGrey,
+  //           title: Text(
+  //             "Incorrect Email Or Password!",
+  //             style: TextStyle(color: Colors.white),
+  //           ),
+  //         );
+  //       });
+  // }
 
   void wrongEmail() {
     showDialog(
