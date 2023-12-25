@@ -54,7 +54,7 @@ class _CalendarState extends State<Calendar> {
                 image: const AssetImage('assets/images/calendar_bg04.jpg'),
                 fit: BoxFit.cover,
                 colorFilter: ColorFilter.mode(
-                  Colors.black.withOpacity(0.7), // Adjust the opacity here (0.0 to 1.0)
+                  Colors.black.withOpacity(0.75), // Adjust the opacity here (0.0 to 1.0)
                   BlendMode.dstATop,
                 ),
               ),
@@ -172,7 +172,7 @@ class _TodoListViewState extends State<TodoListView> {
                 ),
               ),
               IconButton(
-                icon: Icon(Icons.add, color: Colors.black),
+                icon: Icon(Icons.add, color: Colors.black.withOpacity(0.9),),
                 onPressed: () {
                   final newEvent = textController.text;
                   if (newEvent.isNotEmpty) {
