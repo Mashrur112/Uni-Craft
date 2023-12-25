@@ -22,7 +22,7 @@ class Craft extends StatelessWidget {
     // TODO: implement build
     return const MaterialApp(
       title: "Uni Craft",
-      debugShowCheckedModeBanner: true,
+      debugShowCheckedModeBanner: false,
       home: Authpage(),
     );
   }
