@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:uni_craft/chat.dart';
+import 'package:uni_craft/createPoll.dart';
 import 'package:uni_craft/study_Materials.dart';
 import 'package:uni_craft/widget/uploadFile.dart';
 
@@ -14,8 +15,8 @@ import 'members.dart';
 import 'notice.dart';
 
 class Dashboard extends StatefulWidget {
-  var role;
-  Dashboard(this.role, {super.key});
+  var role,uid_admin;
+  Dashboard(this.role,this.uid_admin, {super.key});
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -434,12 +435,77 @@ class _DashboardState extends State<Dashboard> {
                                               fontSize: 17),
                                         ),
                                       ),
-                                    ]),
+
+
+                                    ]
+
+
+
+                                    ),
                                   ),
                                 ),
                               )
                             ],
                           ),
+                    SizedBox.fromSize(
+                      size: Size(
+                          (40 / 392) * screenW, ((20 / 872) * screenH)),
+                    ),
+                    Padding(
+                      padding:  EdgeInsets.fromLTRB(((40/392)*screenW), 0, 0, 0),
+                      child: GestureDetector(
+                        onTap: () {
+                          print(widget.uid_admin);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CreatePoll(widget.uid_admin)));
+                        },
+                        child: Container(
+                          height: (150 / 872) * screenH,
+                          width: (140 / 392) * screenW,
+                          decoration: BoxDecoration(
+                              color: Color(0xffb8d8d8),
+                              borderRadius: BorderRadius.circular(14),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.black54,
+                                  offset: Offset(0, 7),
+                                  spreadRadius: 0,
+                                  blurRadius: 2,
+                                )
+                              ]),
+                          child: Stack(children: [
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                  (20 / 392) * screenW,
+                                  (14 / 872) * screenH,
+                                  0,
+                                  0),
+                              child: Image.asset(
+
+                                "assets/images/poll.png",
+                                height: (100 / 872) * screenH,
+                                width: (100/ 392) * screenW,
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                  (25 / 392) * screenW,
+                                  (115 / 872) * screenH,
+                                  0,
+                                  0),
+                              child: Text(
+                                "Create Poll",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17),
+                              ),
+                            ),
+                          ]),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

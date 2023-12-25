@@ -24,7 +24,7 @@ class _AuthpageState2 extends State<Authpage2> {
 
   var c1=false,c2=false,c3=false;
   String collect1=" ";
-  var role;
+  var role,code,uid_admin;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,7 @@ class _AuthpageState2 extends State<Authpage2> {
               child: StreamBuilder(
                 stream: FirebaseFirestore.instance
                     .collection('Profile' )
-                    .where('uid', isEqualTo: currentUser.currentUser!.uid)
+
                     .snapshots(),
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                   //var data= snapshot.data!.docs[0];
@@ -56,17 +56,32 @@ class _AuthpageState2 extends State<Authpage2> {
                   if (snapshot.hasData && snapshot.data!.docs.length >= 1 ) {
 
                     final res=snapshot.data!.docs.toList();
-                    for(var r in res!)
+                    for(var r in res)
                       {
+
                         if(r['uid']==currentUser.currentUser!.uid)
                           {
                             role=r['role'];
+                            code=r['code'];
                             break;
                           }
+
+                      }
+                    for(var i in res)
+                      {
+                       // print(i['role']);
+                        if(code==i['code'] && i['role']=="Administrator")
+                          {
+                            uid_admin=i['uid'];
+
+                            break;
+                          }
+
+
                       }
 
 
-                    return Dashboard(role);
+                    return Dashboard(role,uid_admin);
                   } else {
 
 
