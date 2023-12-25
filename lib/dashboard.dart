@@ -209,7 +209,7 @@ class _DashboardState extends State<Dashboard> {
                     SizedBox.fromSize(
                       size: Size(0, ((40 / 872) * screenH)),
                     ),
-                    widget.role !="General member"
+                    widget.role != "General member"
                         ? GestureDetector(
                             onTap: () {
                               Navigator.push(
@@ -335,7 +335,7 @@ class _DashboardState extends State<Dashboard> {
                                 height: (150 / 872) * screenH,
                                 width: (140 / 392) * screenW,
                                 decoration: BoxDecoration(
-                                    color: Color(0xffb8d8d8),
+                                    color: Colors.grey,
                                     borderRadius: BorderRadius.circular(14),
                                     boxShadow: const [
                                       BoxShadow(
@@ -346,6 +346,7 @@ class _DashboardState extends State<Dashboard> {
                                       )
                                     ]),
                                 child: Stack(children: [
+
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(
                                         (0 / 392) * screenW,
@@ -360,28 +361,21 @@ class _DashboardState extends State<Dashboard> {
                                   ),
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(
-                                        (25 / 392) * screenW,
-                                        (115 / 872) * screenH,
+                                        (30 / 392) * screenW,
+                                        (116 / 872) * screenH,
                                         0,
                                         0),
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "Members",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 17),
-                                        ),
-                                        SizedBox.fromSize(
-                                          size: Size((10 / 392) * screenW,
-                                              (0)),
-                                        ),
-                                        Icon(Icons.lock,size: 20,),
-                                      ],
+                                    child: Text(
+                                      "Members",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 17),
                                     ),
 
                                   ),
-                                ]),
+                                  Center(child: Icon(Icons.lock,size: 90,color: Colors.black.withOpacity(0.7),)),
+                                ]
+                                ),
                               ),
                               SizedBox.fromSize(
                                 size: Size((40 / 392) * screenW,
@@ -449,13 +443,14 @@ class _DashboardState extends State<Dashboard> {
                           ),
                     SizedBox.fromSize(
                       size: Size(
-                          (40 / 392) * screenW, ((20 / 872) * screenH)),
+                          (40 / 392) * screenW, ((40 / 872) * screenH)),
                     ),
+                    widget.role != "General member"?
                     Padding(
                       padding:  EdgeInsets.fromLTRB(((40/392)*screenW), 0, 0, 0),
                       child: GestureDetector(
                         onTap: () {
-                          print(widget.uid_admin);
+
                           Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -502,8 +497,56 @@ class _DashboardState extends State<Dashboard> {
                                     fontSize: 17),
                               ),
                             ),
+
                           ]),
                         ),
+                      ),
+                    ):
+                    Padding(
+                      padding:  EdgeInsets.fromLTRB(((40/392)*screenW), 0, 0, 0),
+                      child: Container(
+                        height: (150 / 872) * screenH,
+                        width: (140 / 392) * screenW,
+                        decoration: BoxDecoration(
+                            color: Colors.grey,
+                            borderRadius: BorderRadius.circular(14),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Colors.black54,
+                                offset: Offset(0, 7),
+                                spreadRadius: 0,
+                                blurRadius: 2,
+                              )
+                            ]),
+                        child: Stack(children: [
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(
+                                (20 / 392) * screenW,
+                                (14 / 872) * screenH,
+                                0,
+                                0),
+                            child: Image.asset(
+
+                              "assets/images/poll.png",
+                              height: (100 / 872) * screenH,
+                              width: (100/ 392) * screenW,
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(
+                                (25 / 392) * screenW,
+                                (115 / 872) * screenH,
+                                0,
+                                0),
+                            child: Text(
+                              "Create Poll",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 17),
+                            ),
+                          ),
+                          Center(child: Icon(Icons.lock,size: 90,color: Colors.black.withOpacity(0.7),)),
+                        ]),
                       ),
                     ),
                   ],
