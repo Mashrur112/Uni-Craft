@@ -25,6 +25,7 @@ class _AuthpageState2 extends State<Authpage2> {
   var c1=false,c2=false,c3=false;
   String collect1=" ";
   var role,code,uid_admin;
+  var snap=false;
 
   @override
   Widget build(BuildContext context) {
@@ -52,33 +53,36 @@ class _AuthpageState2 extends State<Authpage2> {
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                   //var data= snapshot.data!.docs[0];
                  //print(collect1);
+                  final res=snapshot.data!.docs.toList();
+                  for(var r in res)
+                  {
 
-                  if (snapshot.hasData && snapshot.data!.docs.length >= 1 ) {
+                    if(r['uid']==currentUser.currentUser!.uid)
+                    {
+                      role=r['role'];
+                      code=r['code'];
+                      snap=true;
+                      break;
+                    }
 
-                    final res=snapshot.data!.docs.toList();
-                    for(var r in res)
-                      {
+                  }
+                  for(var i in res)
+                  {
+                    // print(i['role']);
+                    if(code==i['code'] && i['role']=="Administrator")
+                    {
+                      uid_admin=i['uid'];
 
-                        if(r['uid']==currentUser.currentUser!.uid)
-                          {
-                            role=r['role'];
-                            code=r['code'];
-                            break;
-                          }
-
-                      }
-                    for(var i in res)
-                      {
-                       // print(i['role']);
-                        if(code==i['code'] && i['role']=="Administrator")
-                          {
-                            uid_admin=i['uid'];
-
-                            break;
-                          }
+                      break;
+                    }
 
 
-                      }
+                  }
+
+                  if (snapshot.hasData && snapshot.data!.docs.length >= 1 && snap==true ) {
+
+
+
 
 
                     return Dashboard(role,uid_admin);
