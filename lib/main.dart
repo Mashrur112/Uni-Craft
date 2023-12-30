@@ -35,7 +35,7 @@ class Craft extends StatelessWidget {
 
     return const GetMaterialApp(
       title: "Uni Craft",
-      debugShowCheckedModeBanner: true,
+      debugShowCheckedModeBanner: false,
 
       home:Splash(),
     );
