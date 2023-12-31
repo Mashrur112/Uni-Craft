@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:timeplanner/timeplanner.dart';
 
 class Calendar extends StatefulWidget {
   const Calendar({Key? key}) : super(key: key);
@@ -22,7 +23,7 @@ class _CalendarState extends State<Calendar> {
     setState(() {
       events.update(
         today,
-            (existingEvents) => [...existingEvents, event],
+        (existingEvents) => [...existingEvents, event],
         ifAbsent: () => [event],
       );
     });
@@ -45,6 +46,21 @@ class _CalendarState extends State<Calendar> {
       appBar: AppBar(
         title: const Text("Academic Calendar"),
         backgroundColor: Colors.black.withOpacity(0.35),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.calendar_today),
+            onPressed: () {
+              // Navigate to the TimePlanner page
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      TimePlannerPage(), // Replace with your TimePlanner page widget
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: Stack(
         children: [
@@ -54,20 +70,21 @@ class _CalendarState extends State<Calendar> {
                 image: const AssetImage('assets/images/calendar_bg04.jpg'),
                 fit: BoxFit.cover,
                 colorFilter: ColorFilter.mode(
-                  Colors.black.withOpacity(0.75), // Adjust the opacity here (0.0 to 1.0)
+                  Colors.black.withOpacity(
+                      0.75), // Adjust the opacity here (0.0 to 1.0)
                   BlendMode.dstATop,
                 ),
               ),
             ),
           ),
-
           SingleChildScrollView(
             child: Center(
               child: Column(
                 children: [
                   Container(
                     padding: const EdgeInsets.all(20.0),
-                    child: Text("Selected Day = ${today.toString().split(" ")[0]}"),
+                    child: Text(
+                        "Selected Day = ${today.toString().split(" ")[0]}"),
                   ),
                   TableCalendar(
                     locale: "en_US",
@@ -141,7 +158,10 @@ class _TodoListViewState extends State<TodoListView> {
             return ListTile(
               title: Text(widget.events[index]),
               trailing: IconButton(
-                icon: Icon(Icons.delete,color: Colors.red.withOpacity(0.7),),
+                icon: Icon(
+                  Icons.delete,
+                  color: Colors.red.withOpacity(0.7),
+                ),
                 onPressed: () {
                   widget.onDeleteEvent(widget.events[index]);
                 },
@@ -159,7 +179,8 @@ class _TodoListViewState extends State<TodoListView> {
                   controller: textController,
                   decoration: InputDecoration(
                     hintText: "Add your new Event.........",
-                    hintStyle: TextStyle(color: Colors.blueGrey), // Color of the hint text
+                    hintStyle: TextStyle(
+                        color: Colors.blueGrey), // Color of the hint text
                     // Optionally, you can set the border color and focused border color
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.blue),
@@ -168,11 +189,15 @@ class _TodoListViewState extends State<TodoListView> {
                       borderSide: BorderSide(color: Colors.black),
                     ),
                   ),
-                  style: TextStyle(color: Colors.black), // Color of the entered text
+                  style: TextStyle(
+                      color: Colors.black), // Color of the entered text
                 ),
               ),
               IconButton(
-                icon: Icon(Icons.add, color: Colors.black.withOpacity(0.9),),
+                icon: Icon(
+                  Icons.add,
+                  color: Colors.black.withOpacity(0.9),
+                ),
                 onPressed: () {
                   final newEvent = textController.text;
                   if (newEvent.isNotEmpty) {
