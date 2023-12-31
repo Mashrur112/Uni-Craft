@@ -55,8 +55,7 @@ dependencies:
 
   permission_handler: ^11.1.0
   intl: ^0.18.1
-
- 
+  syncfusion_flutter_calendar: ^24.1.43
 
 
 
