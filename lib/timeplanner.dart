@@ -8,6 +8,7 @@ class TimePlannerPage extends StatefulWidget {
 
 class _TimePlannerPageState extends State<TimePlannerPage> {
   List<Meeting> meetings = [];
+  Meeting? selectedMeeting;
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +26,47 @@ class _TimePlannerPageState extends State<TimePlannerPage> {
             child: Text("Add Meeting"),
           ),
           Expanded(
-            child: SfCalendar(
-              view: CalendarView.week,
-              dataSource: MeetingDataSource(meetings),
+            child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  selectedMeeting = null;
+                });
+              },
+              child: Column(
+                children: [
+                  Expanded(
+                    child: SfCalendar(
+                      view: CalendarView.week,
+                      dataSource: MeetingDataSource(meetings),
+                      onTap: (CalendarTapDetails details) {
+                        if (details.targetElement ==
+                            CalendarElement.appointment) {
+                          setState(() {
+                            selectedMeeting = details.appointments![0];
+                          });
+                        }
+                      },
+                    ),
+                  ),
+                  if (selectedMeeting != null) ...[
+                    SizedBox(height: 10),
+                    Container(
+                      color: Colors.grey[200],
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Event Details'),
+                          Text('Event Name: ${selectedMeeting!.eventName}'),
+                          Text('Start Time: ${selectedMeeting!.from}'),
+                          Text('End Time: ${selectedMeeting!.to}'),
+                          // Add more details as needed
+                        ],
+                      ),
+                    ),
+                  ],
+                ],
+              ),
             ),
           ),
         ],
@@ -71,7 +110,7 @@ class _TimePlannerPageState extends State<TimePlannerPage> {
                 },
                 child: Text(
                   'Choose Date',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.black),
                 ),
               ),
               SizedBox(height: 10),
@@ -91,7 +130,7 @@ class _TimePlannerPageState extends State<TimePlannerPage> {
                 },
                 child: Text(
                   'Choose Start Time',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.black),
                 ),
               ),
               ElevatedButton(
@@ -109,7 +148,7 @@ class _TimePlannerPageState extends State<TimePlannerPage> {
                 },
                 child: Text(
                   'Choose End Time',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.black),
                 ),
               ),
             ],
@@ -161,9 +200,6 @@ class MeetingDataSource extends CalendarDataSource {
   MeetingDataSource(List<Meeting> source) {
     appointments = source;
   }
-
-  // Implement the remaining methods from your MeetingDataSource class
-  // ...
 
   @override
   DateTime getStartTime(int index) {
