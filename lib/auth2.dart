@@ -49,6 +49,7 @@ class _AuthpageState2 extends State<Authpage2> {
                 stream: FirebaseFirestore.instance
                     .collection('Profile' )
 
+
                     .snapshots(),
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                   //var data= snapshot.data!.docs[0];
@@ -80,6 +81,7 @@ class _AuthpageState2 extends State<Authpage2> {
                   }
 
                   if (snapshot.hasData && snapshot.data!.docs.length >= 1 && snap==true ) {
+                    snap=false;
 
 
 
