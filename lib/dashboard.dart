@@ -542,7 +542,7 @@ class _DashboardState extends State<Dashboard> {
                                       0),
                                   child: Image.asset(
 
-                                    "assets/images/poll.png",
+                                    "assets/images/poll_v.png",
                                     height: (100 / 872) * screenH,
                                     width: (100/ 392) * screenW,
                                   ),
