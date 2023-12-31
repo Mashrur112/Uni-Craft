@@ -26,7 +26,7 @@ class Craft extends StatelessWidget {
     // TODO: implement build
     // SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
 
-    return const GetMaterialApp(
+    return  GetMaterialApp(
       title: "Uni Craft",
       debugShowCheckedModeBanner: true,
       home: Authpage(),

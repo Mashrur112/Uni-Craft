@@ -16,6 +16,7 @@ class _CreatePollState extends State<CreatePoll> {
   final TextEditingController _option3Controller = TextEditingController();
 
   List<String> options = [];
+  List<String> poll_id = [];
 
   @override
   void dispose() {
@@ -112,7 +113,8 @@ class _CreatePollState extends State<CreatePoll> {
       polls.doc(widget.uid_admin).update({
         'caption': caption,
         'options': options,
-        'votes': List.filled(options.length, 0), // Initialize votes for each option
+        'votes': List.filled(options.length, '0'),
+        'poll_id':List.filled(0, '0'),
       }).then((value) {
         // Successfully added to Firestore
         print('Poll created with ID: ${widget.uid_admin}');
