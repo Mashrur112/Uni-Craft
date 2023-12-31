@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class TimePlannerPage extends StatefulWidget {
@@ -9,6 +10,8 @@ class TimePlannerPage extends StatefulWidget {
 class _TimePlannerPageState extends State<TimePlannerPage> {
   List<Meeting> meetings = [];
   Meeting? selectedMeeting;
+  Color selectedColor =
+      const Color.fromARGB(255, 243, 193, 189); // Default color
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +26,21 @@ class _TimePlannerPageState extends State<TimePlannerPage> {
             onPressed: () {
               _showAddMeetingDialog(context);
             },
-            child: Text("Add Meeting"),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text("Add Meeting"),
+                SizedBox(width: 10),
+                Container(
+                  width: 20,
+                  height: 20,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: selectedColor,
+                  ),
+                ),
+              ],
+            ),
           ),
           Expanded(
             child: GestureDetector(
@@ -151,6 +168,17 @@ class _TimePlannerPageState extends State<TimePlannerPage> {
                   style: TextStyle(color: Colors.black),
                 ),
               ),
+              SizedBox(height: 10),
+              Text('Select Color:'),
+              ElevatedButton(
+                onPressed: () {
+                  _openColorPicker(context);
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: selectedColor,
+                ),
+                child: Text('Choose Color'),
+              ),
             ],
           ),
           actions: [
@@ -180,7 +208,7 @@ class _TimePlannerPageState extends State<TimePlannerPage> {
                         selectedEndTime.hour,
                         selectedEndTime.minute,
                       ),
-                      const Color(0xFF0F8644),
+                      selectedColor,
                       false,
                     ),
                   );
@@ -188,6 +216,40 @@ class _TimePlannerPageState extends State<TimePlannerPage> {
                 Navigator.of(context).pop();
               },
               child: Text('Add'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _openColorPicker(BuildContext context) async {
+    Color pickerColor = selectedColor;
+
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Pick a color'),
+          content: SingleChildScrollView(
+            child: ColorPicker(
+              pickerColor: pickerColor,
+              onColorChanged: (Color color) {
+                pickerColor = color;
+              },
+              showLabel: true,
+              pickerAreaHeightPercent: 0.8,
+            ),
+          ),
+          actions: <Widget>[
+            ElevatedButton(
+              child: const Text('OK'),
+              onPressed: () {
+                setState(() {
+                  selectedColor = pickerColor;
+                });
+                Navigator.of(context).pop();
+              },
             ),
           ],
         );
