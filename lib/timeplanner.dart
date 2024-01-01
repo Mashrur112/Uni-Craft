@@ -77,7 +77,23 @@ class _TimePlannerPageState extends State<TimePlannerPage> {
                           Text('Event Name: ${selectedMeeting!.eventName}'),
                           Text('Start Time: ${selectedMeeting!.from}'),
                           Text('End Time: ${selectedMeeting!.to}'),
-                          // Add more details as needed
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  _showEditMeetingDialog(context);
+                                },
+                                child: Text('Edit'),
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  _deleteMeeting();
+                                },
+                                child: Text('Delete'),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
@@ -96,6 +112,7 @@ class _TimePlannerPageState extends State<TimePlannerPage> {
     DateTime selectedDate = DateTime.now();
     TimeOfDay selectedStartTime = TimeOfDay.now();
     TimeOfDay selectedEndTime = TimeOfDay.now();
+    String? selectedRecurrenceRule;
 
     await showDialog(
       context: context,
@@ -117,7 +134,7 @@ class _TimePlannerPageState extends State<TimePlannerPage> {
                     context: context,
                     initialDate: selectedDate,
                     firstDate: DateTime.now(),
-                    lastDate: DateTime(2101),
+                    lastDate: DateTime(2100),
                   );
                   if (pickedDate != null && pickedDate != selectedDate) {
                     setState(() {
@@ -179,6 +196,38 @@ class _TimePlannerPageState extends State<TimePlannerPage> {
                 ),
                 child: Text('Choose Color'),
               ),
+              SizedBox(height: 10),
+              Text('Select Recurrence Rule:'),
+              DropdownButton<String>(
+                value: selectedRecurrenceRule,
+                items: [
+                  DropdownMenuItem(
+                    child: Text('None'),
+                    value: null,
+                  ),
+                  DropdownMenuItem(
+                    child: Text('Daily'),
+                    value: 'FREQ=DAILY',
+                  ),
+                  DropdownMenuItem(
+                    child: Text('Weekly'),
+                    value: 'FREQ=WEEKLY',
+                  ),
+                  DropdownMenuItem(
+                    child: Text('Monthly'),
+                    value: 'FREQ=MONTHLY',
+                  ),
+                  DropdownMenuItem(
+                    child: Text('Yearly'),
+                    value: 'FREQ=YEARLY',
+                  ),
+                ],
+                onChanged: (String? value) {
+                  setState(() {
+                    selectedRecurrenceRule = value;
+                  });
+                },
+              ),
             ],
           ),
           actions: [
@@ -210,12 +259,183 @@ class _TimePlannerPageState extends State<TimePlannerPage> {
                       ),
                       selectedColor,
                       false,
+                      recurrenceRule: selectedRecurrenceRule,
                     ),
                   );
                 });
                 Navigator.of(context).pop();
               },
               child: Text('Add'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _showEditMeetingDialog(BuildContext context) async {
+    TextEditingController eventNameController =
+        TextEditingController(text: selectedMeeting!.eventName);
+    DateTime selectedDate = selectedMeeting!.from;
+    TimeOfDay selectedStartTime = TimeOfDay(
+        hour: selectedMeeting!.from.hour, minute: selectedMeeting!.from.minute);
+    TimeOfDay selectedEndTime = TimeOfDay(
+        hour: selectedMeeting!.to.hour, minute: selectedMeeting!.to.minute);
+    String? selectedRecurrenceRule = selectedMeeting!.recurrenceRule;
+
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Edit Meeting'),
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextField(
+                controller: eventNameController,
+                decoration: InputDecoration(labelText: 'Event Name'),
+              ),
+              SizedBox(height: 10),
+              Text('Select Date:'),
+              ElevatedButton(
+                onPressed: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: selectedDate,
+                    firstDate: DateTime.now(),
+                    lastDate: DateTime(2100),
+                  );
+                  if (pickedDate != null && pickedDate != selectedDate) {
+                    setState(() {
+                      selectedDate = pickedDate;
+                    });
+                  }
+                },
+                child: Text(
+                  'Choose Date',
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+              SizedBox(height: 10),
+              Text('Select Time Range:'),
+              ElevatedButton(
+                onPressed: () async {
+                  TimeOfDay? pickedStartTime = await showTimePicker(
+                    context: context,
+                    initialTime: selectedStartTime,
+                  );
+                  if (pickedStartTime != null &&
+                      pickedStartTime != selectedStartTime) {
+                    setState(() {
+                      selectedStartTime = pickedStartTime;
+                    });
+                  }
+                },
+                child: Text(
+                  'Choose Start Time',
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  TimeOfDay? pickedEndTime = await showTimePicker(
+                    context: context,
+                    initialTime: selectedEndTime,
+                  );
+                  if (pickedEndTime != null &&
+                      pickedEndTime != selectedEndTime) {
+                    setState(() {
+                      selectedEndTime = pickedEndTime;
+                    });
+                  }
+                },
+                child: Text(
+                  'Choose End Time',
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+              SizedBox(height: 10),
+              Text('Select Color:'),
+              ElevatedButton(
+                onPressed: () {
+                  _openColorPicker(context);
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: selectedMeeting!.background,
+                ),
+                child: Text('Choose Color'),
+              ),
+              SizedBox(height: 10),
+              Text('Select Recurrence Rule:'),
+              DropdownButton<String>(
+                value: selectedRecurrenceRule,
+                items: [
+                  DropdownMenuItem(
+                    child: Text('None'),
+                    value: null,
+                  ),
+                  DropdownMenuItem(
+                    child: Text('Daily'),
+                    value: 'FREQ=DAILY',
+                  ),
+                  DropdownMenuItem(
+                    child: Text('Weekly'),
+                    value: 'FREQ=WEEKLY',
+                  ),
+                  DropdownMenuItem(
+                    child: Text('Monthly'),
+                    value: 'FREQ=MONTHLY',
+                  ),
+                  DropdownMenuItem(
+                    child: Text('Yearly'),
+                    value: 'FREQ=YEARLY',
+                  ),
+                ],
+                onChanged: (String? value) {
+                  setState(() {
+                    selectedRecurrenceRule = value;
+                  });
+                },
+              ),
+            ],
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  meetings.remove(selectedMeeting);
+                  meetings.add(
+                    Meeting(
+                      eventNameController.text,
+                      DateTime(
+                        selectedDate.year,
+                        selectedDate.month,
+                        selectedDate.day,
+                        selectedStartTime.hour,
+                        selectedStartTime.minute,
+                      ),
+                      DateTime(
+                        selectedDate.year,
+                        selectedDate.month,
+                        selectedDate.day,
+                        selectedEndTime.hour,
+                        selectedEndTime.minute,
+                      ),
+                      selectedMeeting!.background,
+                      false,
+                      recurrenceRule: selectedRecurrenceRule,
+                    ),
+                  );
+                });
+                Navigator.of(context).pop();
+              },
+              child: Text('Save'),
             ),
           ],
         );
@@ -256,6 +476,13 @@ class _TimePlannerPageState extends State<TimePlannerPage> {
       },
     );
   }
+
+  void _deleteMeeting() {
+    setState(() {
+      meetings.remove(selectedMeeting);
+      selectedMeeting = null;
+    });
+  }
 }
 
 class MeetingDataSource extends CalendarDataSource {
@@ -287,14 +514,21 @@ class MeetingDataSource extends CalendarDataSource {
   bool isAllDay(int index) {
     return appointments![index].isAllDay;
   }
+
+  @override
+  String? getRecurrenceRule(int index) {
+    return appointments![index].recurrenceRule;
+  }
 }
 
 class Meeting {
-  Meeting(this.eventName, this.from, this.to, this.background, this.isAllDay);
+  Meeting(this.eventName, this.from, this.to, this.background, this.isAllDay,
+      {this.recurrenceRule});
 
   String eventName;
   DateTime from;
   DateTime to;
   Color background;
   bool isAllDay;
+  String? recurrenceRule;
 }
