@@ -14,6 +14,12 @@ class _TimePlannerPageState extends State<TimePlannerPage> {
       const Color.fromARGB(255, 243, 193, 189); // Default color
   String? selectedRecurrenceType;
   int? selectedRecurrenceCount;
+  String? _generateRecurrenceRule({String? type, int? count}) {
+    if (type != null && count != null) {
+      return '$type;COUNT=$count';
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +67,8 @@ class _TimePlannerPageState extends State<TimePlannerPage> {
                         if (details.targetElement ==
                             CalendarElement.appointment) {
                           setState(() {
-                            selectedMeeting = details.appointments![0];
+                            selectedMeeting =
+                                details.appointments![0] as Meeting;
                           });
                         }
                       },
@@ -558,21 +565,26 @@ class _TimePlannerPageState extends State<TimePlannerPage> {
   }
 
   void _deleteMeeting() {
+    if (selectedMeeting!.recurrenceRule != null) {
+      setState(() {
+        // If the selected meeting is a recurring meeting, delete all occurrences
+        meetings.removeWhere((meeting) =>
+            meeting.eventName == selectedMeeting!.eventName &&
+            meeting.recurrenceRule == selectedMeeting!.recurrenceRule);
+      });
+    } else {
+      setState(() {
+        meetings.remove(selectedMeeting);
+      });
+    }
+
     setState(() {
-      meetings.remove(selectedMeeting);
       selectedMeeting = null;
     });
   }
-
-  String? _generateRecurrenceRule({String? type, int? count}) {
-    if (type != null && count != null) {
-      return '$type;COUNT=$count';
-    }
-    return null;
-  }
 }
 
-class MeetingDataSource extends CalendarDataSource {
+class MeetingDataSource extends CalendarDataSource<Meeting> {
   MeetingDataSource(List<Meeting> source) {
     appointments = source;
   }
