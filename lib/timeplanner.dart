@@ -497,32 +497,69 @@ class _TimePlannerPageState extends State<TimePlannerPage> {
             ElevatedButton(
               onPressed: () {
                 setState(() {
-                  meetings.remove(selectedMeeting);
-                  meetings.add(
-                    Meeting(
-                      eventNameController.text,
-                      DateTime(
-                        selectedDate.year,
-                        selectedDate.month,
-                        selectedDate.day,
-                        selectedStartTime.hour,
-                        selectedStartTime.minute,
+                  if (selectedMeeting!.recurrenceRule != null) {
+                    // If it's a recurring meeting, remove all occurrences
+                    meetings.removeWhere((meeting) =>
+                        meeting.eventName == selectedMeeting!.eventName &&
+                        meeting.recurrenceRule ==
+                            selectedMeeting!.recurrenceRule);
+
+                    // Add the edited meeting
+                    meetings.add(
+                      Meeting(
+                        eventNameController.text,
+                        DateTime(
+                          selectedDate.year,
+                          selectedDate.month,
+                          selectedDate.day,
+                          selectedStartTime.hour,
+                          selectedStartTime.minute,
+                        ),
+                        DateTime(
+                          selectedDate.year,
+                          selectedDate.month,
+                          selectedDate.day,
+                          selectedEndTime.hour,
+                          selectedEndTime.minute,
+                        ),
+                        selectedMeeting!.background,
+                        false,
+                        recurrenceRule: _generateRecurrenceRule(
+                          type: selectedType,
+                          count: selectedCount,
+                        ),
                       ),
-                      DateTime(
-                        selectedDate.year,
-                        selectedDate.month,
-                        selectedDate.day,
-                        selectedEndTime.hour,
-                        selectedEndTime.minute,
+                    );
+                  } else {
+                    // If it's not a recurring meeting, remove only the selected meeting
+                    meetings.remove(selectedMeeting);
+                    // Add the edited meeting
+                    meetings.add(
+                      Meeting(
+                        eventNameController.text,
+                        DateTime(
+                          selectedDate.year,
+                          selectedDate.month,
+                          selectedDate.day,
+                          selectedStartTime.hour,
+                          selectedStartTime.minute,
+                        ),
+                        DateTime(
+                          selectedDate.year,
+                          selectedDate.month,
+                          selectedDate.day,
+                          selectedEndTime.hour,
+                          selectedEndTime.minute,
+                        ),
+                        selectedMeeting!.background,
+                        false,
+                        recurrenceRule: _generateRecurrenceRule(
+                          type: selectedType,
+                          count: selectedCount,
+                        ),
                       ),
-                      selectedMeeting!.background,
-                      false,
-                      recurrenceRule: _generateRecurrenceRule(
-                        type: selectedType,
-                        count: selectedCount,
-                      ),
-                    ),
-                  );
+                    );
+                  }
                 });
                 Navigator.of(context).pop();
               },
