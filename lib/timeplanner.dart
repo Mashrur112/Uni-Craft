@@ -14,6 +14,7 @@ class _TimePlannerPageState extends State<TimePlannerPage> {
       const Color.fromARGB(255, 243, 193, 189); // Default color
   String? selectedRecurrenceType;
   int? selectedRecurrenceCount;
+
   String? _generateRecurrenceRule({String? type, int? count}) {
     if (type != null && count != null) {
       return '$type;COUNT=$count';
@@ -299,7 +300,10 @@ class _TimePlannerPageState extends State<TimePlannerPage> {
                       ),
                       selectedColor,
                       false,
-                      recurrenceRule: _generateRecurrenceRule(),
+                      recurrenceRule: _generateRecurrenceRule(
+                        type: selectedRecurrenceType,
+                        count: selectedRecurrenceCount,
+                      ),
                     ),
                   );
                 });
