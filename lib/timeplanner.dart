@@ -12,6 +12,15 @@ class _TimePlannerPageState extends State<TimePlannerPage> {
   Meeting? selectedMeeting;
   Color selectedColor =
       const Color.fromARGB(255, 243, 193, 189); // Default color
+  String? selectedRecurrenceType;
+  int? selectedRecurrenceCount;
+
+  String? _generateRecurrenceRule({String? type, int? count}) {
+    if (type != null && count != null) {
+      return '$type;COUNT=$count';
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +68,8 @@ class _TimePlannerPageState extends State<TimePlannerPage> {
                         if (details.targetElement ==
                             CalendarElement.appointment) {
                           setState(() {
-                            selectedMeeting = details.appointments![0];
+                            selectedMeeting =
+                                details.appointments![0] as Meeting;
                           });
                         }
                       },
@@ -112,7 +122,6 @@ class _TimePlannerPageState extends State<TimePlannerPage> {
     DateTime selectedDate = DateTime.now();
     TimeOfDay selectedStartTime = TimeOfDay.now();
     TimeOfDay selectedEndTime = TimeOfDay.now();
-    String? selectedRecurrenceRule;
 
     await showDialog(
       context: context,
@@ -197,9 +206,9 @@ class _TimePlannerPageState extends State<TimePlannerPage> {
                 child: Text('Choose Color'),
               ),
               SizedBox(height: 10),
-              Text('Select Recurrence Rule:'),
+              Text('Select Recurrence Type:'),
               DropdownButton<String>(
-                value: selectedRecurrenceRule,
+                value: selectedRecurrenceType,
                 items: [
                   DropdownMenuItem(
                     child: Text('None'),
@@ -217,14 +226,46 @@ class _TimePlannerPageState extends State<TimePlannerPage> {
                     child: Text('Monthly'),
                     value: 'FREQ=MONTHLY',
                   ),
+                ],
+                onChanged: (String? type) {
+                  setState(() {
+                    selectedRecurrenceType = type;
+                  });
+                },
+              ),
+              SizedBox(height: 10),
+              Text('Select Recurrence Count:'),
+              DropdownButton<int>(
+                value: selectedRecurrenceCount,
+                items: [
                   DropdownMenuItem(
-                    child: Text('Yearly'),
-                    value: 'FREQ=YEARLY',
+                    child: Text('None'),
+                    value: null,
+                  ),
+                  DropdownMenuItem(
+                    child: Text('01'),
+                    value: 1,
+                  ),
+                  DropdownMenuItem(
+                    child: Text('02'),
+                    value: 2,
+                  ),
+                  DropdownMenuItem(
+                    child: Text('03'),
+                    value: 3,
+                  ),
+                  DropdownMenuItem(
+                    child: Text('04'),
+                    value: 4,
+                  ),
+                  DropdownMenuItem(
+                    child: Text('05'),
+                    value: 5,
                   ),
                 ],
-                onChanged: (String? value) {
+                onChanged: (int? count) {
                   setState(() {
-                    selectedRecurrenceRule = value;
+                    selectedRecurrenceCount = count;
                   });
                 },
               ),
@@ -259,7 +300,10 @@ class _TimePlannerPageState extends State<TimePlannerPage> {
                       ),
                       selectedColor,
                       false,
-                      recurrenceRule: selectedRecurrenceRule,
+                      recurrenceRule: _generateRecurrenceRule(
+                        type: selectedRecurrenceType,
+                        count: selectedRecurrenceCount,
+                      ),
                     ),
                   );
                 });
@@ -281,7 +325,19 @@ class _TimePlannerPageState extends State<TimePlannerPage> {
         hour: selectedMeeting!.from.hour, minute: selectedMeeting!.from.minute);
     TimeOfDay selectedEndTime = TimeOfDay(
         hour: selectedMeeting!.to.hour, minute: selectedMeeting!.to.minute);
-    String? selectedRecurrenceRule = selectedMeeting!.recurrenceRule;
+    String? selectedType;
+    int? selectedCount;
+
+    if (selectedMeeting!.recurrenceRule != null) {
+      List<String> ruleParts = selectedMeeting!.recurrenceRule!.split(';');
+      for (String part in ruleParts) {
+        if (part.startsWith('FREQ=')) {
+          selectedType = part;
+        } else if (part.startsWith('COUNT=')) {
+          selectedCount = int.tryParse(part.substring('COUNT='.length));
+        }
+      }
+    }
 
     await showDialog(
       context: context,
@@ -366,9 +422,9 @@ class _TimePlannerPageState extends State<TimePlannerPage> {
                 child: Text('Choose Color'),
               ),
               SizedBox(height: 10),
-              Text('Select Recurrence Rule:'),
+              Text('Select Recurrence Type:'),
               DropdownButton<String>(
-                value: selectedRecurrenceRule,
+                value: selectedType,
                 items: [
                   DropdownMenuItem(
                     child: Text('None'),
@@ -386,14 +442,46 @@ class _TimePlannerPageState extends State<TimePlannerPage> {
                     child: Text('Monthly'),
                     value: 'FREQ=MONTHLY',
                   ),
+                ],
+                onChanged: (String? type) {
+                  setState(() {
+                    selectedType = type;
+                  });
+                },
+              ),
+              SizedBox(height: 10),
+              Text('Select Recurrence Count:'),
+              DropdownButton<int>(
+                value: selectedCount,
+                items: [
                   DropdownMenuItem(
-                    child: Text('Yearly'),
-                    value: 'FREQ=YEARLY',
+                    child: Text('None'),
+                    value: null,
+                  ),
+                  DropdownMenuItem(
+                    child: Text('01'),
+                    value: 1,
+                  ),
+                  DropdownMenuItem(
+                    child: Text('02'),
+                    value: 2,
+                  ),
+                  DropdownMenuItem(
+                    child: Text('03'),
+                    value: 3,
+                  ),
+                  DropdownMenuItem(
+                    child: Text('04'),
+                    value: 4,
+                  ),
+                  DropdownMenuItem(
+                    child: Text('05'),
+                    value: 5,
                   ),
                 ],
-                onChanged: (String? value) {
+                onChanged: (int? count) {
                   setState(() {
-                    selectedRecurrenceRule = value;
+                    selectedCount = count;
                   });
                 },
               ),
@@ -409,29 +497,69 @@ class _TimePlannerPageState extends State<TimePlannerPage> {
             ElevatedButton(
               onPressed: () {
                 setState(() {
-                  meetings.remove(selectedMeeting);
-                  meetings.add(
-                    Meeting(
-                      eventNameController.text,
-                      DateTime(
-                        selectedDate.year,
-                        selectedDate.month,
-                        selectedDate.day,
-                        selectedStartTime.hour,
-                        selectedStartTime.minute,
+                  if (selectedMeeting!.recurrenceRule != null) {
+                    // If it's a recurring meeting, remove all occurrences
+                    meetings.removeWhere((meeting) =>
+                        meeting.eventName == selectedMeeting!.eventName &&
+                        meeting.recurrenceRule ==
+                            selectedMeeting!.recurrenceRule);
+
+                    // Add the edited meeting
+                    meetings.add(
+                      Meeting(
+                        eventNameController.text,
+                        DateTime(
+                          selectedDate.year,
+                          selectedDate.month,
+                          selectedDate.day,
+                          selectedStartTime.hour,
+                          selectedStartTime.minute,
+                        ),
+                        DateTime(
+                          selectedDate.year,
+                          selectedDate.month,
+                          selectedDate.day,
+                          selectedEndTime.hour,
+                          selectedEndTime.minute,
+                        ),
+                        selectedMeeting!.background,
+                        false,
+                        recurrenceRule: _generateRecurrenceRule(
+                          type: selectedType,
+                          count: selectedCount,
+                        ),
                       ),
-                      DateTime(
-                        selectedDate.year,
-                        selectedDate.month,
-                        selectedDate.day,
-                        selectedEndTime.hour,
-                        selectedEndTime.minute,
+                    );
+                  } else {
+                    // If it's not a recurring meeting, remove only the selected meeting
+                    meetings.remove(selectedMeeting);
+                    // Add the edited meeting
+                    meetings.add(
+                      Meeting(
+                        eventNameController.text,
+                        DateTime(
+                          selectedDate.year,
+                          selectedDate.month,
+                          selectedDate.day,
+                          selectedStartTime.hour,
+                          selectedStartTime.minute,
+                        ),
+                        DateTime(
+                          selectedDate.year,
+                          selectedDate.month,
+                          selectedDate.day,
+                          selectedEndTime.hour,
+                          selectedEndTime.minute,
+                        ),
+                        selectedMeeting!.background,
+                        false,
+                        recurrenceRule: _generateRecurrenceRule(
+                          type: selectedType,
+                          count: selectedCount,
+                        ),
                       ),
-                      selectedMeeting!.background,
-                      false,
-                      recurrenceRule: selectedRecurrenceRule,
-                    ),
-                  );
+                    );
+                  }
                 });
                 Navigator.of(context).pop();
               },
@@ -478,14 +606,26 @@ class _TimePlannerPageState extends State<TimePlannerPage> {
   }
 
   void _deleteMeeting() {
+    if (selectedMeeting!.recurrenceRule != null) {
+      setState(() {
+        // If the selected meeting is a recurring meeting, delete all occurrences
+        meetings.removeWhere((meeting) =>
+            meeting.eventName == selectedMeeting!.eventName &&
+            meeting.recurrenceRule == selectedMeeting!.recurrenceRule);
+      });
+    } else {
+      setState(() {
+        meetings.remove(selectedMeeting);
+      });
+    }
+
     setState(() {
-      meetings.remove(selectedMeeting);
       selectedMeeting = null;
     });
   }
 }
 
-class MeetingDataSource extends CalendarDataSource {
+class MeetingDataSource extends CalendarDataSource<Meeting> {
   MeetingDataSource(List<Meeting> source) {
     appointments = source;
   }
