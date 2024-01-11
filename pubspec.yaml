@@ -57,7 +57,7 @@ dependencies:
   intl: ^0.18.1
   syncfusion_flutter_calendar: ^24.1.43
   flutter_colorpicker: ^1.0.3
-
+  provider: ^6.1.1
 
 
 

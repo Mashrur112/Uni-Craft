@@ -14,6 +14,8 @@ import 'calendar.dart';
 import 'edit_Profile.dart';
 import 'members.dart';
 import 'notice.dart';
+import 'package:provider/provider.dart';
+import 'theme_provider.dart';
 
 class Dashboard extends StatefulWidget {
   var role,uid_admin;
@@ -39,6 +41,7 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     double screenW = MediaQuery.of(context).size.width;
     double screenH = MediaQuery.of(context).size.height;
 
@@ -75,6 +78,14 @@ class _DashboardState extends State<Dashboard> {
           backgroundColor: Color(0xff7a9e9f),
           elevation: 4,
           shadowColor: Colors.black,
+          actions: [
+            IconButton(
+              icon: Icon(Icons.dark_mode),
+              onPressed: () {
+                themeProvider.toggleTheme();
+              },
+            ),
+          ],
         ),
       ),
       body: Stack(
@@ -212,132 +223,79 @@ class _DashboardState extends State<Dashboard> {
                     ),
                     widget.role != "General member"
                         ? GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => members()));
+                      },
+                      child: Row(
+                        children: [
+                          SizedBox.fromSize(
+                            size: Size((40 / 392) * screenW,
+                                ((20 / 872) * screenH)),
+                          ),
+                          Container(
+                            height: (150 / 872) * screenH,
+                            width: (140 / 392) * screenW,
+                            decoration: BoxDecoration(
+                                color: Color(0xffb8d8d8),
+                                borderRadius: BorderRadius.circular(14),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Colors.black54,
+                                    offset: Offset(0, 7),
+                                    spreadRadius: 0,
+                                    blurRadius: 2,
+                                  )
+                                ]),
+                            child: Stack(children: [
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(
+                                    (0 / 392) * screenW,
+                                    (0 / 872) * screenH,
+                                    (12 / 392) * screenW,
+                                    0),
+                                child: Image.asset(
+                                  "assets/images/members.png",
+                                  height: (140 / 872) * screenH,
+                                  width: (140 / 392) * screenW,
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(
+                                    (35 / 392) * screenW,
+                                    (115 / 872) * screenH,
+                                    0,
+                                    0),
+                                child: Text(
+                                  "Members",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17),
+                                ),
+                              ),
+                            ]),
+                          ),
+                          SizedBox.fromSize(
+                            size: Size((40 / 392) * screenW,
+                                ((20 / 872) * screenH)),
+                          ),
+                          GestureDetector(
                             onTap: () {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => members()));
+                                      builder: (context) => notice()));
                             },
-                            child: Row(
-                              children: [
-                                SizedBox.fromSize(
-                                  size: Size((40 / 392) * screenW,
-                                      ((20 / 872) * screenH)),
-                                ),
-                                Container(
-                                  height: (150 / 872) * screenH,
-                                  width: (140 / 392) * screenW,
-                                  decoration: BoxDecoration(
-                                      color: Color(0xffb8d8d8),
-                                      borderRadius: BorderRadius.circular(14),
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          color: Colors.black54,
-                                          offset: Offset(0, 7),
-                                          spreadRadius: 0,
-                                          blurRadius: 2,
-                                        )
-                                      ]),
-                                  child: Stack(children: [
-                                    Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                          (0 / 392) * screenW,
-                                          (0 / 872) * screenH,
-                                          (12 / 392) * screenW,
-                                          0),
-                                      child: Image.asset(
-                                        "assets/images/members.png",
-                                        height: (140 / 872) * screenH,
-                                        width: (140 / 392) * screenW,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                          (35 / 392) * screenW,
-                                          (115 / 872) * screenH,
-                                          0,
-                                          0),
-                                      child: Text(
-                                        "Members",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 17),
-                                      ),
-                                    ),
-                                  ]),
-                                ),
-                                SizedBox.fromSize(
-                                  size: Size((40 / 392) * screenW,
-                                      ((20 / 872) * screenH)),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => notice()));
-                                  },
-                                  child: Center(
-                                    child: Container(
-                                      height: (150 / 872) * screenH,
-                                      width: (140 / 392) * screenW,
-                                      decoration: BoxDecoration(
-                                          color: Color(0xffb8d8d8),
-                                          borderRadius:
-                                              BorderRadius.circular(14),
-                                          boxShadow: const [
-                                            BoxShadow(
-                                              color: Colors.black54,
-                                              offset: Offset(0, 7),
-                                              spreadRadius: 0,
-                                              blurRadius: 2,
-                                            )
-                                          ]),
-                                      child: Stack(children: [
-                                        Padding(
-                                          padding: EdgeInsets.fromLTRB(
-                                              (10 / 392) * screenW,
-                                              (2 / 872) * screenH,
-                                              0,
-                                              0),
-                                          child: Image.asset(
-                                            "assets/images/Notice.png",
-                                            height: (115 / 872) * screenH,
-                                            width: (115 / 392) * screenW,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.fromLTRB(
-                                              (45 / 392) * screenW,
-                                              (115 / 872) * screenH,
-                                              0,
-                                              0),
-                                          child: Text(
-                                            "Notice",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 17),
-                                          ),
-                                        ),
-                                      ]),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          )
-                        : Row(
-                            children: [
-                              SizedBox.fromSize(
-                                size: Size((40 / 392) * screenW,
-                                    ((20 / 872) * screenH)),
-                              ),
-                              Container(
+                            child: Center(
+                              child: Container(
                                 height: (150 / 872) * screenH,
                                 width: (140 / 392) * screenW,
                                 decoration: BoxDecoration(
-                                    color: Colors.grey,
-                                    borderRadius: BorderRadius.circular(14),
+                                    color: Color(0xffb8d8d8),
+                                    borderRadius:
+                                    BorderRadius.circular(14),
                                     boxShadow: const [
                                       BoxShadow(
                                         color: Colors.black54,
@@ -347,101 +305,154 @@ class _DashboardState extends State<Dashboard> {
                                       )
                                     ]),
                                 child: Stack(children: [
-
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(
-                                        (0 / 392) * screenW,
-                                        (0 / 872) * screenH,
-                                        (12 / 392) * screenW,
+                                        (10 / 392) * screenW,
+                                        (2 / 872) * screenH,
+                                        0,
                                         0),
                                     child: Image.asset(
-                                      "assets/images/members.png",
-                                      height: (140 / 872) * screenH,
-                                      width: (140 / 392) * screenW,
+                                      "assets/images/Notice.png",
+                                      height: (115 / 872) * screenH,
+                                      width: (115 / 392) * screenW,
                                     ),
                                   ),
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(
-                                        (30 / 392) * screenW,
-                                        (116 / 872) * screenH,
+                                        (45 / 392) * screenW,
+                                        (115 / 872) * screenH,
                                         0,
                                         0),
                                     child: Text(
-                                      "Members",
+                                      "Notice",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 17),
                                     ),
-
                                   ),
-                                  Center(child: Icon(Icons.lock,size: 90,color: Colors.black.withOpacity(0.7),)),
-                                ]
-                                ),
+                                ]),
                               ),
-                              SizedBox.fromSize(
-                                size: Size((40 / 392) * screenW,
-                                    ((20 / 872) * screenH)),
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                        : Row(
+                      children: [
+                        SizedBox.fromSize(
+                          size: Size((40 / 392) * screenW,
+                              ((20 / 872) * screenH)),
+                        ),
+                        Container(
+                          height: (150 / 872) * screenH,
+                          width: (140 / 392) * screenW,
+                          decoration: BoxDecoration(
+                              color: Colors.grey,
+                              borderRadius: BorderRadius.circular(14),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.black54,
+                                  offset: Offset(0, 7),
+                                  spreadRadius: 0,
+                                  blurRadius: 2,
+                                )
+                              ]),
+                          child: Stack(children: [
+
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                  (0 / 392) * screenW,
+                                  (0 / 872) * screenH,
+                                  (12 / 392) * screenW,
+                                  0),
+                              child: Image.asset(
+                                "assets/images/members.png",
+                                height: (140 / 872) * screenH,
+                                width: (140 / 392) * screenW,
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => notice()));
-                                },
-                                child: Center(
-                                  child: Container(
-                                    height: (150 / 872) * screenH,
-                                    width: (140 / 392) * screenW,
-                                    decoration: BoxDecoration(
-                                        color: Color(0xffb8d8d8),
-                                        borderRadius: BorderRadius.circular(14),
-                                        boxShadow: const [
-                                          BoxShadow(
-                                            color: Colors.black54,
-                                            offset: Offset(0, 7),
-                                            spreadRadius: 0,
-                                            blurRadius: 2,
-                                          )
-                                        ]),
-                                    child: Stack(children: [
-                                      Padding(
-                                        padding: EdgeInsets.fromLTRB(
-                                            (10 / 392) * screenW,
-                                            (2 / 872) * screenH,
-                                            0,
-                                            0),
-                                        child: Image.asset(
-                                          "assets/images/Notice.png",
-                                          height: (115 / 872) * screenH,
-                                          width: (115 / 392) * screenW,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.fromLTRB(
-                                            (45 / 392) * screenW,
-                                            (115 / 872) * screenH,
-                                            0,
-                                            0),
-                                        child: Text(
-                                          "Notice",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 17),
-                                        ),
-                                      ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                  (30 / 392) * screenW,
+                                  (116 / 872) * screenH,
+                                  0,
+                                  0),
+                              child: Text(
+                                "Members",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17),
+                              ),
 
-
-                                    ]
-
-
-
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
+                            ),
+                            Center(child: Icon(Icons.lock,size: 90,color: Colors.black.withOpacity(0.7),)),
+                          ]
                           ),
+                        ),
+                        SizedBox.fromSize(
+                          size: Size((40 / 392) * screenW,
+                              ((20 / 872) * screenH)),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => notice()));
+                          },
+                          child: Center(
+                            child: Container(
+                              height: (150 / 872) * screenH,
+                              width: (140 / 392) * screenW,
+                              decoration: BoxDecoration(
+                                  color: Color(0xffb8d8d8),
+                                  borderRadius: BorderRadius.circular(14),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Colors.black54,
+                                      offset: Offset(0, 7),
+                                      spreadRadius: 0,
+                                      blurRadius: 2,
+                                    )
+                                  ]),
+                              child: Stack(children: [
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                      (10 / 392) * screenW,
+                                      (2 / 872) * screenH,
+                                      0,
+                                      0),
+                                  child: Image.asset(
+                                    "assets/images/Notice.png",
+                                    height: (115 / 872) * screenH,
+                                    width: (115 / 392) * screenW,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                      (45 / 392) * screenW,
+                                      (115 / 872) * screenH,
+                                      0,
+                                      0),
+                                  child: Text(
+                                    "Notice",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 17),
+                                  ),
+                                ),
+
+
+                              ]
+
+
+
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                     SizedBox.fromSize(
                       size: Size(
                           (40 / 392) * screenW, ((40 / 872) * screenH)),
@@ -689,12 +700,12 @@ class _DashboardState extends State<Dashboard> {
                                     Colors.white.withOpacity(0.2), // Adjust the opacity here (0.0 to 1.0)
                                     BlendMode.srcATop,
                                   ),
-                                child: CircleAvatar(
-                                  backgroundImage: CachedNetworkImageProvider(
-                                      profile_info[0]),
-                                  radius: 42,
-                                ),
-                              ),),
+                                  child: CircleAvatar(
+                                    backgroundImage: CachedNetworkImageProvider(
+                                        profile_info[0]),
+                                    radius: 42,
+                                  ),
+                                ),),
                               Positioned(
                                 bottom: (60 / 872) * screenH,
                                 left: (17 / 392) * screenW,
@@ -706,7 +717,7 @@ class _DashboardState extends State<Dashboard> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),),
-                                Positioned(
+                              Positioned(
                                   bottom: (40 / 872) * screenH,
                                   left: (17 / 392) * screenW,
                                   child: Text(
@@ -734,45 +745,45 @@ class _DashboardState extends State<Dashboard> {
                                     });
                                   },
                                   icon:
-                                      const Icon(Icons.remove_red_eye_rounded),
+                                  const Icon(Icons.remove_red_eye_rounded),
                                   color: Colors.white,
                                 ),
                               ),
                               view_more == true
                                   ? Positioned(
-                                      bottom: (110 / 872) * screenH,
-                                      left: (160 / 392) * screenW,
-                                      child: Text(
-                                        "Age: " + profile_info[2],
-                                        style: const TextStyle(
-                                            color: Colors.white, fontSize: 18,fontWeight: FontWeight.bold),
-                                      ),
-                                    )
+                                bottom: (110 / 872) * screenH,
+                                left: (160 / 392) * screenW,
+                                child: Text(
+                                  "Age: " + profile_info[2],
+                                  style: const TextStyle(
+                                      color: Colors.white, fontSize: 18,fontWeight: FontWeight.bold),
+                                ),
+                              )
                                   : const Center(),
                               view_more == true
                                   ? Positioned(
-                                      bottom: (200 / 872) * screenH,
-                                      left: (90 / 392) * screenW,
-                                      child: Text(
-                                        "Joining code: " + profile_info[6],
-                                        style: const TextStyle(
-                                            color: Colors.black, fontSize: 16,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    )
+                                bottom: (200 / 872) * screenH,
+                                left: (90 / 392) * screenW,
+                                child: Text(
+                                  "Joining code: " + profile_info[6],
+                                  style: const TextStyle(
+                                      color: Colors.black, fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              )
                                   : const Center(),
                               view_more == true
                                   ? Positioned(
-                                      bottom: (18 / 872) * screenH,
-                                      left: (16 / 392) * screenW,
-                                      child: Text(profile_info[4],
-                                          style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold)),
-                                    )
+                                bottom: (18 / 872) * screenH,
+                                left: (16 / 392) * screenW,
+                                child: Text(profile_info[4],
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold)),
+                              )
                                   : const Center(),
-                              ],
+                            ],
                           ),
                         ],
                       ),
