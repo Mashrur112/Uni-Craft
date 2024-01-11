@@ -36,8 +36,10 @@ class Craft extends StatelessWidget {
 
     return GetMaterialApp(
       title: "Uni Craft",
+
       debugShowCheckedModeBanner: true,
       home: Splash(),
+
     );
   }
 }

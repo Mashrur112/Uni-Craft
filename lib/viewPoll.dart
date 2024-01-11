@@ -64,23 +64,23 @@ class _ViewPollState extends State<ViewPoll> {
                     onPressed: () {
 
 
-                        if (poll == true) {
-                          poll = false;
+                      if (poll == true) {
+                        poll = false;
 
-                          poll_id.add(
-                              FirebaseAuth.instance.currentUser!.uid.toString());
+                        poll_id.add(
+                            FirebaseAuth.instance.currentUser!.uid.toString());
 
-                          int temp = int.parse(vote[0]);
-                          temp++;
-                          vote[0] = temp.toString();
-                          FirebaseFirestore.instance
-                              .collection("Profile")
-                              .doc(widget.uid)
-                              .update({
-                            'votes': vote,
-                            'poll_id': poll_id,
-                          });
-                        }
+                        int temp = int.parse(vote[0]);
+                        temp++;
+                        vote[0] = temp.toString();
+                        FirebaseFirestore.instance
+                            .collection("Profile")
+                            .doc(widget.uid)
+                            .update({
+                          'votes': vote,
+                          'poll_id': poll_id,
+                        });
+                      }
 
                     },
                     child: Text(
@@ -91,23 +91,23 @@ class _ViewPollState extends State<ViewPoll> {
                     onPressed: () {
 
 
-                        if (poll == true) {
-                          poll = false;
+                      if (poll == true) {
+                        poll = false;
 
-                          poll_id.add(
-                              FirebaseAuth.instance.currentUser!.uid.toString());
+                        poll_id.add(
+                            FirebaseAuth.instance.currentUser!.uid.toString());
 
-                          int temp = int.parse(vote[1]);
-                          temp++;
-                          vote[1] = temp.toString();
-                          FirebaseFirestore.instance
-                              .collection("Profile")
-                              .doc(widget.uid)
-                              .update({
-                            'votes': vote,
-                            'poll_id': poll_id,
-                          });
-                        }
+                        int temp = int.parse(vote[1]);
+                        temp++;
+                        vote[1] = temp.toString();
+                        FirebaseFirestore.instance
+                            .collection("Profile")
+                            .doc(widget.uid)
+                            .update({
+                          'votes': vote,
+                          'poll_id': poll_id,
+                        });
+                      }
 
                     },
                     child: Text(
@@ -119,23 +119,23 @@ class _ViewPollState extends State<ViewPoll> {
                     onPressed: () {
 
 
-                        if (poll == true) {
-                          poll = false;
+                      if (poll == true) {
+                        poll = false;
 
-                          poll_id.add(
-                              FirebaseAuth.instance.currentUser!.uid.toString());
+                        poll_id.add(
+                            FirebaseAuth.instance.currentUser!.uid.toString());
 
-                          int temp = int.parse(vote[2]);
-                          temp++;
-                          vote[2] = temp.toString();
-                          FirebaseFirestore.instance
-                              .collection("Profile")
-                              .doc(widget.uid)
-                              .update({
-                            'votes': vote,
-                            'poll_id': poll_id,
-                          });
-                        }
+                        int temp = int.parse(vote[2]);
+                        temp++;
+                        vote[2] = temp.toString();
+                        FirebaseFirestore.instance
+                            .collection("Profile")
+                            .doc(widget.uid)
+                            .update({
+                          'votes': vote,
+                          'poll_id': poll_id,
+                        });
+                      }
 
                     },
                     child: Text(
