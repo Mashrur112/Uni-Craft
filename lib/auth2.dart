@@ -43,9 +43,7 @@ class _AuthpageState2 extends State<Authpage2> {
                     .collection('Profile')
                     .snapshots(),
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
-                  }
+
 
                   final res = snapshot.data!.docs.toList();
                   for (var r in res) {
