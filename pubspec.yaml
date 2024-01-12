@@ -52,7 +52,7 @@ dependencies:
   video_player: ^2.4.7
   cached_network_image: ^3.3.0
   table_calendar: ^3.0.9
-
+  audioplayers: ^5.2.1
   permission_handler: ^11.1.0
   intl: ^0.18.1
   syncfusion_flutter_calendar: ^24.1.43

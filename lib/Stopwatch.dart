@@ -1,159 +1,136 @@
 import 'dart:async';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:uni_craft/laps_component.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class StopWatchView extends StatefulWidget {
-  const StopWatchView({Key? key}) : super(key: key);
+  const StopWatchView({super.key});
 
   @override
-  State<StopWatchView> createState() => _StopWatchViewState();
+  State<StopWatchView> createState() => _MyHomePageState();
 }
 
-class _StopWatchViewState extends State<StopWatchView> {
-  Stopwatch? _stopwatch;
-  String savedTime = "";
-  List saved = [];
+class _MyHomePageState extends State<StopWatchView> {
+  final Stopwatch stopwatch = Stopwatch();
+  late Timer timer;
+  String result = '00:00:00';
 
-  final List buttons = const ['Start', 'Stop', 'Reset', 'Save'];
-
-  @override
-  void initState() {
-    super.initState();
-    _stopwatch = Stopwatch();
-    Timer _timer = Timer.periodic(const Duration(milliseconds: 30), (timer) {
-      setState(() {});
+  void _start() {
+    // Timer.periodic() will call the callback function every 100 milliseconds
+    timer = Timer.periodic(const Duration(milliseconds: 30), (Timer t) {
+      setState(() {
+        // result in hh:mm:ss format
+        result =
+            '${stopwatch.elapsed.inMinutes.toString().padLeft(2, '0')}:${(stopwatch.elapsed.inSeconds % 60).toString().padLeft(2, '0')}:${(stopwatch.elapsed.inMilliseconds % 100).toString().padLeft(2, '0')}';
+      });
     });
+
+    stopwatch.start();
+  }
+
+  void _stop() {
+    timer.cancel();
+    stopwatch.stop();
+  }
+
+  void _reset() {
+    _stop();
+    stopwatch.reset();
+    result = '00:00:00';
+
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xff4f6367),
-      appBar: AppBar(
-        backgroundColor: const Color(0xff4f6367),
-        title: const Text(
-          "Stopwatch",
-          style: TextStyle(color: Colors.white, fontSize: 25),
-        ),
-        centerTitle: true,
-        elevation: 0,
-      ),
-      body: Padding(
-        padding:
-            const EdgeInsets.only(top: 70, left: 20, right: 20, bottom: 20),
-        child: SizedBox(
-          height: double.infinity,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text(
-                formatTime(_stopwatch!.elapsedMilliseconds),
-                style: const TextStyle(color: Colors.white, fontSize: 80),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              LapsComponent(savedTime: saved),
-              const SizedBox(
-                height: 30,
-              ),
-              Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      RawMaterialButton(
-                        onPressed: () {
-                          start();
-                        },
-                        shape: const StadiumBorder(
-                            side: BorderSide(color: Color(0xff4f6367))),
-                        child: const Text(
-                          "start",
-                          style: TextStyle(color: Colors.white, fontSize: 18),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      RawMaterialButton(
-                        onPressed: () {
-                          stop();
-                        },
-                        shape: const StadiumBorder(
-                            side: BorderSide(color: Color(0xff4f6367))),
-                        child: const Text(
-                          "stop",
-                          style: TextStyle(color: Colors.white, fontSize: 18),
-                        ),
-                      ),
-                    ],
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            Text(
+              'Stopwatch',
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineMedium
+                  ?.copyWith(color: Colors.white),
+            ),
+            const SizedBox(
+              height: 2,
+            ),
+            Stack(
+              children: [
+                Center(
+                  child: Transform.scale(
+                    scale: 6,
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                      backgroundColor: Colors.white70,
+                      value: stopwatch.isRunning ? null : 0,
+                      strokeWidth: 1,
+                    ),
                   ),
-                  const SizedBox(
-                    height: 10,
+                ),
+                Center(
+                  child: Text(
+                    result,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 30,
+                    ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      RawMaterialButton(
-                        onPressed: () {
-                          reset();
-                        },
-                        shape: const StadiumBorder(
-                            side: BorderSide(color: Color(0xff4f6367))),
-                        child: const Text(
-                          "reset",
-                          style: TextStyle(color: Colors.white, fontSize: 18),
-                        ),
-                      ),
-                      RawMaterialButton(
-                        onPressed: () {
-                          save();
-                        },
-                        shape: const StadiumBorder(
-                            side: BorderSide(color: Color(0xff4f6367))),
-                        child: const Text(
-                          "save",
-                          style: TextStyle(color: Colors.white, fontSize: 18),
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              )
-            ],
-          ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                IconButton(
+                  onPressed: () => AudioPlayer()
+                      .play(AssetSource('audio/peking_opera_drum_1.mp3')),
+                  tooltip: 'Buzz',
+                  icon: const Icon(
+                    CupertinoIcons.bell,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                ),
+                FloatingActionButton(
+                  backgroundColor: Color.fromARGB(255, 96, 156, 168),
+                  onPressed: () {
+                    setState(() {
+                      stopwatch.isRunning ? _stop() : _start();
+                    });
+                  },
+                  tooltip: 'Play / Pause',
+                  shape: const CircleBorder(),
+                  child: Icon(
+                    stopwatch.isRunning
+                        ? CupertinoIcons.pause_solid
+                        : CupertinoIcons.play_arrow_solid,
+                    color: Colors.white,
+                    size: 35,
+                  ),
+                ),
+                IconButton(
+                  onPressed: _reset,
+                  tooltip: 'reset',
+                  icon: const Icon(
+                    CupertinoIcons.repeat,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
   }
-
-  start() {
-    _stopwatch!.start();
-  }
-
-  stop() {
-    _stopwatch!.stop();
-  }
-
-  reset() {
-    _stopwatch!.reset();
-  }
-
-  save() {
-    setState(() {
-      savedTime = formatTime(_stopwatch!.elapsedMilliseconds);
-      saved.add(savedTime);
-    });
-  }
-}
-
-String formatTime(int milliseconds) {
-  // to return time in form '00:00:00'
-  var secs = milliseconds ~/ 1000;
-  var hours = (secs ~/ 3600).toString().padLeft(2, '0');
-  var minutes = ((secs % 3600) ~/ 60).toString().padLeft(2, '0');
-  var seconds = (secs % 60).toString().padLeft(2, '0');
-  return "$hours:$minutes:$seconds";
 }
