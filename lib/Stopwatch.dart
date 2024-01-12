@@ -128,7 +128,7 @@ class _CountDownTimerState extends State<CountDownTimer>
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
-                  color: Colors.lime,
+                  color: Colors.lightGreen,
                   height: controller.value * MediaQuery.of(context).size.height,
                 ),
               ),
@@ -219,15 +219,33 @@ class _CountDownTimerState extends State<CountDownTimer>
                       children: <Widget>[
                         FloatingActionButton.extended(
                           onPressed: isTimerRunning ? pauseTimer : startTimer,
+                          backgroundColor: Color.fromARGB(255, 96, 156, 168),
+                          foregroundColor: Colors.white,
                           icon: Icon(
                             isTimerRunning ? Icons.pause : Icons.play_arrow,
+                            color: Colors.white,
                           ),
-                          label: Text(isTimerRunning ? "Pause" : "Play"),
+                          label: Text(
+                            isTimerRunning ? "Pause" : "Play",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
                         FloatingActionButton.extended(
                           onPressed: resetTimer,
-                          icon: Icon(Icons.stop),
-                          label: Text("Stop"),
+                          backgroundColor: Color.fromARGB(255, 96, 168, 144),
+                          foregroundColor: Colors.white,
+                          icon: Icon(
+                            Icons.stop,
+                            color: Colors.white,
+                          ),
+                          label: Text(
+                            "Stop",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
                       ],
                     ),
