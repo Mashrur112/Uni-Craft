@@ -7,11 +7,15 @@ class TimePlannerPage extends StatefulWidget {
   _TimePlannerPageState createState() => _TimePlannerPageState();
 }
 
+
+
 class _TimePlannerPageState extends State<TimePlannerPage> {
   List<Meeting> meetings = [];
   Meeting? selectedMeeting;
   Color selectedColor =
       const Color.fromARGB(255, 243, 193, 189); // Default color
+
+
 
   @override
   Widget build(BuildContext context) {
