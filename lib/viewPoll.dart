@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:uni_craft/poll_graph.dart';
 
 class ViewPoll extends StatefulWidget {
   var uid;
@@ -156,6 +157,7 @@ class _ViewPollState extends State<ViewPoll> {
                           },
                           child: Text("Delete pole")),
                       ElevatedButton(onPressed: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>poll_graph(widget.uid)));
 
 
                       }, child: Text("view poll graph"))
