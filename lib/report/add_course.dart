@@ -11,9 +11,11 @@ class add_course extends StatefulWidget{
 }
 
 class _add_courseState extends State<add_course> {
-  var course_n=TextEditingController();
 
-  List course_name=[];
+  var course_n=TextEditingController();
+  //var twoDList = List<List>.generate(1, (i) => List<dynamic>.generate(3, (index) => null, growable: false), growable: false);
+
+  List course_name=<Map>[];
 
   var join_code;
 
@@ -56,7 +58,12 @@ class _add_courseState extends State<add_course> {
                             controller:course_n ,
                           ),
                           ElevatedButton(onPressed: (){
-                            course_name.add(course_n.text.toString());
+                            var map={};
+                            map['Name']=course_n.text.toString();
+                            map['quiz']=0;
+                            map['mid']=0;
+                            map['final']=0;
+                            course_name.add(map);
                             FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
                               'course':course_name,
                             });
@@ -88,12 +95,16 @@ class _add_courseState extends State<add_course> {
                     itemCount:course_name.length,
                     itemBuilder: (context,index){
                       return ElevatedButton(onPressed: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>marks_sec()));
+                        int idx=index;
+                        List temp=[];
+                        temp.add(course_name);
+                        temp.add(idx);
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>marks_sec(temp)));
 
                       }, child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(course_name[index]),
+                          Text(course_name[index]['Name']),
 
                           GestureDetector(
                               onTap: (){
