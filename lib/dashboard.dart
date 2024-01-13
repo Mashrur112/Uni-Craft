@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:uni_craft/chat.dart';
 import 'package:uni_craft/createPoll.dart';
+import 'package:uni_craft/report/add_course.dart';
 import 'package:uni_craft/study_Materials.dart';
 import 'package:uni_craft/viewPoll.dart';
 import 'package:uni_craft/widget/uploadFile.dart';
@@ -679,6 +680,67 @@ class _DashboardState extends State<Dashboard> {
                         ),
                       ],
                     ),
+                    SizedBox.fromSize(
+                      size: Size(
+                          (40 / 392) * screenW, ((40 / 872) * screenH)),
+                    ),
+                    Padding(
+                      padding:  EdgeInsets.fromLTRB(((40/392)*screenW), 0, 0, 0),
+                      child: GestureDetector(
+                        onTap: () {
+
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => add_course()));
+                        },
+                        child: Container(
+                          height: (150 / 872) * screenH,
+                          width: (140 / 392) * screenW,
+                          decoration: BoxDecoration(
+                              color: Color(0xffb8d8d8),
+                              borderRadius: BorderRadius.circular(14),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.black54,
+                                  offset: Offset(0, 7),
+                                  spreadRadius: 0,
+                                  blurRadius: 2,
+                                )
+                              ]),
+                          child: Stack(children: [
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                  (20 / 392) * screenW,
+                                  (14 / 872) * screenH,
+                                  0,
+                                  0),
+                              child: Image.asset(
+
+                                "assets/images/poll_v.png",
+                                height: (100 / 872) * screenH,
+                                width: (100/ 392) * screenW,
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                  (25 / 392) * screenW,
+                                  (115 / 872) * screenH,
+                                  0,
+                                  0),
+                              child: Text(
+                                "Report",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17),
+                              ),
+                            ),
+
+                          ]),
+                        ),
+                      ),
+                    ),
+
                   ],
                 ),
               ),
