@@ -2,9 +2,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:just_chat/components/chat_bubble.dart';
-import 'package:just_chat/services/chat/chat_service.dart';
-import 'components/my_text_field.dart';
+import 'package:uni_craft/chat/chat_service.dart';
+import 'package:uni_craft/components/chat_bubble.dart';
+
+import '../components/my_text_field.dart';
+
 
 class ChatPage extends StatefulWidget {
   final String receiverUserEmail;
