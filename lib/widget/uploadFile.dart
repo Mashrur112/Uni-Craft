@@ -3,12 +3,9 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 import 'package:path/path.dart';
 
 import '../Homepage.dart';
@@ -16,6 +13,8 @@ import '../api/firebase_api.dart';
 import 'button_widget.dart';
 
 class uploadFile extends StatefulWidget {
+  const uploadFile({super.key});
+
   @override
   State<uploadFile> createState() => _uploadFileState();
 }
@@ -39,10 +38,10 @@ class _uploadFileState extends State<uploadFile> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
-            Container(
+            SizedBox(
               height: 0,
               width: 0,
               child: StreamBuilder(
@@ -52,7 +51,7 @@ class _uploadFileState extends State<uploadFile> {
                   builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.hasData && upload_check == true) {
                       final res = snapshot.data!.docs.toList();
-                      for (var r in res!) {
+                      for (var r in res) {
                         if (r['uid'] == FirebaseAuth.instance.currentUser!.uid &&
                             r['role'] == "Administrator") {
                           int c = 0;
@@ -80,18 +79,18 @@ class _uploadFileState extends State<uploadFile> {
                           upload_check = false;
                         }
                       }
-                      return Text("Upload Successfull");
+                      return const Text("Upload Successfull");
                     }
                     if (snapshot.hasData && link_up == true) {
                       final res = snapshot.data!.docs.toList();
-                      for (var r in res!) {
+                      for (var r in res) {
                         if (r['uid'] == FirebaseAuth.instance.currentUser!.uid &&
                             r['role'] == "Administrator") {
                           int l = 0;
                           int l1 = l + 1;
                           while (true) {
                             try {
-                              if (r['link'+l.toString()] == "") {
+                              if (r['link$l'] == "") {
                                 break;
                               } else {
                                 l = l + 2;
@@ -106,22 +105,23 @@ class _uploadFileState extends State<uploadFile> {
                               .collection("Profile")
                               .doc(FirebaseAuth.instance.currentUser!.uid)
                               .update({
-                           'link'+ l.toString(): caption.text.toString(),
-                            'link'+l1.toString(): link.text.toString(),
+                           'link$l': caption.text.toString(),
+                            'link$l1': link.text.toString(),
                           });
                           link_up = false;
                         }
                       }
-                      return Text("Upload Successfull");
+                      return const Text("Upload Successfull");
                     }
 
-                    else
+                    else {
                       return Container();
+                    }
                   }),
             ),
             SizedBox.fromSize(size: Size(0, (((150 / 872) * screenH)))),
             Container(
-              padding: EdgeInsets.all(32),
+              padding: const EdgeInsets.all(32),
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -131,21 +131,21 @@ class _uploadFileState extends State<uploadFile> {
                       icon: Icons.attach_file,
                       onClicked: selectFile,
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Text(
                       fileName,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                           color: Colors.white),
                     ),
-                    SizedBox(height: 48),
+                    const SizedBox(height: 48),
                     ButtonWidget(
                       text: 'Upload File',
                       icon: Icons.cloud_upload_outlined,
                       onClicked: uploadFile,
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     task != null ? buildUploadStatus(task!) : Container(),
                     SizedBox.fromSize(size: Size(0, (41 / 872) * screenH)),
                     Form(
@@ -156,28 +156,29 @@ class _uploadFileState extends State<uploadFile> {
                               padding: EdgeInsets.symmetric(
                                   horizontal: (10 / 372) * screenW),
                               child: TextFormField(
-                                style: TextStyle(color: Colors.white),
+                                style: const TextStyle(color: Colors.white),
                                 controller: caption,
 
                                 decoration: InputDecoration(
                                   focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(14),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                         color: Colors.white70,
                                       )),
                                   enabledBorder: UnderlineInputBorder(
                                       borderRadius: BorderRadius.circular(1),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                         color: Colors.white70,
                                       )),
-                                  label: Text("Caption",
+                                  label: const Text("Caption",
                                       style: TextStyle(color: Colors.white70)),
                                 ),
                                 validator: (value) {
                                   if (value!.isEmpty) {
                                     return "Enter any caption ";
-                                  } else
+                                  } else {
                                     return null;
+                                  }
                                 },
                               ),
                             ),
@@ -187,28 +188,29 @@ class _uploadFileState extends State<uploadFile> {
                               padding: EdgeInsets.symmetric(
                                   horizontal: (10 / 372) * screenW),
                               child: TextFormField(
-                                style: TextStyle(color: Colors.white),
+                                style: const TextStyle(color: Colors.white),
                                 controller: link,
 
                                 decoration: InputDecoration(
                                   focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(14),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                         color: Colors.white70,
                                       )),
                                   enabledBorder: UnderlineInputBorder(
                                       borderRadius: BorderRadius.circular(1),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                         color: Colors.white70,
                                       )),
-                                  label: Text("Link",
+                                  label: const Text("Link",
                                       style: TextStyle(color: Colors.white70)),
                                 ),
                                 validator: (value) {
-                                  if (value!.isEmpty ||  !RegExp(r'[h]*[t]*[t]*[p]*[s]*[:]*[/]*[.]*(https://)').hasMatch(value!)) {
+                                  if (value!.isEmpty ||  !RegExp(r'[h]*[t]*[t]*[p]*[s]*[:]*[/]*[.]*(https://)').hasMatch(value)) {
                                     return "Enter link ";
-                                  } else
+                                  } else {
                                     return null;
+                                  }
                                 },
                               ),
                             ),
@@ -231,7 +233,7 @@ class _uploadFileState extends State<uploadFile> {
                             link_up=true;
                           });}
                         },
-                        child: Text(
+                        child: const Text(
                           "Upload link",
                           style: TextStyle(color: Colors.white),
                         )),
@@ -285,7 +287,7 @@ class _uploadFileState extends State<uploadFile> {
 
             return Text(
               '$percentage %',
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Colors.white),

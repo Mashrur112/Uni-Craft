@@ -1,15 +1,7 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/services.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:uni_craft/Homepage.dart';
 import 'package:uni_craft/auth-page.dart';
-import 'package:uni_craft/dependency_injection.dart';
 
-import 'firebase_options.dart';
 import 'package:flutter/material.dart';
-import 'package:uni_craft/LoginPage.dart';
 
-import 'main.dart';
 
 class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);
@@ -29,7 +21,7 @@ class _SplashState extends State<Splash> {
     await Future.delayed(const Duration(seconds: 2));
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => Authpage()),
+      MaterialPageRoute(builder: (context) => const Authpage()),
 
     );
   }

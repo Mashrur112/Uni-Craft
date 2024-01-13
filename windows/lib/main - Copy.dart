@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp( Craft());
+  runApp( const Craft());
 }
 class Craft extends StatelessWidget{
+  const Craft({super.key});
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -13,7 +15,7 @@ class Craft extends StatelessWidget{
       theme: ThemeData(
           primarySwatch: Colors.blue
       ),
-      home: Homepage(),
+      home: const Homepage(),
     );
 
   }
@@ -21,20 +23,22 @@ class Craft extends StatelessWidget{
 
 }
 class Homepage extends StatelessWidget{
+  const Homepage({super.key});
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
         appBar: AppBar(
-          title: Text("Dashboard"),
+          title: const Text("Dashboard"),
 
         ),
         body: Center(
           child: Container(
               width: 200,
               height: 200,
-              child: Center(child: Text("Mashrur")),
-              color: Colors.blue.shade50
+              color: Colors.blue.shade50,
+              child: const Center(child: Text("Mashrur"))
 
           ),
         )

@@ -3,24 +3,17 @@ import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:uni_craft/LoginPage.dart';
-import 'package:uni_craft/auth2.dart';
-import 'package:uni_craft/dashboard.dart';
 import 'package:uni_craft/resources/data.dart';
 import 'package:uni_craft/utils.dart';
-import 'package:xid/xid.dart';
 
-import 'auth-page.dart';
 
 final formKey = GlobalKey<FormState>();
 
 class Homepage extends StatefulWidget {
-  Homepage({super.key});
+  const Homepage({super.key});
   //final user=FirebaseAuth.instance.currentUser!;
 
   @override
@@ -39,7 +32,7 @@ class _HomepageState extends State<Homepage> {
   bool check_for_save = false;
   var x = 0;
   var data = 1;
-  var y=null;
+  var y;
   int c=0;
   var val_join=false;
   var join_check=false;
@@ -85,14 +78,14 @@ class _HomepageState extends State<Homepage> {
                 onPressed: () {
                   signout();
                 },
-                icon: Icon(Icons.logout))
+                icon: const Icon(Icons.logout))
           ],
         ),
         body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
-              Container(
+              SizedBox(
                 height: 0,
                 child: StreamBuilder(
                   stream: FirebaseFirestore.instance
@@ -103,7 +96,7 @@ class _HomepageState extends State<Homepage> {
                     data = 1;
 
                     data = snapshot.data!.docs.length;
-                    return Text("Null");
+                    return const Text("Null");
 
                     //data1=snapshot.data!.docs[0]['uid'];
 
@@ -117,14 +110,14 @@ class _HomepageState extends State<Homepage> {
                 ),
               ),
               SizedBox.fromSize(size: Size(0, (15 / 872) * screenH)),
-              Text(
+              const Text(
                 "Set up you profile!",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 25,
                     color: Colors.white),
               ),
-              SizedBox.fromSize(size: Size(0, 21 / 872) * screenH),
+              SizedBox.fromSize(size: const Size(0, 21 / 872) * screenH),
               Stack(
                 children: [
                   _image != null
@@ -132,7 +125,7 @@ class _HomepageState extends State<Homepage> {
                           radius: 51,
                           backgroundImage: MemoryImage(_image!),
                         )
-                      : CircleAvatar(
+                      : const CircleAvatar(
                           radius: 51,
                           backgroundImage:
                               AssetImage("assets/images/profile.png"),
@@ -143,7 +136,7 @@ class _HomepageState extends State<Homepage> {
                       right: -7,
                       child: IconButton(
                           onPressed: selectImage,
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.add_a_photo,
                             color: Colors.white,
                           ))),
@@ -164,7 +157,7 @@ class _HomepageState extends State<Homepage> {
                     value: items,
                     child: Text(
                       items,
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white),
                     ),
                   );
                 }).toList(),
@@ -184,30 +177,31 @@ class _HomepageState extends State<Homepage> {
                       padding: EdgeInsets.symmetric(
                           horizontal: (10 / 372) * screenW),
                       child: TextFormField(
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                         controller: name,
                         decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(14),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Colors.white70,
                               )),
                           enabledBorder: UnderlineInputBorder(
                               borderRadius: BorderRadius.circular(1),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Colors.white70,
                               )),
-                          label: Text(
+                          label: const Text(
                             "Name",
                             style: TextStyle(color: Colors.white70),
                           ),
                         ),
                         validator: (value) {
                           if (value!.isEmpty ||
-                              !RegExp(r'[a-zA-Z]').hasMatch(value!)) {
+                              !RegExp(r'[a-zA-Z]').hasMatch(value)) {
                             return "Enter Your name ";
-                          } else
+                          } else {
                             return null;
+                          }
                         },
                       ),
                     ),
@@ -216,29 +210,30 @@ class _HomepageState extends State<Homepage> {
                       padding: EdgeInsets.symmetric(
                           horizontal: (10 / 372) * screenW),
                       child: TextFormField(
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                         controller: age,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(14),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Colors.white70,
                               )),
                           enabledBorder: UnderlineInputBorder(
                               borderRadius: BorderRadius.circular(1),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Colors.white70,
                               )),
-                          label: Text("Age: ",
+                          label: const Text("Age: ",
                               style: TextStyle(color: Colors.white70)),
                         ),
                         validator: (value) {
                           if (value!.isEmpty ||
-                              !RegExp(r'[0-9]').hasMatch(value!)) {
+                              !RegExp(r'[0-9]').hasMatch(value)) {
                             return "Enter Your age ";
-                          } else
+                          } else {
                             return null;
+                          }
                         },
                       ),
                     ),
@@ -247,31 +242,32 @@ class _HomepageState extends State<Homepage> {
                       padding: EdgeInsets.symmetric(
                           horizontal: (10 / 372) * screenW),
                       child: TextFormField(
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                         controller: email,
                         decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(14),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Colors.white70,
                               )),
                           enabledBorder: UnderlineInputBorder(
                               borderRadius: BorderRadius.circular(1),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Colors.white70,
                               )),
-                          label: Text("Enter your Email address",
+                          label: const Text("Enter your Email address",
                               style: TextStyle(color: Colors.white70)),
                           hintText: email1,
                           hintStyle:
-                              TextStyle(color: Colors.white54, fontSize: 15),
+                              const TextStyle(color: Colors.white54, fontSize: 15),
                         ),
                         validator: (value) {
                           if (value!.isEmpty ||
-                              !RegExp(r'[@]*[.]').hasMatch(value!)) {
+                              !RegExp(r'[@]*[.]').hasMatch(value)) {
                             return "Enter Your Email address ";
-                          } else
+                          } else {
                             return null;
+                          }
                         },
                       ),
                     ),
@@ -280,69 +276,71 @@ class _HomepageState extends State<Homepage> {
                       padding: EdgeInsets.symmetric(
                           horizontal: (10 / 372) * screenW),
                       child: TextFormField(
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                         controller: roll,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(14),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Colors.white70,
                               )),
                           enabledBorder: UnderlineInputBorder(
                               borderRadius: BorderRadius.circular(1),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Colors.white70,
                               )),
-                          label: Text("Roll Number",
+                          label: const Text("Roll Number",
                               style: TextStyle(color: Colors.white70)),
                         ),
                         validator: (value) {
                           if (value!.isEmpty ||
-                              !RegExp(r'[0-9]').hasMatch(value!)) {
+                              !RegExp(r'[0-9]').hasMatch(value)) {
                             return "Enter Your roll number ";
-                          } else
+                          } else {
                             return null;
+                          }
                         },
                       ),
                     ),
                     SizedBox.fromSize(size: Size(0, (21 / 872) * screenH)),
                     dropdownvalue == "Administrator"
-                        ? Container(
+                        ? SizedBox(
                             height: (50 / 872) * screenH,
                             child: x != 0
                                 ? Text(
-                                    "Join code:" + x.toString(),
-                                    style: TextStyle(color: Colors.white),
+                                    "Join code:$x",
+                                    style: const TextStyle(color: Colors.white),
                                   )
-                                : Text("Please Generate Code",
+                                : const Text("Please Generate Code",
                                     style: TextStyle(color: Colors.white)),
                           )
                         : Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: (10 / 372) * screenW),
                             child: TextFormField(
-                              style: TextStyle(color: Colors.white),
+                              style: const TextStyle(color: Colors.white),
                               controller: join_code,
                               decoration: InputDecoration(
                                 focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(14),
-                                    borderSide: BorderSide(
+                                    borderSide: const BorderSide(
                                       color: Colors.white70,
                                     )),
                                 enabledBorder: UnderlineInputBorder(
                                     borderRadius: BorderRadius.circular(1),
-                                    borderSide: BorderSide(
+                                    borderSide: const BorderSide(
                                       color: Colors.white70,
                                     )),
-                                label: Text("joining code",
+                                label: const Text("joining code",
                                     style: TextStyle(color: Colors.white70)),
                               ),
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   return "Enter Your joining code  ";
-                                } else
+                                } else {
                                   return null;
+                                }
                               },
                             ),
                           ),
@@ -392,18 +390,18 @@ class _HomepageState extends State<Homepage> {
                       }
                      // Navigator.push(context, MaterialPageRoute(builder: (context)=>Authpage2()));
                      // print(c);
-                      return Center();
+                      return const Center();
 
 
                     }
                     else
                     {
 
-                      return Center();
+                      return const Center();
                     }
 
                   })
-                  : Center(),
+                  : const Center(),
               SizedBox.fromSize(size: Size(0, (21 / 872) * screenH)),
               dropdownvalue == "Administrator"
                   ? ElevatedButton(
@@ -414,8 +412,8 @@ class _HomepageState extends State<Homepage> {
 
 
                       },
-                      child: Text("Generate code"))
-                  : Center(),
+                      child: const Text("Generate code"))
+                  : const Center(),
 
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -470,7 +468,7 @@ class _HomepageState extends State<Homepage> {
                         showDialog(
                             context: context,
                             builder: (context) {
-                              return AlertDialog(
+                              return const AlertDialog(
                                 elevation: 51,
                                 shadowColor: Colors.black26,
                                 icon: Icon(Icons.warning_amber),
@@ -489,7 +487,7 @@ class _HomepageState extends State<Homepage> {
                         showDialog(
                         context: context,
                         builder: (context) {
-                        return AlertDialog(
+                        return const AlertDialog(
                         elevation: 51,
                         shadowColor: Colors.black26,
                         icon: Icon(Icons.warning_amber),
@@ -512,7 +510,7 @@ class _HomepageState extends State<Homepage> {
                         showDialog(
                             context: context,
                             builder: (context) {
-                              return AlertDialog(
+                              return const AlertDialog(
                                 elevation: 51,
                                 shadowColor: Colors.black26,
                                 icon: Icon(Icons.warning_amber),
@@ -529,7 +527,7 @@ class _HomepageState extends State<Homepage> {
                           showDialog(
                               context: context,
                               builder: (context) {
-                                return AlertDialog(
+                                return const AlertDialog(
                                   elevation: 51,
                                   shadowColor: Colors.black26,
                                   icon: Icon(Icons.warning_amber),
@@ -585,7 +583,7 @@ class _HomepageState extends State<Homepage> {
                       }
                     }
                   },
-                  child: Text(
+                  child: const Text(
                     "Save Profile",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   )),

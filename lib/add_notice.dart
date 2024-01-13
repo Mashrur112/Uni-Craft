@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'Homepage.dart';
 
 class add_notice extends StatefulWidget {
+  const add_notice({super.key});
+
   @override
   State<add_notice> createState() => _add_noticeState();
 }
@@ -47,14 +48,14 @@ class _add_noticeState extends State<add_notice> {
                           int t = c + 1;
                           while(true) {
                             try {
-                              if (r['notice' + c.toString()]=="" ) {
+                              if (r['notice$c']=="" ) {
 
                                 FirebaseFirestore.instance
                                     .collection("Profile")
                                     .doc(FirebaseAuth.instance.currentUser!.uid)
                                     .update({
-                                  'notice' + c.toString():caption.text.toString(),
-                                  'notice' + t.toString(): text.text.toString(),
+                                  'notice$c':caption.text.toString(),
+                                  'notice$t': text.text.toString(),
                                 });
 
                                 strm_opn=false;
@@ -71,8 +72,8 @@ class _add_noticeState extends State<add_notice> {
                                   .collection("Profile")
                                   .doc(FirebaseAuth.instance.currentUser!.uid)
                                   .update({
-                                'notice' + c.toString():caption.text.toString(),
-                                'notice' + t.toString(): text.text.toString(),
+                                'notice$c':caption.text.toString(),
+                                'notice$t': text.text.toString(),
                               });
                               strm_opn=false;
                               break;
@@ -83,7 +84,7 @@ class _add_noticeState extends State<add_notice> {
 
                       }
                     }
-                    return Center();
+                    return const Center();
                   }),
 
               Form(
@@ -92,7 +93,7 @@ class _add_noticeState extends State<add_notice> {
                   children: [
                     SizedBox.fromSize(size: Size(0,(100/872)*screenH),),
                     TextFormField(
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white),
                       controller: caption,
                       minLines: 2,
                       maxLines: 3,
@@ -101,8 +102,9 @@ class _add_noticeState extends State<add_notice> {
                         if (value!.isEmpty ||
                             !RegExp(r'[a-zA-Z]').hasMatch(value)) {
                           return "Enter any caption ";
-                        } else
+                        } else {
                           return null;
+                        }
                       },
                       onChanged: (value) {
                         setState(() {
@@ -112,27 +114,27 @@ class _add_noticeState extends State<add_notice> {
                       maxLength: 80,
                       maxLengthEnforcement: MaxLengthEnforcement.enforced,
                       decoration: InputDecoration(
-                          label: Text(
+                          label: const Text(
                             'Caption',
                             style: TextStyle(color: Colors.grey),
                           ),
-                          counterStyle: TextStyle(
+                          counterStyle: const TextStyle(
                             color: Colors.white,
                           ),
                           counterText: 'Remaining: $count',
                           floatingLabelAlignment: FloatingLabelAlignment.start,
                           alignLabelWithHint: true,
-                          errorBorder: OutlineInputBorder(
+                          errorBorder: const OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Colors.grey,
                             ),
                           ),
-                          focusedBorder: OutlineInputBorder(
+                          focusedBorder: const OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Colors.grey,
                             ),
                           ),
-                          enabledBorder: OutlineInputBorder(
+                          enabledBorder: const OutlineInputBorder(
                               borderSide: BorderSide(
                             color: Colors.grey,
                           ))),
@@ -141,7 +143,7 @@ class _add_noticeState extends State<add_notice> {
                       size: Size(0, ((10 / 872)) * screenH),
                     ),
                     TextFormField(
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white),
                       controller: text,
                       minLines: 18,
                       maxLines: 20,
@@ -149,7 +151,7 @@ class _add_noticeState extends State<add_notice> {
 
 
 
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           label: Text(
                             'Text..',
                             style: TextStyle(color: Colors.grey, fontSize: 20),
@@ -172,10 +174,11 @@ class _add_noticeState extends State<add_notice> {
                           ))),
                       validator: (value){
                         if (value!.isEmpty ||
-                            !RegExp(r'[a-zA-Z]').hasMatch(value!)) {
+                            !RegExp(r'[a-zA-Z]').hasMatch(value)) {
                           return "Enter any caption ";
-                        } else
+                        } else {
                           return null;
+                        }
 
 
                       },
@@ -192,7 +195,7 @@ class _add_noticeState extends State<add_notice> {
 
 
 
-                    }, child: Text("Publish")),
+                    }, child: const Text("Publish")),
                   ],
                 ),
               ),

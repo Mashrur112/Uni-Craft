@@ -1,14 +1,8 @@
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:uni_craft/Forgotpass.dart';
-import 'package:uni_craft/main.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:uni_craft/Homepage.dart';
-import 'package:uni_craft/auth-page.dart';
 import 'package:uni_craft/register.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
 
 class Login extends StatefulWidget {
  const Login({super.key});
@@ -17,8 +11,8 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  bool _isLoggedIn = false;
-  Map _user={};
+  final bool _isLoggedIn = false;
+  final Map _user={};
 
 
 
@@ -38,7 +32,7 @@ class _LoginState extends State<Login> {
   void reg() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => Register()),
+      MaterialPageRoute(builder: (context) => const Register()),
     );
   }
 
@@ -88,12 +82,12 @@ class _LoginState extends State<Login> {
             return AlertDialog(
               elevation: 51,
               shadowColor: Colors.black26,
-              icon: Icon(Icons.warning_amber),
+              icon: const Icon(Icons.warning_amber),
               iconColor: Colors.red,
               backgroundColor: Colors.blueGrey,
               title: Text(
                 e.code,
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               ),
             );
           });
@@ -145,7 +139,7 @@ class _LoginState extends State<Login> {
     return Scaffold(
       //resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
@@ -206,7 +200,7 @@ class _LoginState extends State<Login> {
                             ((8 / 872.72) * screenH),
                             (5 / 392.72) * screenW,
                             (((8 / 872.72) * screenH))),
-                        child: Icon(Icons.email, color: Colors.black),
+                        child: const Icon(Icons.email, color: Colors.black),
                       ),
                       filled: true,
                       fillColor: const Color(0xff70ade6),
@@ -257,7 +251,7 @@ class _LoginState extends State<Login> {
                       prefixIcon: Padding(
                         padding: EdgeInsets.fromLTRB((10 / 392.72) * screenW, 0,
                             (3 / 392.72) * screenW, 0),
-                        child: Icon(
+                        child: const Icon(
                           Icons.lock,
                           color: Colors.black,
                         ),
@@ -268,10 +262,11 @@ class _LoginState extends State<Login> {
                         child: IconButton(
                             onPressed: () {
                               setState(() {
-                                if (is_obs)
+                                if (is_obs) {
                                   is_obs = false;
-                                else
+                                } else {
                                   is_obs = true;
+                                }
                               });
                             },
                             icon: const Icon(
@@ -314,7 +309,7 @@ class _LoginState extends State<Login> {
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>Forgot_pass()));
 
               },
-                      child: Text(
+                      child: const Text(
                         "Forgot Password?",
                         style: TextStyle(
                           color: Color(0xffd42020),
@@ -369,7 +364,7 @@ class _LoginState extends State<Login> {
                     EdgeInsets.symmetric(horizontal: (19 / 392.72) * screenW),
                 child: Row(
                   children: [
-                    Expanded(
+                    const Expanded(
                         child: Divider(
                       thickness: 1,
                       color: Colors.white70,
@@ -377,7 +372,7 @@ class _LoginState extends State<Login> {
                     Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: (7 / 392.72) * screenW),
-                      child: Text(
+                      child: const Text(
                         "Or continue with",
                         style: TextStyle(
                           color: Colors.white,
@@ -385,7 +380,7 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                     ),
-                    Expanded(
+                    const Expanded(
                         child: Divider(
                       thickness: 1,
                       color: Colors.white70,

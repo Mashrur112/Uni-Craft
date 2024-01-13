@@ -150,7 +150,7 @@ class _DashboardState extends State<Dashboard> {
           GestureDetector(
             onTap: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ChatApp()));
+                  MaterialPageRoute(builder: (context) => const ChatApp()));
             },
             child: Center(
               child: Container(
@@ -181,7 +181,7 @@ class _DashboardState extends State<Dashboard> {
           GestureDetector(
             onTap: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Calendar()));
+                  MaterialPageRoute(builder: (context) => const Calendar()));
             },
             child: Center(
               child: Container(

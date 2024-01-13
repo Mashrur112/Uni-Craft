@@ -1,18 +1,15 @@
-import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
-import 'package:video_player/video_player.dart';
 
 
 
 class study_Materials extends StatefulWidget {
+  const study_Materials({super.key});
+
   @override
   State<study_Materials> createState() => _study_MaterialsState();
 }
@@ -52,11 +49,11 @@ class _study_MaterialsState extends State<study_Materials> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Study Materials"),
+          title: const Text("Study Materials"),
         ),
         body: Column(
           children: [
-            TabBar(tabs: [
+            const TabBar(tabs: [
               Tab(text: "Media", icon: Icon(Icons.photo)),
               Tab(text: "File", icon: Icon(Icons.file_copy_sharp)),
               Tab(text: "Link", icon: Icon(Icons.link)),
@@ -79,7 +76,7 @@ class _study_MaterialsState extends State<study_Materials> {
                           img_lidx = 0;
 
                           final res = snapshot.data!.docs.toList();
-                          for (var r in res!) {
+                          for (var r in res) {
                             if (r['uid'] ==
                                 FirebaseAuth.instance.currentUser!.uid) {
                               join_code = r['code'];
@@ -88,17 +85,16 @@ class _study_MaterialsState extends State<study_Materials> {
                               break;
                             }
                           }
-                          for (var r in res!) {
+                          for (var r in res) {
                             if (r['code'] == join_code.toString() &&
                                 r['role'] == "Administrator") {
                               //print(count1);
 
                               while (true) {
                                 try {
-                                  if (r[c.toString()] == "")
-                                  break;
-
-                                  else{
+                                  if (r[c.toString()] == "") {
+                                    break;
+                                  } else{
 
 
                                     link.insert(
@@ -140,23 +136,24 @@ class _study_MaterialsState extends State<study_Materials> {
                                   break;
                                 }
                               }
-                            } else
+                            } else {
                               count++;
+                            }
                           }
                         }
                         if(del_1==true)
                         {
-                          int idx_link=index3;
+                          int idxLink=index3;
                           final res=snapshot.data!.docs.toList();
-                          for(var r in res!) {
+                          for(var r in res) {
                             if (r['uid'] == FirebaseAuth.instance.currentUser!.uid) {
 
                               while(true){
                                 print(index3);
                                 print(count1);
-                                if(index3==count1)
+                                if(index3==count1) {
                                   break;
-                                else{
+                                } else{
 
                                   if(index3==(count1-1)) {
                                     FirebaseFirestore.instance.collection("Profile").doc(
@@ -167,11 +164,11 @@ class _study_MaterialsState extends State<study_Materials> {
                                     break;
                                   }
                                   else{
-                                    idx_link=idx_link+1;
+                                    idxLink=idxLink+1;
 
                                     FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
-                                      (2*index3).toString():link[idx_link].toString(),
-                                      ((2*index3)+1).toString():name[idx_link].toString(),
+                                      (2*index3).toString():link[idxLink].toString(),
+                                      ((2*index3)+1).toString():name[idxLink].toString(),
                                     });
 
                                     index3++;}}
@@ -189,7 +186,7 @@ class _study_MaterialsState extends State<study_Materials> {
                               0, ((50 / 872) * screenH), 0, 0),
                           child: GridView.builder(
                             gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
+                                const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 3,
                               mainAxisSpacing: 5,
                               crossAxisSpacing: 0,
@@ -198,21 +195,22 @@ class _study_MaterialsState extends State<study_Materials> {
 
                             scrollDirection: Axis.vertical,
                             shrinkWrap: false,
-                            physics: BouncingScrollPhysics(),
+                            physics: const BouncingScrollPhysics(),
                             //padding: EdgeInsets.all(21),
                             itemCount: img_lidx,
                             itemBuilder: (BuildContext context, int index) {
                               return Column(
                                 children: [
-                                  Container(
+                                  SizedBox(
                                     height: (150 / 872) * screenH,
                                     child: GestureDetector(
                                       onTap: () async {
                                         final url =
                                             Uri.parse(image_link[index]);
-                                        if (!await launchUrl(url))
+                                        if (!await launchUrl(url)) {
                                           throw Exception(
                                               'Could not launch $url');
+                                        }
                                       },
 
                                       child: CachedNetworkImage(
@@ -222,7 +220,7 @@ class _study_MaterialsState extends State<study_Materials> {
                                             Center(
                                                 child: Text(image_name[index])),
                                         errorWidget: (context, url, error) =>
-                                            Icon(Icons.error),
+                                            const Icon(Icons.error),
                                       ),
 
                                       // Text(
@@ -260,7 +258,7 @@ class _study_MaterialsState extends State<study_Materials> {
                                             //             delete_file(name, link,
                                             //                 index1, count1)));
                                           },
-                                          child: Text("Delete"))
+                                          child: const Text("Delete"))
                                       : Container(),
                                 ],
                               );
@@ -285,7 +283,7 @@ class _study_MaterialsState extends State<study_Materials> {
                           file_lidx = 0;
 
                           final res = snapshot.data!.docs.toList();
-                          for (var r in res!) {
+                          for (var r in res) {
                             if (r['uid'] ==
                                 FirebaseAuth.instance.currentUser!.uid) {
                               join_code = r['code'];
@@ -294,16 +292,16 @@ class _study_MaterialsState extends State<study_Materials> {
                               break;
                             }
                           }
-                          for (var r in res!) {
+                          for (var r in res) {
                             if (r['code'] == join_code.toString() &&
                                 r['role'] == "Administrator") {
                               //print(count1);
 
                               while (true) {
                                 try {
-                                  if (r[c.toString()] == "")
+                                  if (r[c.toString()] == "") {
                                     break;
-                                  else {
+                                  } else {
 
                                     if (!name[count1].contains('.jpg') &&
                                         !name[count1].contains('.jpeg') &&
@@ -334,23 +332,24 @@ class _study_MaterialsState extends State<study_Materials> {
                                   break;
                                 }
                               }
-                            } else
+                            } else {
                               count++;
+                            }
                           }
                         }
                         if(del_2==true)
                         {
-                          int idx_link=index3;
+                          int idxLink=index3;
                           final res=snapshot.data!.docs.toList();
-                          for(var r in res!) {
+                          for(var r in res) {
                             if (r['uid'] == FirebaseAuth.instance.currentUser!.uid) {
 
                               while(true){
                                 print(index3);
                                 print(count1);
-                                if(index3==count1)
+                                if(index3==count1) {
                                   break;
-                                else{
+                                } else{
 
                                   if(index3==(count1-1)) {
                                     FirebaseFirestore.instance.collection("Profile").doc(
@@ -361,11 +360,11 @@ class _study_MaterialsState extends State<study_Materials> {
                                     break;
                                   }
                                   else{
-                                    idx_link=idx_link+1;
+                                    idxLink=idxLink+1;
 
                                     FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
-                                      (2*index3).toString():link[idx_link].toString(),
-                                      ((2*index3)+1).toString():name[idx_link].toString(),
+                                      (2*index3).toString():link[idxLink].toString(),
+                                      ((2*index3)+1).toString():name[idxLink].toString(),
                                     });
 
                                     index3++;}}
@@ -383,21 +382,22 @@ class _study_MaterialsState extends State<study_Materials> {
 
                             scrollDirection: Axis.vertical,
                             shrinkWrap: false,
-                            physics: BouncingScrollPhysics(),
+                            physics: const BouncingScrollPhysics(),
                             //padding: EdgeInsets.all(21),
                             itemCount: file_lidx,
                             itemBuilder: (BuildContext context, int index) {
                               return Column(
                                 children: [
-                                  Container(
+                                  SizedBox(
                                     height: (40 / 872) * screenH,
                                     child: GestureDetector(
                                       onTap: () async {
                                         final url =
                                             Uri.parse(file_link[index]);
-                                        if (!await launchUrl(url))
+                                        if (!await launchUrl(url)) {
                                           throw Exception(
                                               'Could not launch $url');
+                                        }
                                       },
 
                                       child: Text(file_name[index]),
@@ -438,7 +438,7 @@ class _study_MaterialsState extends State<study_Materials> {
                                             //             delete_file(name, link,
                                             //                 index1, count1)));
                                           },
-                                          child: Text("Delete"))
+                                          child: const Text("Delete"))
                                       : Container(),
                                 ],
                               );
@@ -462,7 +462,7 @@ class _study_MaterialsState extends State<study_Materials> {
                           count3 = 0;
 
                           final res = snapshot.data!.docs.toList();
-                          for (var r in res!) {
+                          for (var r in res) {
                             if (r['uid'] ==
                                 FirebaseAuth.instance.currentUser!.uid) {
                               join_code = r['code'];
@@ -471,7 +471,7 @@ class _study_MaterialsState extends State<study_Materials> {
                               break;
                             }
                           }
-                          for (var r in res!) {
+                          for (var r in res) {
                             if (r['code'] == join_code.toString() &&
                                 r['role'] == "Administrator") {
 
@@ -480,17 +480,17 @@ class _study_MaterialsState extends State<study_Materials> {
                               while (true) {
                                 try {
 
-                                  if (r['link'+l.toString()] == "")
+                                  if (r['link$l'] == "") {
                                     break;
-                                  else {
+                                  } else {
 
                                     link_cap.insert(
                                         count2,
-                                        snapshot.data!.docs[count3]['link'+l.toString()]
+                                        snapshot.data!.docs[count3]['link$l']
                                             .toString());
                                     link_l.insert(
                                         count2,
-                                        snapshot.data!.docs[count3]['link'+l1.toString()]
+                                        snapshot.data!.docs[count3]['link$l1']
                                             .toString());
 
                                     count2++;
@@ -501,38 +501,39 @@ class _study_MaterialsState extends State<study_Materials> {
                                   break;
                                 }
                               }
-                            } else
+                            } else {
                               count3++;
+                            }
                           }
                         }
                         if(del_3==true)
                         {
-                          int idx_link=index3;
+                          int idxLink=index3;
                           final res=snapshot.data!.docs.toList();
-                          for(var r in res!) {
+                          for(var r in res) {
                             if (r['uid'] == FirebaseAuth.instance.currentUser!.uid) {
 
                               while(true){
                                 // print(widget.index);
                                 // print(widget.count1);
-                                if(index3==count2)
+                                if(index3==count2) {
                                   break;
-                                else{
+                                } else{
 
                                   if(index3==(count2-1)) {
                                     FirebaseFirestore.instance.collection("Profile").doc(
                                         FirebaseAuth.instance.currentUser!.uid).update({
-                                      'link'+(2*index3).toString(): "",
-                                      'link'+((2*index3) + 1).toString(): "",
+                                      'link${2*index3}': "",
+                                      'link${(2*index3) + 1}': "",
                                     });
                                     break;
                                   }
                                   else{
-                                    idx_link=idx_link+1;
+                                    idxLink=idxLink+1;
 
                                     FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
-                                      'link'+ (2*index3).toString():link_cap[idx_link].toString(),
-                                      'link'+((2*index3)+1).toString():link_l[idx_link].toString(),
+                                      'link${2*index3}':link_cap[idxLink].toString(),
+                                      'link${(2*index3)+1}':link_l[idxLink].toString(),
                                     });
 
                                     index3++;}}
@@ -550,23 +551,23 @@ class _study_MaterialsState extends State<study_Materials> {
 
                             scrollDirection: Axis.vertical,
                             shrinkWrap: false,
-                            physics: BouncingScrollPhysics(),
+                            physics: const BouncingScrollPhysics(),
                             //padding: EdgeInsets.all(21),
                             itemCount: count2,
                             itemBuilder: (BuildContext context, int index) {
                               return Column(
                                 children: [
-                                  Container(
+                                  SizedBox(
                                     height: (70 / 872) * screenH,
                                     child: GestureDetector(
                                       onTap: () async {
                                         final url =
                                         Uri.parse(link_l[index]);
 
-                                        if (!await launchUrl(url))
-
+                                        if (!await launchUrl(url)) {
                                           throw Exception(
                                               'Could not launch $url');
+                                        }
                                       },
 
                                       child: Text(link_cap[index]),
@@ -598,7 +599,7 @@ class _study_MaterialsState extends State<study_Materials> {
                                         //             delete_link(link_cap, link_l,
                                         //                 index, count2)));
                                       },
-                                      child: Text("Delete"))
+                                      child: const Text("Delete"))
                                       : Container(),
                                 ],
                               );

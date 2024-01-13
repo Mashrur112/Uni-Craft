@@ -1,12 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:uni_craft/LoginPage.dart';
 import 'package:uni_craft/dashboard.dart';
-import 'package:uni_craft/main.dart';
 
 import 'Homepage.dart';
 
@@ -40,7 +35,7 @@ class _AuthpageState2 extends State<Authpage2> {
 
 
 
-            Container(
+            SizedBox(
               height: screenH,
               width: screenW,
 
@@ -53,10 +48,10 @@ class _AuthpageState2 extends State<Authpage2> {
                   //var data= snapshot.data!.docs[0];
                  //print(collect1);
 
-                  if (snapshot.hasData && snapshot.data!.docs.length >= 1 ) {
+                  if (snapshot.hasData && snapshot.data!.docs.isNotEmpty ) {
 
                     final res=snapshot.data!.docs.toList();
-                    for(var r in res!)
+                    for(var r in res)
                       {
                         if(r['uid']==currentUser.currentUser!.uid)
                           {
@@ -71,7 +66,7 @@ class _AuthpageState2 extends State<Authpage2> {
 
 
 
-                    return Homepage();
+                    return const Homepage();
 
                   }
                 },

@@ -4,13 +4,14 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'add_notice.dart';
 import 'notice_text.dart';
 
 class notice extends StatefulWidget{
+  const notice({super.key});
+
   @override
   State<notice> createState() => _noticeState();
 }
@@ -41,11 +42,11 @@ class _noticeState extends State<notice> {
       appBar: AppBar(
         actions: [
           IconButton(onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>add_notice()));
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>const add_notice()));
 
 
 
-          }, icon: Icon(Icons.add,color: Colors.green,)),
+          }, icon: const Icon(Icons.add,color: Colors.green,)),
 
 
         ],
@@ -74,15 +75,15 @@ class _noticeState extends State<notice> {
                   while(true) {
                     try {
 
-                      if (r['notice' + c.toString()]!="" ) {
+                      if (r['notice$c']!="" ) {
 
 
 
 
                         count1++;
 
-                        notice_n.insert(count, r['notice'+c.toString()]);
-                        notice_t.insert(count, r['notice'+t.toString()]);
+                        notice_n.insert(count, r['notice$c']);
+                        notice_t.insert(count, r['notice$t']);
 
 
 
@@ -121,8 +122,8 @@ class _noticeState extends State<notice> {
                 //
                 // });
                 FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
-                  'notice'+((index1)+1).toString():"",
-                  "notice"+((index1)+2).toString():"",
+                  'notice${(index1)+1}':"",
+                  "notice${(index1)+2}":"",
 
                 });
 
@@ -145,10 +146,10 @@ class _noticeState extends State<notice> {
                   return GestureDetector(
                     child: Column(
                       children: [
-                        Container(
+                        SizedBox(
                           height: (250/872)*screenH,
                           child: Card(
-                            child: FittedBox(child: Text(notice_n[index],style: TextStyle(color: Colors.black,fontSize: 20),)),
+                            child: FittedBox(child: Text(notice_n[index],style: const TextStyle(color: Colors.black,fontSize: 20),)),
 
                           ),
                         ),
@@ -168,7 +169,7 @@ class _noticeState extends State<notice> {
                           });
 
 
-                        }, child: Text("Delete")),
+                        }, child: const Text("Delete")),
                       ],
                     ),
                     onTap: (){

@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -16,7 +15,7 @@ class edit_profile extends StatefulWidget {
   var profile_info = [];
 
 
-  edit_profile(this.profile_info);
+  edit_profile(this.profile_info, {super.key});
 
   @override
   State<edit_profile> createState() => _edit_profileState();
@@ -71,7 +70,7 @@ class _edit_profileState extends State<edit_profile> {
     return Scaffold(
         backgroundColor: Colors.black,
         body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -90,15 +89,17 @@ class _edit_profileState extends State<edit_profile> {
 
 
                           }
-                        if(r['code']==widget.profile_info[6] && r['role']=='General member')
+                        if(r['code']==widget.profile_info[6] && r['role']=='General member') {
                           FirebaseFirestore.instance.collection('Profile').doc(r['uid']).delete();
+                        }
 
                       }
-                    return Center();
+                    return const Center();
 
                   }
-                else
-                  return Center();
+                else {
+                  return const Center();
+                }
 
               }),
 
@@ -108,7 +109,7 @@ class _edit_profileState extends State<edit_profile> {
 
 
               SizedBox.fromSize(
-                size: Size(0, 200),
+                size: const Size(0, 200),
               ),
               Stack(
                 children: [
@@ -128,7 +129,7 @@ class _edit_profileState extends State<edit_profile> {
                       right: -7,
                       child: IconButton(
                           onPressed: selectImage,
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.add_a_photo,
                             color: Colors.white,
                           ))),
@@ -150,7 +151,7 @@ class _edit_profileState extends State<edit_profile> {
                 items: items.map((String items) {
                   return DropdownMenuItem(
                     value: items,
-                    child: Text(items,style: TextStyle(color: Colors.white),),
+                    child: Text(items,style: const TextStyle(color: Colors.white),),
                   );
                 }).toList(),
                 // After selecting the desired option,it will
@@ -160,7 +161,7 @@ class _edit_profileState extends State<edit_profile> {
                     dropdownvalue = newValue!;
                   });
                 },
-              ):Center(),
+              ):const Center(),
               Form(
                 key: formKey,
                 child: Column(
@@ -169,19 +170,19 @@ class _edit_profileState extends State<edit_profile> {
                       padding:
                       EdgeInsets.symmetric(horizontal: (10 / 372) * screenW),
                       child: TextFormField(
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                         controller: name,
                         decoration: InputDecoration(
                           hintText: widget.profile_info[1],
-                          hintStyle: TextStyle(color: Colors.white70),
+                          hintStyle: const TextStyle(color: Colors.white70),
                           focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(14),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Colors.white70,
                               )),
                           enabledBorder: UnderlineInputBorder(
                               borderRadius: BorderRadius.circular(1),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Colors.white70,
                               )),
                           // label: Text(
@@ -190,13 +191,15 @@ class _edit_profileState extends State<edit_profile> {
                           // ),
                         ),
                         validator: (value) {
-                          if(value!.isEmpty)
+                          if(value!.isEmpty) {
                             value=widget.profile_info[1];
+                          }
                           if (
                               !RegExp(r'[a-zA-Z]').hasMatch(value!)) {
                             return "Enter Your name ";
-                          } else
+                          } else {
                             return null;
+                          }
                         },
                       ),
                     ),
@@ -205,32 +208,34 @@ class _edit_profileState extends State<edit_profile> {
                       padding:
                       EdgeInsets.symmetric(horizontal: (10 / 372) * screenW),
                       child: TextFormField(
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                         controller: age,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           hintText: widget.profile_info[2],
-                          hintStyle: TextStyle(color: Colors.white70),
+                          hintStyle: const TextStyle(color: Colors.white70),
                           focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(14),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Colors.white70,
                               )),
                           enabledBorder: UnderlineInputBorder(
                               borderRadius: BorderRadius.circular(1),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Colors.white70,
                               )),
 
                         ),
                         validator: (value) {
-                          if(value!.isEmpty)
+                          if(value!.isEmpty) {
                             value=widget.profile_info[2];
+                          }
                           if (
                               !RegExp(r'[0-9]').hasMatch(value!)) {
                             return "Enter Your age ";
-                          } else
+                          } else {
                             return null;
+                          }
                         },
                       ),
                     ),
@@ -239,31 +244,33 @@ class _edit_profileState extends State<edit_profile> {
                       padding:
                       EdgeInsets.symmetric(horizontal: (10 / 372) * screenW),
                       child: TextFormField(
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                         controller: email,
                         decoration: InputDecoration(
                           hintText: widget.profile_info[4],
-                          hintStyle: TextStyle(color: Colors.white70),
+                          hintStyle: const TextStyle(color: Colors.white70),
                           focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(14),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Colors.white70,
                               )),
                           enabledBorder: UnderlineInputBorder(
                               borderRadius: BorderRadius.circular(1),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Colors.white70,
                               )),
 
                         ),
                         validator: (value) {
-                          if(value!.isEmpty)
+                          if(value!.isEmpty) {
                             value=widget.profile_info[4];
+                          }
                           if (
                               !RegExp(r'[@]*[.]').hasMatch(value!)) {
                             return "Enter Your Email address ";
-                          } else
+                          } else {
                             return null;
+                          }
                         },
                       ),
                     ),
@@ -272,32 +279,34 @@ class _edit_profileState extends State<edit_profile> {
                       padding:
                       EdgeInsets.symmetric(horizontal: (10 / 372) * screenW),
                       child: TextFormField(
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                         controller: roll,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           hintText: widget.profile_info[3],
-                          hintStyle: TextStyle(color: Colors.white70),
+                          hintStyle: const TextStyle(color: Colors.white70),
                           focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(14),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Colors.white70,
                               )),
                           enabledBorder: UnderlineInputBorder(
                               borderRadius: BorderRadius.circular(1),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Colors.white70,
                               )),
 
                         ),
                         validator: (value) {
-                          if(value!.isEmpty)
-                          value=widget.profile_info[3];
+                          if(value!.isEmpty) {
+                            value=widget.profile_info[3];
+                          }
                           if (
                               !RegExp(r'[0-9]').hasMatch(value!)) {
                             return "Enter Your roll number ";
-                          } else
+                          } else {
                             return null;
+                          }
                         },
                       ),
                     ),
@@ -355,14 +364,14 @@ class _edit_profileState extends State<edit_profile> {
                      }
 
 
-                     if (_image != null)
-
+                     if (_image != null) {
                        await UpdateData().savedData(file: _image!);
+                     }
 
                    }
 
 
-                  }, child: Text("Save Profile")),
+                  }, child: const Text("Save Profile")),
                   SizedBox.fromSize(size: Size((10/392)*screenW, 0),),
                   ElevatedButton(onPressed: () async {
                     try {
@@ -375,8 +384,9 @@ class _edit_profileState extends State<edit_profile> {
                       check_for_save = false;
                     }
                     setState(() {
-                      if(widget.profile_info[5]=="Administrator" && check_for_save==true)
+                      if(widget.profile_info[5]=="Administrator" && check_for_save==true) {
                         del=true;
+                      }
                     });
                     if(check_for_save==true)
                       {
@@ -389,7 +399,7 @@ class _edit_profileState extends State<edit_profile> {
                           Navigator.pop(context);}
 
 
-                  }, child: Text("Delete Profile"))
+                  }, child: const Text("Delete Profile"))
                 ],
               )
             ],

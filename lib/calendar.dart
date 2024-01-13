@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class Calendar extends StatefulWidget {
+  const Calendar({super.key});
+
   @override
   _CalendarState createState() => _CalendarState();
 }
@@ -19,22 +21,22 @@ class _CalendarState extends State<Calendar> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Academic Calendar"),
+        title: const Text("Academic Calendar"),
         backgroundColor: Colors.blue,
       ),
       body: Center(
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.all(20.0),
-              child: Text("Selected Day = "+today.toString().split(" ")[0],),
+              padding: const EdgeInsets.all(20.0),
+              child: Text("Selected Day = ${today.toString().split(" ")[0]}",),
               // +today.toString().split(" ")[0]),
               //${today.toLocal()}
             ),
             TableCalendar(
               locale: "en_US",
               rowHeight: 43,
-              headerStyle: HeaderStyle(
+              headerStyle: const HeaderStyle(
                 formatButtonVisible: false,
                 titleCentered: true,
               ),

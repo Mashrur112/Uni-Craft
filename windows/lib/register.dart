@@ -1,13 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:uni_craft/Homepage.dart';
-import 'package:uni_craft/auth-page.dart';
 
-import 'LoginPage.dart';
 
 
 class Register extends StatefulWidget {
+  const Register({super.key});
+
   @override
   State<Register> createState() => _RegisterState();
 }
@@ -35,7 +34,7 @@ class _RegisterState extends State<Register> {
   void wrongCred(){
     showDialog(context: context,
         builder:(context){
-          return  AlertDialog(
+          return  const AlertDialog(
 
             elevation: 51,
             shadowColor: Colors.black26,
@@ -106,7 +105,7 @@ if(!t){
 
               elevation: 51,
               shadowColor: Colors.black26,
-              icon:Icon( Icons.warning_amber),
+              icon:const Icon( Icons.warning_amber),
               iconColor: Colors.red,
               backgroundColor: Colors.blueGrey,
               title:  Text(e.code),
@@ -181,7 +180,7 @@ if(!t){
                    ),
                    prefixIcon:  Padding(
                      padding:  EdgeInsets.fromLTRB(((14/392.72)*screenW), ((8/872.72)*screenH), (5/392.72)*screenW, (((8/872.72)*screenH))),
-                     child: Icon(Icons.email, color: Colors.black),
+                     child: const Icon(Icons.email, color: Colors.black),
                    ),
                    filled: true,
                    fillColor: const Color(0xff70ade6),
@@ -231,7 +230,7 @@ if(!t){
                    ),
                    prefixIcon:  Padding(
                      padding:  EdgeInsets.fromLTRB((10/392.72)*screenW, 0, (3/392.72)*screenW, 0),
-                     child: Icon(
+                     child: const Icon(
                        Icons.lock,
                        color: Colors.black,
                      ),
@@ -241,10 +240,11 @@ if(!t){
                      child: IconButton(
                          onPressed: () {
                            setState(() {
-                             if (is_obs)
+                             if (is_obs) {
                                is_obs = false;
-                             else
+                             } else {
                                is_obs = true;
+                             }
                            });
                          },
                          icon: const Icon(
@@ -297,7 +297,7 @@ if(!t){
                    ),
                    prefixIcon:  Padding(
                      padding:  EdgeInsets.fromLTRB((10/392.72)*screenW, 0, (3/392.72)*screenW, 0),
-                     child: Icon(
+                     child: const Icon(
                        Icons.lock,
                        color: Colors.black,
                      ),
@@ -307,10 +307,11 @@ if(!t){
                      child: IconButton(
                          onPressed: () {
                            setState(() {
-                             if (is_obs)
+                             if (is_obs) {
                                is_obs = false;
-                             else
+                             } else {
                                is_obs = true;
+                             }
                            });
                          },
                          icon: const Icon(
@@ -376,13 +377,13 @@ if(!t){
            //or continue with
 
             Padding(
-             padding:  EdgeInsets.symmetric(horizontal: 19),
+             padding:  const EdgeInsets.symmetric(horizontal: 19),
              child: Row(
 
 
                children: [
 
-                 Expanded(
+                 const Expanded(
                      child:Divider(
                        thickness: 1,
                        color: Colors.white70,
@@ -391,12 +392,12 @@ if(!t){
                  ),
                  Padding(
                    padding:  EdgeInsets.symmetric(horizontal: (7/392.72)*screenW),
-                   child: Text("Or continue with",style: TextStyle(
+                   child: const Text("Or continue with",style: TextStyle(
                      color: Colors.white,
                      fontWeight: FontWeight.bold,
                    ),),
                  ),
-                 Expanded(
+                 const Expanded(
                      child:Divider(
                        thickness: 1,
                        color: Colors.white70,

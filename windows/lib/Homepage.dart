@@ -1,11 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 
 class Homepage extends StatefulWidget {
-  Homepage({super.key});
+  const Homepage({super.key});
   //final user=FirebaseAuth.instance.currentUser!;
 
   @override
@@ -36,11 +35,11 @@ class _HomepageState extends State<Homepage> {
             IconButton(onPressed:(){
               signout();
             }
-                , icon: Icon(Icons.logout))
+                , icon: const Icon(Icons.logout))
           ],
 
         ),
-        body: Center(child: Text("Logged in as: "+user.email!,))
+        body: Center(child: Text("Logged in as: ${user.email!}",))
 
 
 
