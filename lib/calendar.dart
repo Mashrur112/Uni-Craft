@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:uni_craft/Stopwatch.dart';
+import 'package:uni_craft/timeplanner.dart';
 
 class Calendar extends StatefulWidget {
   const Calendar({Key? key}) : super(key: key);
@@ -48,14 +49,14 @@ class _CalendarState extends State<Calendar> {
         backgroundColor: Colors.black.withOpacity(0.35),
         actions: [
           IconButton(
-            icon: Icon(Icons.timer),
+            icon: Icon(Icons.calendar_view_week),
             onPressed: () {
               // Navigate to the TimePlanner page
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) =>
-                      Timer_Stopwatch(), // Replace with your TimePlanner page widget
+                      TimePlannerPage(), // Replace with your TimePlanner page widget
                 ),
               );
             },
