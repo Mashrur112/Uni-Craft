@@ -1,43 +1,37 @@
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:uni_craft/Forgotpass.dart';
+import 'package:uni_craft/main.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:uni_craft/Homepage.dart';
+import 'package:uni_craft/auth-page.dart';
 import 'package:uni_craft/register.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 class Login extends StatefulWidget {
- const Login({super.key});
+  const Login({super.key});
   @override
   State<Login> createState() => _LoginState();
 }
 
 class _LoginState extends State<Login> {
-  final bool _isLoggedIn = false;
-  final Map _user={};
-
-
-
-
-
+  bool _isLoggedIn = false;
+  Map _user = {};
 
 //fb log in
-
-
-
-
-
-
-
 
 //reg
   void reg() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const Register()),
+      MaterialPageRoute(builder: (context) => Register()),
     );
   }
 
   Future<UserCredential> signInWithGoogle() async {
-    print ("fsdf");
+    print("fsdf");
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
@@ -82,12 +76,12 @@ class _LoginState extends State<Login> {
             return AlertDialog(
               elevation: 51,
               shadowColor: Colors.black26,
-              icon: const Icon(Icons.warning_amber),
+              icon: Icon(Icons.warning_amber),
               iconColor: Colors.red,
               backgroundColor: Colors.blueGrey,
               title: Text(
                 e.code,
-                style: const TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.white),
               ),
             );
           });
@@ -137,24 +131,17 @@ class _LoginState extends State<Login> {
     double screenW = MediaQuery.of(context).size.width;
     double screenH = MediaQuery.of(context).size.height;
     return Scaffold(
-      //resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
+        physics: BouncingScrollPhysics(),
         child: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage("assets/images/LogIn.jpeg"), fit: BoxFit.cover),
           ),
           child: Column(
-
             //mainAxisAlignment: MainAxisAlignment.center,
             children: [
-
-
-
-
-
-
               Container(height: (30 / 872.72) * screenH),
 
               Padding(
@@ -200,7 +187,7 @@ class _LoginState extends State<Login> {
                             ((8 / 872.72) * screenH),
                             (5 / 392.72) * screenW,
                             (((8 / 872.72) * screenH))),
-                        child: const Icon(Icons.email, color: Colors.black),
+                        child: Icon(Icons.email, color: Colors.black),
                       ),
                       filled: true,
                       fillColor: const Color(0xff70ade6),
@@ -251,7 +238,7 @@ class _LoginState extends State<Login> {
                       prefixIcon: Padding(
                         padding: EdgeInsets.fromLTRB((10 / 392.72) * screenW, 0,
                             (3 / 392.72) * screenW, 0),
-                        child: const Icon(
+                        child: Icon(
                           Icons.lock,
                           color: Colors.black,
                         ),
@@ -262,11 +249,10 @@ class _LoginState extends State<Login> {
                         child: IconButton(
                             onPressed: () {
                               setState(() {
-                                if (is_obs) {
+                                if (is_obs)
                                   is_obs = false;
-                                } else {
+                                else
                                   is_obs = true;
-                                }
                               });
                             },
                             icon: const Icon(
@@ -305,11 +291,13 @@ class _LoginState extends State<Login> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     GestureDetector(
-                      onTap:(){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Forgot_pass()));
-
-              },
-                      child: const Text(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Forgot_pass()));
+                      },
+                      child: Text(
                         "Forgot Password?",
                         style: TextStyle(
                           color: Color(0xffd42020),
@@ -364,7 +352,7 @@ class _LoginState extends State<Login> {
                     EdgeInsets.symmetric(horizontal: (19 / 392.72) * screenW),
                 child: Row(
                   children: [
-                    const Expanded(
+                    Expanded(
                         child: Divider(
                       thickness: 1,
                       color: Colors.white70,
@@ -372,7 +360,7 @@ class _LoginState extends State<Login> {
                     Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: (7 / 392.72) * screenW),
-                      child: const Text(
+                      child: Text(
                         "Or continue with",
                         style: TextStyle(
                           color: Colors.white,
@@ -380,7 +368,7 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                     ),
-                    const Expanded(
+                    Expanded(
                         child: Divider(
                       thickness: 1,
                       color: Colors.white70,
@@ -398,10 +386,7 @@ class _LoginState extends State<Login> {
                 children: [
                   GestureDetector(
                       onTap: () async {
-                        print("done");
                         await signInWithGoogle();
-
-
                       },
                       child: Image.asset(
                         "assets/images/google.png",
@@ -411,12 +396,10 @@ class _LoginState extends State<Login> {
                   SizedBox(
                     width: (0 / 392.72) * screenW,
                   ),
-
-
                 ],
               ),
               Container(
-                height: (50 / 872.72) * screenH,
+                height: (40 / 872.72) * screenH,
               ),
               //register
               Row(
@@ -432,9 +415,10 @@ class _LoginState extends State<Login> {
                         "Register Now",
                         style: TextStyle(color: Colors.blue, fontSize: 14),
                       ))
+
                 ],
               ),
-              Container(height:  (50/872.72)*screenH,),
+              Container(height: 100,)
             ],
           ),
         ),
