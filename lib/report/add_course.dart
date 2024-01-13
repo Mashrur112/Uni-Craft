@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:uni_craft/report/marks_section.dart';
 
 class add_course extends StatefulWidget{
   @override
@@ -86,11 +87,14 @@ class _add_courseState extends State<add_course> {
                   shrinkWrap: true,
                     itemCount:course_name.length,
                     itemBuilder: (context,index){
-                      return ElevatedButton(onPressed: (){}, child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                      return ElevatedButton(onPressed: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>marks_sec()));
+
+                      }, child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(course_name[index]),
-                          SizedBox.fromSize( size:Size(0.7*screenW,0),),
+
                           GestureDetector(
                               onTap: (){
                                 course_name.removeAt(index);
