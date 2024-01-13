@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 
 import 'Homepage.dart';
 
 class add_notice extends StatefulWidget {
+  const add_notice({super.key});
+
   @override
   State<add_notice> createState() => _add_noticeState();
 }
@@ -18,11 +18,8 @@ class _add_noticeState extends State<add_notice> {
   var caption = TextEditingController();
 
   var count = "";
-  int c = 0;
+  int c = 1;
   var strm_opn=false;
-  String? string;
-
-
 
 
   @override
@@ -47,20 +44,18 @@ class _add_noticeState extends State<add_notice> {
                       for (var r in res) {
                         if (r['uid'] ==
                             FirebaseAuth.instance.currentUser!.uid) {
-                          c = 0;
+                          c = 1;
                           int t = c + 1;
-                          int d=t+1;
                           while(true) {
                             try {
-                              if (r['notice' + c.toString()]=="" ) {
+                              if (r['notice$c']=="" ) {
 
                                 FirebaseFirestore.instance
                                     .collection("Profile")
                                     .doc(FirebaseAuth.instance.currentUser!.uid)
                                     .update({
-                                  'notice' + c.toString():caption.text.toString(),
-                                  'notice' + t.toString(): text.text.toString(),
-                                  'notice' + d.toString(): string,
+                                  'notice$c':caption.text.toString(),
+                                  'notice$t': text.text.toString(),
                                 });
 
                                 strm_opn=false;
@@ -68,10 +63,8 @@ class _add_noticeState extends State<add_notice> {
                               }
                               else{
 
-                                c = c + 3;
-                                t = c + 1;
-                              d=t+1;
-                              }
+                                c = c + 2;
+                                t = c + 1;}
 
                             } catch (e) {
 
@@ -79,9 +72,8 @@ class _add_noticeState extends State<add_notice> {
                                   .collection("Profile")
                                   .doc(FirebaseAuth.instance.currentUser!.uid)
                                   .update({
-                                'notice' + c.toString():caption.text.toString(),
-                                'notice' + t.toString(): text.text.toString(),
-                                'notice' + d.toString(): string,
+                                'notice$c':caption.text.toString(),
+                                'notice$t': text.text.toString(),
                               });
                               strm_opn=false;
                               break;
@@ -92,7 +84,7 @@ class _add_noticeState extends State<add_notice> {
 
                       }
                     }
-                    return Center();
+                    return const Center();
                   }),
 
               Form(
@@ -101,7 +93,7 @@ class _add_noticeState extends State<add_notice> {
                   children: [
                     SizedBox.fromSize(size: Size(0,(100/872)*screenH),),
                     TextFormField(
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white),
                       controller: caption,
                       minLines: 2,
                       maxLines: 3,
@@ -110,8 +102,9 @@ class _add_noticeState extends State<add_notice> {
                         if (value!.isEmpty ||
                             !RegExp(r'[a-zA-Z]').hasMatch(value)) {
                           return "Enter any caption ";
-                        } else
+                        } else {
                           return null;
+                        }
                       },
                       onChanged: (value) {
                         setState(() {
@@ -121,27 +114,27 @@ class _add_noticeState extends State<add_notice> {
                       maxLength: 80,
                       maxLengthEnforcement: MaxLengthEnforcement.enforced,
                       decoration: InputDecoration(
-                          label: Text(
+                          label: const Text(
                             'Caption',
                             style: TextStyle(color: Colors.grey),
                           ),
-                          counterStyle: TextStyle(
+                          counterStyle: const TextStyle(
                             color: Colors.white,
                           ),
                           counterText: 'Remaining: $count',
                           floatingLabelAlignment: FloatingLabelAlignment.start,
                           alignLabelWithHint: true,
-                          errorBorder: OutlineInputBorder(
+                          errorBorder: const OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Colors.grey,
                             ),
                           ),
-                          focusedBorder: OutlineInputBorder(
+                          focusedBorder: const OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Colors.grey,
                             ),
                           ),
-                          enabledBorder: OutlineInputBorder(
+                          enabledBorder: const OutlineInputBorder(
                               borderSide: BorderSide(
                             color: Colors.grey,
                           ))),
@@ -150,7 +143,7 @@ class _add_noticeState extends State<add_notice> {
                       size: Size(0, ((10 / 872)) * screenH),
                     ),
                     TextFormField(
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white),
                       controller: text,
                       minLines: 18,
                       maxLines: 20,
@@ -158,7 +151,7 @@ class _add_noticeState extends State<add_notice> {
 
 
 
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           label: Text(
                             'Text..',
                             style: TextStyle(color: Colors.grey, fontSize: 20),
@@ -181,10 +174,11 @@ class _add_noticeState extends State<add_notice> {
                           ))),
                       validator: (value){
                         if (value!.isEmpty ||
-                            !RegExp(r'[a-zA-Z]').hasMatch(value!)) {
+                            !RegExp(r'[a-zA-Z]').hasMatch(value)) {
                           return "Enter any caption ";
-                        } else
+                        } else {
                           return null;
+                        }
 
 
                       },
@@ -192,20 +186,16 @@ class _add_noticeState extends State<add_notice> {
 
 
                     ElevatedButton(onPressed: () {
-                     if(formKey.currentState!.validate()){
-
-
-                       DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
-                       string = dateFormat.format(DateTime.now());
-                       Navigator.pop(context);
-                       setState(() {
+                      formKey.currentState!.validate();
+                      //Navigator.pop(context);
+                      setState(() {
                         strm_opn=true;
 
-                      });}
+                      });
 
 
 
-                    }, child: Text("Publish")),
+                    }, child: const Text("Publish")),
                   ],
                 ),
               ),

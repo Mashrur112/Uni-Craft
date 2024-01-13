@@ -1,42 +1,38 @@
+
+
+
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'add_notice.dart';
 import 'notice_text.dart';
 
-class notice extends StatefulWidget {
+class notice extends StatefulWidget{
+  const notice({super.key});
+
   @override
   State<notice> createState() => _noticeState();
 }
 
 class _noticeState extends State<notice> {
   var index1;
-  var index2 = 0;
-  var join_code;
-  var role;
 
-  void del(idx) {
-    index1 = idx;
+  void del( idx)
+  {
+    index1=idx;
   }
+  var strm_opn=false;
 
-  var strm_opn = false;
+  var notice_n=[];
 
-  var notice_n = [];
+  var notice_t=[];
 
-  var notice_t = [];
+  int count1=0;
+  int current_u=0;
 
-  int count1 = 0;
-  int current_u = 0;
-
-  var del_n = false;
-  int l = 0;
-  int l1 = 0;
-  int count2 = 0;
-  int count3 = 0;
-  var date=[];
-
+  var del_n=false;
 
   @override
   Widget build(BuildContext context) {
@@ -45,161 +41,148 @@ class _noticeState extends State<notice> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => add_notice()));
-              },
-              icon: Icon(
-                Icons.add,
-                color: Colors.green,
-              )),
-        ],
-      ),
-      body: StreamBuilder(
-          stream: FirebaseFirestore.instance.collection("Profile").snapshots(),
-          builder: (context, snapshots) {
-            if (snapshots.hasData) {
-              l = 0;
-              l1 = l + 1;
-              int d=l1+1;
-             count2 = 0;
-              count3 = 0;
+          IconButton(onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>const add_notice()));
 
+
+
+          }, icon: const Icon(Icons.add,color: Colors.green,)),
+
+
+        ],
+
+      ),
+      body:
+
+
+
+      StreamBuilder(
+          stream: FirebaseFirestore.instance
+              .collection("Profile")
+              .snapshots(),
+          builder: (context, snapshots) {
+            if (snapshots.hasData ) {
               final res = snapshots.data!.docs.toList();
-              for (var r in res!) {
+              for (var r in res) {
                 if (r['uid'] ==
                     FirebaseAuth.instance.currentUser!.uid) {
-                  join_code = r['code'];
-                  role = r['role'];
+                  int c = 1;
+                  int t = c + 1;
+                  int count=0;
+                  count1=0;
+                  ///print( r['notice'+c.toString()]);
 
-                  break;
-                }
-              }
-              for (var r in res!) {
-                if (r['code'] == join_code.toString() ) {
-
-                  //print(count1);
-
-                  while (true) {
+                  while(true) {
                     try {
 
-                      if (r['notice'+l.toString()] == "")
-                        break;
-                      else {
+                      if (r['notice$c']!="" ) {
 
-                        notice_n.insert(
-                            count2,
-                            snapshots.data!.docs[count3]['notice'+l.toString()]
-                                .toString());
-                        notice_t.insert(
-                            count2,
-                            snapshots.data!.docs[count3]['notice'+l1.toString()]
-                                .toString());
-                        date.insert(
-                            count2,
-                            snapshots.data!.docs[count3]['notice'+d.toString()]
-                                .toString());
 
-                        count2++;
-                        l = l + 3;
-                        l1 = l + 1;
-                        d=l1+1;
+
+
+                        count1++;
+
+                        notice_n.insert(count, r['notice$c']);
+                        notice_t.insert(count, r['notice$t']);
+
+
+
+
+
+
+
+
+
                       }
+                      c = c + 2;
+                      t = c + 1;
+
+
                     } catch (e) {
+
+
+
                       break;
                     }
                   }
-                } else
-                  count3++;
+                  break;
+                }
+                current_u++;
+
+
               }
             }
             if(del_n==true)
-            {
-              int idx_link=index1;
-              final res=snapshots.data!.docs.toList();
-              for(var r in res!) {
-                if (r['uid'] == FirebaseAuth.instance.currentUser!.uid) {
+              {
 
-                  while(true){
-                    // print(widget.index);
-                    // print(widget.count1);
-                    if(index1==count2)
-                      break;
-                    else{
 
-                      if(index1==(count2-1)) {
-                        FirebaseFirestore.instance.collection("Profile").doc(
-                            FirebaseAuth.instance.currentUser!.uid).update({
-                          'notice'+(3*index1).toString(): "",
-                          'notice'+((3*index1) + 1).toString(): "",
-                          'notice'+((3*index1) + 2).toString(): "",
-                        });
-                        break;
-                      }
-                      else{
-                        idx_link=idx_link+1;
+                // FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
+                //   'notice'+((index1*2)+1).toString():snapshots.data!.docs[current_u][ 'notice'+((index1*2)+3).toString()].toString(),
+                //   "notice"+((index1*2)+2).toString():snapshots.data!.docs[current_u][ 'notice'+((index1*2)+4).toString()].toString(),
+                //
+                // });
+                FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
+                  'notice${(index1)+1}':"",
+                  "notice${(index1)+2}":"",
 
-                        FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
-                          'notice'+ (3*index1).toString():notice_n[idx_link].toString(),
-                          'notice'+((3*index1)+1).toString():notice_t[idx_link].toString(),
-                          'notice'+((3*index1)+2).toString():date[idx_link].toString(),
-                        });
+                });
 
-                        index1++;}}
-                  }
-                }
+                del_n=false;
+                // setState(() {
+                //
+                // });
+
+
+
+
               }
-              del_n=false;
-            }
-
+            print(notice_n[1]);
             return ListView.builder(
-                itemCount: count2,
-                itemBuilder: (BuildContext context, int index) {
+
+                itemCount:count1 ,
+
+                itemBuilder: (BuildContext context,int index){
+
                   return GestureDetector(
                     child: Column(
                       children: [
-                        Container(
-                          height: (250 / 872) * screenH,
+                        SizedBox(
+                          height: (250/872)*screenH,
                           child: Card(
-                            child: Row(
-                              children: [
-                                Text(date[index]),
-                                FittedBox(
-                                    child: Text(
-                                  notice_n[index],
-                                  style:
-                                      TextStyle(color: Colors.black, fontSize: 20),
-                                )),
-                              ],
-                            ),
+                            child: FittedBox(child: Text(notice_n[index],style: const TextStyle(color: Colors.black,fontSize: 20),)),
+
                           ),
                         ),
-                        ElevatedButton(
-                            onPressed: () {
-                              int total = index;
+                        ElevatedButton(onPressed: (){
+
+                          int total=count1-index-1;
+                          print(total);
 
 
+                          del(total);
 
-                              del(total);
+                          setState(() {
 
-                              setState(() {
-                                del_n = true;
-                              });
-                            },
-                            child: Text("Delete")),
+
+                            del_n=true;
+
+                          });
+
+
+                        }, child: const Text("Delete")),
                       ],
                     ),
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  notice_text(notice_t[index])));
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>notice_text(notice_t[index])));
                     },
                   );
-                });
+
+
+
+
+            });
           }),
+
     );
   }
 }

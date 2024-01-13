@@ -1,10 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:uni_craft/Homepage.dart';
 import 'package:uni_craft/auth-page.dart';
 
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
-import 'package:uni_craft/LoginPage.dart';
 
 
 void main() async {
@@ -12,10 +10,12 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(Craft());
+  runApp(const Craft());
 }
 
 class Craft extends StatelessWidget {
+  const Craft({super.key});
+
   @override
   Widget build(BuildContext context) {
     double screenW=MediaQuery.of(context).size.width;

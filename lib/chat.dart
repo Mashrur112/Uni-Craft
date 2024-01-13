@@ -1,15 +1,10 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:uni_craft/auth-page.dart';
-import 'package:uni_craft/dependency_injection.dart';
-import 'package:uni_craft/splash.dart';
-import 'dashboard.dart';
 
-import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 
 
 class ChatApp extends StatefulWidget {
+  const ChatApp({super.key});
+
   @override
   _ChatAppState createState() => _ChatAppState();
 }
@@ -22,10 +17,10 @@ class _ChatAppState extends State<ChatApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(50.0), // Adjust the height as needed
+        preferredSize: const Size.fromHeight(50.0), // Adjust the height as needed
         child: AppBar(
           backgroundColor: Colors.blueGrey.withOpacity(0.9),
-          title: Center(
+          title: const Center(
             child: Text(
               'General Chat',
               style: TextStyle(
@@ -56,7 +51,7 @@ class _ChatAppState extends State<ChatApp> {
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.white.withOpacity(0.2),
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                           topRight: Radius.circular(40.0),
                           topLeft: Radius.circular(40.0),
                           bottomRight: Radius.circular(40.0),
@@ -69,9 +64,9 @@ class _ChatAppState extends State<ChatApp> {
                           horizontal: 15.0,
                         ),
                         child: TextField(
-                          style: TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.white),
                           controller: messageController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: 'Type your message...',
                             hintStyle: TextStyle(color: Colors.white54),
                           ),
@@ -80,7 +75,7 @@ class _ChatAppState extends State<ChatApp> {
                     ),
                   ),
                   IconButton(
-                    icon: Icon(Icons.send),
+                    icon: const Icon(Icons.send),
                     onPressed: () {
                       _sendMessage(messageController.text);
                     },
@@ -114,13 +109,13 @@ class _ChatAppState extends State<ChatApp> {
 class ChatMessageWidget extends StatelessWidget {
   final MessageModel message;
 
-  ChatMessageWidget({required this.message});
+  const ChatMessageWidget({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Padding(
-        padding: EdgeInsets.only(left: 6),
+        padding: const EdgeInsets.only(left: 6),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -133,15 +128,15 @@ class ChatMessageWidget extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Container(
               width: MediaQuery.of(context).size.width,
-              constraints: BoxConstraints(
+              constraints: const BoxConstraints(
                 maxWidth: 290,
               ),
               child: Material(
                 color: const Color(0xFFADD8E6),
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(16.0),
                   bottomRight: Radius.circular(16.0),
                   bottomLeft: Radius.circular(16.0),
@@ -152,45 +147,45 @@ class ChatMessageWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 5),
+                      const SizedBox(height: 5),
                       Row(
                         children: [
                           Text(
                             message.user.name,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontFamily: 'Lato',
                               fontSize: (13 / 8.12) * 8,
-                              color: const Color(0xd9343f4b),
+                              color: Color(0xd9343f4b),
                               fontWeight: FontWeight.w700,
                             ),
                             textAlign: TextAlign.left,
                           ),
-                          SizedBox(width: 8),
+                          const SizedBox(width: 8),
                           Text(
                             message.time,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontFamily: 'Lato',
                               fontSize: 11,
-                              color: const Color(0xFF000000),
+                              color: Color(0xFF000000),
                             ),
                             textAlign: TextAlign.left,
                           ),
                         ],
                       ),
-                      SizedBox(height: 5),
+                      const SizedBox(height: 5),
                       Container(
-                        margin: EdgeInsets.only(right: 10),
+                        margin: const EdgeInsets.only(right: 10),
                         child: Text(
                           message.text,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'Lato',
                             fontSize: 15,
-                            color: const Color(0xFF000000),
+                            color: Color(0xFF000000),
                           ),
                           textAlign: TextAlign.left,
                         ),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       _isPhoto(message),
                     ],
                   ),
@@ -204,14 +199,14 @@ class ChatMessageWidget extends StatelessWidget {
   }
 
   Widget _isPhoto(MessageModel message) {
-    if (message.imageUrl != null && message.imageUrl.isNotEmpty) {
+    if (message.imageUrl.isNotEmpty) {
       return Image.network(
         message.imageUrl,
         height: 100,
         width: 100,
       );
     } else {
-      return SizedBox.shrink();
+      return const SizedBox.shrink();
     }
   }
 }

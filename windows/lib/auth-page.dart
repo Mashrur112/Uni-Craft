@@ -1,10 +1,6 @@
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:uni_craft/LoginPage.dart';
-import 'package:uni_craft/main.dart';
 
 import 'Homepage.dart';
 class Authpage extends StatefulWidget{
@@ -38,12 +34,12 @@ class _AuthpageState extends State<Authpage> {
 
 
 
-            return Homepage();
+            return const Homepage();
           }
           else
             {
 
-            return Login();}
+            return const Login();}
         },
       ),
     );

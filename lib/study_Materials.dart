@@ -1,25 +1,16 @@
-import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:uni_craft/widget/uploadFile.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
-import 'package:video_player/video_player.dart';
 
 
 
 class study_Materials extends StatefulWidget {
-  var r1 ;
-  study_Materials(this.r1);
+  const study_Materials({super.key});
 
   @override
-
-
   State<study_Materials> createState() => _study_MaterialsState();
 }
 
@@ -47,10 +38,7 @@ class _study_MaterialsState extends State<study_Materials> {
   var link_cap=[];
   var link_l=[];
   var del_1=false,del_2=false,del_3=false;
-  var date1=[];
-  var date2=[];
-  var date3=[];
-  var date4=[];
+
 
 
   @override
@@ -61,24 +49,11 @@ class _study_MaterialsState extends State<study_Materials> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          actions: [
-widget.r1=="Administrator"?
-            IconButton(onPressed: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>uploadFile()));
-              
-              
-              
-            }, icon: Icon(Icons.file_upload_outlined)
-            ):Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-              child: Icon(Icons.file_upload_off),
-            ),
-          ],
-          title: Text("Study Materials"),
+          title: const Text("Study Materials"),
         ),
         body: Column(
           children: [
-            TabBar(tabs: [
+            const TabBar(tabs: [
               Tab(text: "Media", icon: Icon(Icons.photo)),
               Tab(text: "File", icon: Icon(Icons.file_copy_sharp)),
               Tab(text: "Link", icon: Icon(Icons.link)),
@@ -95,14 +70,13 @@ widget.r1=="Administrator"?
                         if (snapshot.hasData) {
                           c = 0;
                           b = c + 1;
-                          int d=b+1;
                           count = 0;
                           count1 = 0;
                           image_nidx = 0;
                           img_lidx = 0;
 
                           final res = snapshot.data!.docs.toList();
-                          for (var r in res!) {
+                          for (var r in res) {
                             if (r['uid'] ==
                                 FirebaseAuth.instance.currentUser!.uid) {
                               join_code = r['code'];
@@ -111,17 +85,16 @@ widget.r1=="Administrator"?
                               break;
                             }
                           }
-                          for (var r in res!) {
+                          for (var r in res) {
                             if (r['code'] == join_code.toString() &&
                                 r['role'] == "Administrator") {
                               //print(count1);
 
                               while (true) {
                                 try {
-                                  if (r[c.toString()] == "")
-                                  break;
-
-                                  else{
+                                  if (r[c.toString()] == "") {
+                                    break;
+                                  } else{
 
 
                                     link.insert(
@@ -132,8 +105,6 @@ widget.r1=="Administrator"?
                                         count1,
                                         snapshot.data!.docs[count][b.toString()]
                                             .toString());
-                                    date1.insert(count1,  snapshot.data!.docs[count][d.toString()]
-                                        .toString());
                                     if (name[count1].contains('.jpg') ||
                                         name[count1].contains('.jpeg') ||
                                         name[count1].contains('.png') ||
@@ -152,57 +123,52 @@ widget.r1=="Administrator"?
                                           snapshot
                                               .data!.docs[count][c.toString()]
                                               .toString());
-                                      date2.insert(img_lidx,  snapshot.data!.docs[count][d.toString()]
-                                          .toString());
                                       image_nidx++;
                                       img_lidx++;
                                     }
 
                                   }
                                   count1++;
-                                  c=c+3;
+                                  c=c+2;
                                   b=c+1;
-                                  d=b+1;
 
                                 } catch (e) {
                                   break;
                                 }
                               }
-                            } else
+                            } else {
                               count++;
+                            }
                           }
                         }
                         if(del_1==true)
                         {
-                          int idx_link=index3;
+                          int idxLink=index3;
                           final res=snapshot.data!.docs.toList();
-                          for(var r in res!) {
+                          for(var r in res) {
                             if (r['uid'] == FirebaseAuth.instance.currentUser!.uid) {
 
                               while(true){
-
-                                if(index3==count1)
+                                print(index3);
+                                print(count1);
+                                if(index3==count1) {
                                   break;
-                                else{
+                                } else{
 
                                   if(index3==(count1-1)) {
-
                                     FirebaseFirestore.instance.collection("Profile").doc(
                                         FirebaseAuth.instance.currentUser!.uid).update({
-                                      ((3*index3)).toString(): "",
-                                      ((3*index3) + 1).toString(): "",
-                                      ((3*index3)+2).toString():"",
+                                      (2*index3).toString(): "",
+                                      ((2*index3) + 1).toString(): "",
                                     });
                                     break;
                                   }
                                   else{
-                                    idx_link=idx_link+1;
-                                    print(date1[idx_link].toString());
+                                    idxLink=idxLink+1;
 
                                     FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
-                                      ((3*index3)).toString():link[idx_link].toString(),
-                                      ((3*index3)+1).toString():name[idx_link].toString(),
-                                      ((3*index3)+2).toString():date1[idx_link].toString(),
+                                      (2*index3).toString():link[idxLink].toString(),
+                                      ((2*index3)+1).toString():name[idxLink].toString(),
                                     });
 
                                     index3++;}}
@@ -220,30 +186,31 @@ widget.r1=="Administrator"?
                               0, ((50 / 872) * screenH), 0, 0),
                           child: GridView.builder(
                             gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
+                                const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 3,
-                              mainAxisSpacing: 0,
-                              crossAxisSpacing: 1,
-                              childAspectRatio: 1.8 / 3,
+                              mainAxisSpacing: 5,
+                              crossAxisSpacing: 0,
+                              childAspectRatio: 1.9 / 3,
                             ),
 
                             scrollDirection: Axis.vertical,
                             shrinkWrap: false,
-                            physics: BouncingScrollPhysics(),
+                            physics: const BouncingScrollPhysics(),
                             //padding: EdgeInsets.all(21),
                             itemCount: img_lidx,
                             itemBuilder: (BuildContext context, int index) {
                               return Column(
                                 children: [
-                                  Container(
-                                    height: (120 / 872) * screenH,
+                                  SizedBox(
+                                    height: (150 / 872) * screenH,
                                     child: GestureDetector(
                                       onTap: () async {
                                         final url =
                                             Uri.parse(image_link[index]);
-                                        if (!await launchUrl(url))
+                                        if (!await launchUrl(url)) {
                                           throw Exception(
                                               'Could not launch $url');
+                                        }
                                       },
 
                                       child: CachedNetworkImage(
@@ -253,7 +220,7 @@ widget.r1=="Administrator"?
                                             Center(
                                                 child: Text(image_name[index])),
                                         errorWidget: (context, url, error) =>
-                                            Icon(Icons.error),
+                                            const Icon(Icons.error),
                                       ),
 
                                       // Text(
@@ -264,7 +231,6 @@ widget.r1=="Administrator"?
                                       // ),
                                     ),
                                   ),
-                                  Text(date2[index]),
                                   // SizedBox.fromSize(size: Size(0,50),),
                                   role == "Administrator"
                                       ? ElevatedButton(
@@ -292,7 +258,7 @@ widget.r1=="Administrator"?
                                             //             delete_file(name, link,
                                             //                 index1, count1)));
                                           },
-                                          child: Text("Delete"))
+                                          child: const Text("Delete"))
                                       : Container(),
                                 ],
                               );
@@ -311,14 +277,13 @@ widget.r1=="Administrator"?
                         if (snapshot.hasData) {
                           c = 0;
                           b = c + 1;
-                          int d=b+1;
                           count = 0;
                           count1 = 0;
                           file_nidx = 0;
                           file_lidx = 0;
 
                           final res = snapshot.data!.docs.toList();
-                          for (var r in res!) {
+                          for (var r in res) {
                             if (r['uid'] ==
                                 FirebaseAuth.instance.currentUser!.uid) {
                               join_code = r['code'];
@@ -327,16 +292,16 @@ widget.r1=="Administrator"?
                               break;
                             }
                           }
-                          for (var r in res!) {
+                          for (var r in res) {
                             if (r['code'] == join_code.toString() &&
                                 r['role'] == "Administrator") {
                               //print(count1);
 
                               while (true) {
                                 try {
-                                  if (r[c.toString()] == "")
+                                  if (r[c.toString()] == "") {
                                     break;
-                                  else {
+                                  } else {
 
                                     if (!name[count1].contains('.jpg') &&
                                         !name[count1].contains('.jpeg') &&
@@ -356,56 +321,50 @@ widget.r1=="Administrator"?
                                           snapshot
                                               .data!.docs[count][c.toString()]
                                               .toString());
-                                      date3.insert(
-                                          file_lidx,
-                                          snapshot
-                                              .data!.docs[count][d.toString()]
-                                              .toString());
                                       file_lidx++;
                                       file_nidx++;
                                     }
                                     count1++;
-                                    c = c + 3;
+                                    c = c + 2;
                                     b = c + 1;
-                                    d=b+1;
                                   }
                                 } catch (e) {
                                   break;
                                 }
                               }
-                            } else
+                            } else {
                               count++;
+                            }
                           }
                         }
                         if(del_2==true)
                         {
-                          int idx_link=index3;
+                          int idxLink=index3;
                           final res=snapshot.data!.docs.toList();
-                          for(var r in res!) {
+                          for(var r in res) {
                             if (r['uid'] == FirebaseAuth.instance.currentUser!.uid) {
 
                               while(true){
-
-                                if(index3==count1)
+                                print(index3);
+                                print(count1);
+                                if(index3==count1) {
                                   break;
-                                else{
+                                } else{
 
                                   if(index3==(count1-1)) {
                                     FirebaseFirestore.instance.collection("Profile").doc(
                                         FirebaseAuth.instance.currentUser!.uid).update({
-                                      (3*index3).toString(): "",
-                                      ((3*index3) + 1).toString(): "",
-                                      ((3*index3)+2).toString():"",
+                                      (2*index3).toString(): "",
+                                      ((2*index3) + 1).toString(): "",
                                     });
                                     break;
                                   }
                                   else{
-                                    idx_link=idx_link+1;
+                                    idxLink=idxLink+1;
 
                                     FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
-                                      (3*index3).toString():link[idx_link].toString(),
-                                      ((3*index3)+1).toString():name[idx_link].toString(),
-                                      ((3*index3)+2).toString():date3[idx_link].toString(),
+                                      (2*index3).toString():link[idxLink].toString(),
+                                      ((2*index3)+1).toString():name[idxLink].toString(),
                                     });
 
                                     index3++;}}
@@ -423,29 +382,25 @@ widget.r1=="Administrator"?
 
                             scrollDirection: Axis.vertical,
                             shrinkWrap: false,
-                            physics: BouncingScrollPhysics(),
+                            physics: const BouncingScrollPhysics(),
                             //padding: EdgeInsets.all(21),
                             itemCount: file_lidx,
                             itemBuilder: (BuildContext context, int index) {
                               return Column(
                                 children: [
-                                  Container(
+                                  SizedBox(
                                     height: (40 / 872) * screenH,
                                     child: GestureDetector(
                                       onTap: () async {
                                         final url =
                                             Uri.parse(file_link[index]);
-                                        if (!await launchUrl(url))
+                                        if (!await launchUrl(url)) {
                                           throw Exception(
                                               'Could not launch $url');
+                                        }
                                       },
 
-                                      child:
-                                          Text(file_name[index]),
-                                          //SizedBox.fromSize(size: Size(((50/392)*screenW),0)),
-
-
-
+                                      child: Text(file_name[index]),
 
                                       // Text(
                                       //   name[index],
@@ -455,7 +410,6 @@ widget.r1=="Administrator"?
                                       // ),
                                     ),
                                   ),
-                                  Text(date3[index]),
                                   // SizedBox.fromSize(size: Size(0,50),),
                                   role == "Administrator"
                                       ? ElevatedButton(
@@ -484,7 +438,7 @@ widget.r1=="Administrator"?
                                             //             delete_file(name, link,
                                             //                 index1, count1)));
                                           },
-                                          child: Text("Delete"))
+                                          child: const Text("Delete"))
                                       : Container(),
                                 ],
                               );
@@ -504,12 +458,11 @@ widget.r1=="Administrator"?
                         if (snapshot.hasData) {
                           l = 0;
                           l1 = l + 1;
-                          int l2=l1+1;
                           count2 = 0;
                           count3 = 0;
 
                           final res = snapshot.data!.docs.toList();
-                          for (var r in res!) {
+                          for (var r in res) {
                             if (r['uid'] ==
                                 FirebaseAuth.instance.currentUser!.uid) {
                               join_code = r['code'];
@@ -518,7 +471,7 @@ widget.r1=="Administrator"?
                               break;
                             }
                           }
-                          for (var r in res!) {
+                          for (var r in res) {
                             if (r['code'] == join_code.toString() &&
                                 r['role'] == "Administrator") {
 
@@ -527,66 +480,60 @@ widget.r1=="Administrator"?
                               while (true) {
                                 try {
 
-                                  if (r['link'+l.toString()] == "")
+                                  if (r['link$l'] == "") {
                                     break;
-                                  else {
+                                  } else {
 
                                     link_cap.insert(
                                         count2,
-                                        snapshot.data!.docs[count3]['link'+l.toString()]
+                                        snapshot.data!.docs[count3]['link$l']
                                             .toString());
                                     link_l.insert(
                                         count2,
-                                        snapshot.data!.docs[count3]['link'+l1.toString()]
-                                            .toString());
-                                    date4.insert(
-                                        count2,
-                                        snapshot.data!.docs[count3]['link'+l2.toString()]
+                                        snapshot.data!.docs[count3]['link$l1']
                                             .toString());
 
                                     count2++;
-                                    l = l + 3;
+                                    l = l + 2;
                                     l1 = l + 1;
-                                    l2=l1+1;
                                   }
                                 } catch (e) {
                                   break;
                                 }
                               }
-                            } else
+                            } else {
                               count3++;
+                            }
                           }
                         }
                         if(del_3==true)
                         {
-                          int idx_link=index3;
+                          int idxLink=index3;
                           final res=snapshot.data!.docs.toList();
-                          for(var r in res!) {
+                          for(var r in res) {
                             if (r['uid'] == FirebaseAuth.instance.currentUser!.uid) {
 
                               while(true){
                                 // print(widget.index);
                                 // print(widget.count1);
-                                if(index3==count2)
+                                if(index3==count2) {
                                   break;
-                                else{
+                                } else{
 
                                   if(index3==(count2-1)) {
                                     FirebaseFirestore.instance.collection("Profile").doc(
                                         FirebaseAuth.instance.currentUser!.uid).update({
-                                      'link'+(3*index3).toString(): "",
-                                      'link'+((3*index3) + 1).toString(): "",
-                                      'link'+((3*index3) + 2).toString(): "",
+                                      'link${2*index3}': "",
+                                      'link${(2*index3) + 1}': "",
                                     });
                                     break;
                                   }
                                   else{
-                                    idx_link=idx_link+1;
+                                    idxLink=idxLink+1;
 
                                     FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
-                                      'link'+ (3*index3).toString():link_cap[idx_link].toString(),
-                                      'link'+((3*index3)+1).toString():link_l[idx_link].toString(),
-                                      'link'+((3*index3)+2).toString():date4[idx_link].toString(),
+                                      'link${2*index3}':link_cap[idxLink].toString(),
+                                      'link${(2*index3)+1}':link_l[idxLink].toString(),
                                     });
 
                                     index3++;}}
@@ -604,27 +551,26 @@ widget.r1=="Administrator"?
 
                             scrollDirection: Axis.vertical,
                             shrinkWrap: false,
-                            physics: BouncingScrollPhysics(),
+                            physics: const BouncingScrollPhysics(),
                             //padding: EdgeInsets.all(21),
                             itemCount: count2,
                             itemBuilder: (BuildContext context, int index) {
                               return Column(
                                 children: [
-                                  Container(
+                                  SizedBox(
                                     height: (70 / 872) * screenH,
                                     child: GestureDetector(
                                       onTap: () async {
                                         final url =
                                         Uri.parse(link_l[index]);
 
-                                        if (!await launchUrl(url))
-
+                                        if (!await launchUrl(url)) {
                                           throw Exception(
                                               'Could not launch $url');
+                                        }
                                       },
 
                                       child: Text(link_cap[index]),
-
 
                                       // Text(
                                       //   name[index],
@@ -634,7 +580,6 @@ widget.r1=="Administrator"?
                                       // ),
                                     ),
                                   ),
-                                  Text(date4[index]),
                                   // SizedBox.fromSize(size: Size(0,50),),
                                   role == "Administrator"
                                       ? ElevatedButton(
@@ -654,7 +599,7 @@ widget.r1=="Administrator"?
                                         //             delete_link(link_cap, link_l,
                                         //                 index, count2)));
                                       },
-                                      child: Text("Delete"))
+                                      child: const Text("Delete"))
                                       : Container(),
                                 ],
                               );

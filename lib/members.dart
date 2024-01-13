@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class members extends StatelessWidget{
@@ -12,6 +11,8 @@ class members extends StatelessWidget{
   var d=0.0;
   int s=0;
   var name;
+
+  members({super.key});
   @override
   Widget build(BuildContext context) {
     double screenW = MediaQuery.of(context).size.width;
@@ -19,7 +20,7 @@ class members extends StatelessWidget{
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
-        padding:  EdgeInsets.symmetric(vertical: 30),
+        padding:  const EdgeInsets.symmetric(vertical: 30),
         child: StreamBuilder(stream: FirebaseFirestore.instance.collection('Profile').snapshots(), builder: (context,snapshots){
           if(snapshots.hasData)
             {
@@ -60,7 +61,7 @@ class members extends StatelessWidget{
 
             }
           return ListView.builder(
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
               itemCount: s,
 
               itemBuilder: (BuildContext context,int index){
@@ -69,7 +70,7 @@ class members extends StatelessWidget{
 
 
             if (prsn[index*6]!=name && prsn[(index*6)+1]=="General member") {
-              return Container(
+              return SizedBox(
               height: (250/872)*screenH,
 
               child: Card(
@@ -78,7 +79,7 @@ class members extends StatelessWidget{
 
                 child: Column(
                   children: [
-                    SizedBox.fromSize(size: Size(0,20),),
+                    SizedBox.fromSize(size: const Size(0,20),),
                     Stack(
                       children: [
 
@@ -105,7 +106,7 @@ class members extends StatelessWidget{
 
 
 
-                          }, child: Text("Delete")),
+                          }, child: const Text("Delete")),
                         ),
                       ],
                     ),
@@ -118,7 +119,7 @@ class members extends StatelessWidget{
             }
             if(prsn[index*6]!=name && prsn[(index*6)+1]=="Administrator")
               {
-                return Container(
+                return SizedBox(
                   height: (250/872)*screenH,
 
                   child: Card(
@@ -128,7 +129,7 @@ class members extends StatelessWidget{
 
                     child: Column(
                       children: [
-                        SizedBox.fromSize(size: Size(0,20),),
+                        SizedBox.fromSize(size: const Size(0,20),),
                         Stack(
                           children: [
 
@@ -151,7 +152,7 @@ class members extends StatelessWidget{
                 );
               }
             if (prsn[index*6]!=name && prsn[(index*6)+1]=="Co-Administrator"){
-              return Container(
+              return SizedBox(
               height: (250/872)*screenH,
 
               child: Card(
@@ -161,7 +162,7 @@ class members extends StatelessWidget{
 
                 child: Column(
                   children: [
-                    SizedBox.fromSize(size: Size(0,20),),
+                    SizedBox.fromSize(size: const Size(0,20),),
                     Stack(
                       children: [
 
@@ -188,7 +189,7 @@ class members extends StatelessWidget{
 
 
 
-                          }, child: Text("Delete")),
+                          }, child: const Text("Delete")),
                         ),
                       ],
                     ),
@@ -199,14 +200,14 @@ class members extends StatelessWidget{
             );
             }
                 if (prsn[index*6]==name && prsn[(index*6)+1]=="General member") {
-                  return Container(
+                  return SizedBox(
                     height: (250/872)*screenH,
 
 
 
                     child: Card(
                       shape: RoundedRectangleBorder(
-                        side: BorderSide(
+                        side: const BorderSide(
                           color: Colors.black,
                         ),
                         borderRadius: BorderRadius.circular(12),
@@ -216,7 +217,7 @@ class members extends StatelessWidget{
 
                       child: Column(
                         children: [
-                          SizedBox.fromSize(size: Size(0,20),),
+                          SizedBox.fromSize(size: const Size(0,20),),
                           Stack(
                             children: [
 
@@ -240,13 +241,13 @@ class members extends StatelessWidget{
                 }
                 if(prsn[index*6]==name && prsn[(index*6)+1]=="Administrator")
                 {
-                  return Container(
+                  return SizedBox(
                     height: (250/872)*screenH,
 
 
                     child: Card(
                       shape: RoundedRectangleBorder(
-                          side: BorderSide(
+                          side: const BorderSide(
                             color: Colors.black,
                             width: 2,
                           ),
@@ -259,7 +260,7 @@ class members extends StatelessWidget{
 
                       child: Column(
                         children: [
-                          SizedBox.fromSize(size: Size(0,20),),
+                          SizedBox.fromSize(size: const Size(0,20),),
                           Stack(
                             children: [
 
@@ -283,13 +284,13 @@ class members extends StatelessWidget{
                   );
                 }
                 if (prsn[index*6]==name && prsn[(index*6)+1]=="Co-Administrator"){
-                  return Container(
+                  return SizedBox(
                     height: (250/872)*screenH,
 
 
                     child: Card(
                       shape: RoundedRectangleBorder(
-                          side: BorderSide(
+                          side: const BorderSide(
                             color: Colors.black,
                             width: 2,
 
@@ -302,7 +303,7 @@ class members extends StatelessWidget{
 
                       child: Column(
                         children: [
-                          SizedBox.fromSize(size: Size(0,20),),
+                          SizedBox.fromSize(size: const Size(0,20),),
                           Stack(
                             children: [
 
@@ -325,6 +326,7 @@ class members extends StatelessWidget{
                     ),
                   );
                 }
+                return null;
 
 
 
