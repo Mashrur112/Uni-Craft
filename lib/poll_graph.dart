@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class poll_graph extends StatelessWidget{
   var uid;
   poll_graph(this.uid);
-  var votes=[],total;
+  var votes=[],total,options=[];
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -18,6 +18,7 @@ class poll_graph extends StatelessWidget{
 
 
             votes=snapshots.data?.docs[0]['votes'];
+            options=snapshots.data?.docs[0]['options'];
             try {
               total=0;
               for (int i = 0; i < 3; i++) {
@@ -33,25 +34,34 @@ class poll_graph extends StatelessWidget{
 
         }
 
-            print(votes[2]);
+
 
           }
         return Center(
           child: Container(
             width: 400,
             height: 400,
-            color: Colors.red,
+            color: Colors.white,
             child: PieChart(
                 PieChartData(
                   centerSpaceRadius: 5,
                   borderData: FlBorderData(show: false),
                   sectionsSpace: 2,
                   sections: [
+                    votes[0]!='0'?
                     PieChartSectionData(
-                      value: ((int.parse(votes[0])/total)*100),color: Colors.blue,radius: 100),
-          PieChartSectionData(
-              value: ((int.parse(votes[1])/total)*100),color: Colors.yellow,radius: 100),
+                        title: options[0]+(":")+votes[0]+"votes",
+                        value: ((int.parse(votes[0])/total)*100),color: Colors.yellow,radius: 100):PieChartSectionData(
+                        value: ((int.parse(votes[0])/total)*100),color: Colors.yellow,radius: 100),
+                    votes[1]!='0'?
                     PieChartSectionData(
+                        title: options[1]+(":")+votes[1]+"votes",
+                        value: ((int.parse(votes[1])/total)*100),color: Colors.blue,radius: 100):PieChartSectionData(
+                        value: ((int.parse(votes[1])/total)*100),color: Colors.blue,radius: 100),
+                    votes[2]!='0'?
+                    PieChartSectionData(
+                        title: options[2]+(":")+votes[2]+"votes",
+                        value: ((int.parse(votes[2])/total)*100),color: Colors.white,radius: 100):PieChartSectionData(
                         value: ((int.parse(votes[2])/total)*100),color: Colors.white,radius: 100),
                   ]
 
