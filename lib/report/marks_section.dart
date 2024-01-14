@@ -26,12 +26,12 @@ class _marks_secState extends State<marks_sec> {
   var quiz = TextEditingController();
 
 
-  var quiz_m ;
+  var quiz_m ,mid_m,final_m;
 
 
   var mid = TextEditingController();
 
-  var mid_m = '0';
+
 
   var fina = TextEditingController();
 
@@ -58,9 +58,12 @@ class _marks_secState extends State<marks_sec> {
                   {
                     try {
                       quiz_m = r['course'][widget.temp[1]]['quiz'];
+                      mid_m = r['course'][widget.temp[1]]['mid'];
+                      final_m = r['course'][widget.temp[1]]['final'];
                     }catch(e)
         {
           quiz_m='0';
+          mid_m=final_m='0';
         }
                   }
               }
@@ -104,8 +107,80 @@ class _marks_secState extends State<marks_sec> {
                 color: Colors.red,
                 child: Center(child: Text("Quiz marks    $quiz_m",style: TextStyle(color: Colors.white,fontSize: 20),)),
               ),
+            ),
+            GestureDetector(
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (ctx) => AlertDialog(
+                    actions: <Widget>[
+                      TextField(
+                        controller: mid,
+                        keyboardType: TextInputType.number,
+                      ),
+                      ElevatedButton(
+                          onPressed: () {
+
+
+                            widget.temp[0][widget.temp[1]]['mid']=mid.text.toString();
+                            FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
+                              'course':widget.temp[0],
+                            });
+
+
+                            setState(() {
+                              Navigator.pop(context);
+                            });
+                          },
+                          child: Text("Add"))
+                    ],
+                  ),
+                );
+              },
+              child: Container(
+                height: 0.07 * screenH,
+                width: screenW,
+                color: Colors.blue,
+                child: Center(child: Text("Mid marks    $mid_m",style: TextStyle(color: Colors.white,fontSize: 20),)),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (ctx) => AlertDialog(
+                    actions: <Widget>[
+                      TextField(
+                        controller: fina,
+                        keyboardType: TextInputType.number,
+                      ),
+                      ElevatedButton(
+                          onPressed: () {
+
+
+                            widget.temp[0][widget.temp[1]]['final']=fina.text.toString();
+                            FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
+                              'course':widget.temp[0],
+                            });
+
+
+                            setState(() {
+                              Navigator.pop(context);
+                            });
+                          },
+                          child: Text("Add"))
+                    ],
+                  ),
+                );
+              },
+              child: Container(
+                height: 0.07 * screenH,
+                width: screenW,
+                color: Colors.green,
+                child: Center(child: Text("Final marks    $final_m",style: TextStyle(color: Colors.white,fontSize: 20),)),
+              ),
             )
-            
+
           ],
         );
 
