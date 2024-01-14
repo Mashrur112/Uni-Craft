@@ -186,7 +186,7 @@ class _study_MaterialsState extends State<study_Materials> {
                               0, ((50 / 872) * screenH), 0, 0),
                           child: GridView.builder(
                             gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
+                            const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 3,
                               mainAxisSpacing: 5,
                               crossAxisSpacing: 0,
@@ -206,7 +206,7 @@ class _study_MaterialsState extends State<study_Materials> {
                                     child: GestureDetector(
                                       onTap: () async {
                                         final url =
-                                            Uri.parse(image_link[index]);
+                                        Uri.parse(image_link[index]);
                                         if (!await launchUrl(url)) {
                                           throw Exception(
                                               'Could not launch $url');
@@ -216,11 +216,11 @@ class _study_MaterialsState extends State<study_Materials> {
                                       child: CachedNetworkImage(
                                         imageUrl: image_link[index],
                                         progressIndicatorBuilder: (context, url,
-                                                downloadProgress) =>
+                                            downloadProgress) =>
                                             Center(
                                                 child: Text(image_name[index])),
                                         errorWidget: (context, url, error) =>
-                                            const Icon(Icons.error),
+                                        const Icon(Icons.error),
                                       ),
 
                                       // Text(
@@ -234,31 +234,31 @@ class _study_MaterialsState extends State<study_Materials> {
                                   // SizedBox.fromSize(size: Size(0,50),),
                                   role == "Administrator"
                                       ? ElevatedButton(
-                                          onPressed: () {
-                                            for(int i=0;i<count1;i++)
-                                              {
-                                                if(image_name[index]==name[i])
-                                                  {
-                                                    index1=i;
-                                                    break;
-                                                  }
+                                      onPressed: () {
+                                        for(int i=0;i<count1;i++)
+                                        {
+                                          if(image_name[index]==name[i])
+                                          {
+                                            index1=i;
+                                            break;
+                                          }
 
 
-                                              }
-                                            // int total=count1-index1-1;
-                                            delete1(index1);
-                                            setState(() {
-                                              del_1=true;
+                                        }
+                                        // int total=count1-index1-1;
+                                        delete1(index1);
+                                        setState(() {
+                                          del_1=true;
 
-                                            });
-                                            // Navigator.push(
-                                            //     context,
-                                            //     MaterialPageRoute(
-                                            //         builder: (context) =>
-                                            //             delete_file(name, link,
-                                            //                 index1, count1)));
-                                          },
-                                          child: const Text("Delete"))
+                                        });
+                                        // Navigator.push(
+                                        //     context,
+                                        //     MaterialPageRoute(
+                                        //         builder: (context) =>
+                                        //             delete_file(name, link,
+                                        //                 index1, count1)));
+                                      },
+                                      child: const Text("Delete"))
                                       : Container(),
                                 ],
                               );
@@ -393,7 +393,7 @@ class _study_MaterialsState extends State<study_Materials> {
                                     child: GestureDetector(
                                       onTap: () async {
                                         final url =
-                                            Uri.parse(file_link[index]);
+                                        Uri.parse(file_link[index]);
                                         if (!await launchUrl(url)) {
                                           throw Exception(
                                               'Could not launch $url');
@@ -413,32 +413,32 @@ class _study_MaterialsState extends State<study_Materials> {
                                   // SizedBox.fromSize(size: Size(0,50),),
                                   role == "Administrator"
                                       ? ElevatedButton(
-                                          onPressed: () {
-                                            for(int i=0;i<count1;i++)
-                                            {
-                                              if(file_name[index]==name[i])
-                                              {
-                                                index1=i;
-                                                break;
-                                              }
+                                      onPressed: () {
+                                        for(int i=0;i<count1;i++)
+                                        {
+                                          if(file_name[index]==name[i])
+                                          {
+                                            index1=i;
+                                            break;
+                                          }
 
 
-                                            }
-                                            delete1(index1);
-                                            setState(() {
-                                              del_2=true;
+                                        }
+                                        delete1(index1);
+                                        setState(() {
+                                          del_2=true;
 
-                                            });
+                                        });
 
 
-                                            // Navigator.push(
-                                            //     context,
-                                            //     MaterialPageRoute(
-                                            //         builder: (context) =>
-                                            //             delete_file(name, link,
-                                            //                 index1, count1)));
-                                          },
-                                          child: const Text("Delete"))
+                                        // Navigator.push(
+                                        //     context,
+                                        //     MaterialPageRoute(
+                                        //         builder: (context) =>
+                                        //             delete_file(name, link,
+                                        //                 index1, count1)));
+                                      },
+                                      child: const Text("Delete"))
                                       : Container(),
                                 ],
                               );

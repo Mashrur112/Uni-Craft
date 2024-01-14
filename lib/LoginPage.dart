@@ -1,4 +1,5 @@
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:provider/provider.dart';
 import 'package:uni_craft/Forgotpass.dart';
 import 'package:uni_craft/main.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -8,6 +9,7 @@ import 'package:uni_craft/Homepage.dart';
 import 'package:uni_craft/auth-page.dart';
 import 'package:uni_craft/register.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'chat/services/auth_services.dart';
 import 'firebase_options.dart';
 
 class Login extends StatefulWidget {
@@ -19,6 +21,8 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   bool _isLoggedIn = false;
   Map _user = {};
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
 //fb log in
 
@@ -53,6 +57,24 @@ class _LoginState extends State<Login> {
 
   var passString = TextEditingController();
   void Signin() async {
+
+    //change from here
+    final authService = Provider.of<AuthService>(context, listen: false);
+
+    try {
+      await authService.signInWithEmailAndPassword(
+        emailController.text.trim(),
+        passwordController.text.trim(),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.toString()),
+        ),
+      );
+    }
+    //to here
+
     showDialog(
         context: context,
         builder: (context) {
