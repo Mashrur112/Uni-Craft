@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:uni_craft/Stopwatch.dart';
 import 'package:uni_craft/chat.dart';
+import 'package:uni_craft/chat/chat_home.dart';
 import 'package:uni_craft/createPoll.dart';
 import 'package:uni_craft/report/add_course.dart';
 import 'package:uni_craft/study_Materials.dart';
@@ -807,7 +808,7 @@ class _DashboardState extends State<Dashboard> {
             child: GestureDetector(
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ChatApp()));
+                    MaterialPageRoute(builder: (context) => ChatHome()));
               },
               child: Icon(
                 Icons.chat_outlined,
