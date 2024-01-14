@@ -44,8 +44,9 @@ class _AuthpageState2 extends State<Authpage2> {
                     .snapshots(),
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
 
-
+if(snapshot.hasData){
                   final res = snapshot.data!.docs.toList();
+
                   for (var r in res) {
                     if (r['uid'] == currentUser.currentUser!.uid) {
                       role = r['role'];
@@ -59,7 +60,7 @@ class _AuthpageState2 extends State<Authpage2> {
                       uid_admin = i['uid'];
                       break;
                     }
-                  }
+                  }}
 
                   if (snapshot.hasData &&
                       snapshot.data!.docs.length >= 1 &&

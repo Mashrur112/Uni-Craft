@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uni_craft/report/marks_section.dart';
+import 'package:uni_craft/report/report_graph.dart';
 
 class add_course extends StatefulWidget{
   @override
@@ -121,6 +122,10 @@ class _add_courseState extends State<add_course> {
                         ],
                       ));
                     }),
+                ElevatedButton(onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>report_graph()));
+
+                }, child: Text("Graph"))
               ],
             );
           })
