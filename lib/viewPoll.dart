@@ -17,7 +17,6 @@ class ViewPoll extends StatefulWidget {
 class _ViewPollState extends State<ViewPoll> {
   var caption, option, vote, poll_id, poll_idIdx;
   var option3 = false;
-
   var poll = false;
   bool v_poll = true;
 
@@ -29,6 +28,7 @@ class _ViewPollState extends State<ViewPoll> {
               .collection("Profile")
               .where('uid', isEqualTo: widget.uid)
               .snapshots(),
+
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               int i;
@@ -46,7 +46,6 @@ class _ViewPollState extends State<ViewPoll> {
                 }
 
                 option = snapshot.data?.docs[0]['options'];
-
                 caption = snapshot.data?.docs[0]['caption'];
                 vote = snapshot.data?.docs[0]['votes'];
                 try {
@@ -84,8 +83,8 @@ class _ViewPollState extends State<ViewPoll> {
                                   .collection("Profile")
                                   .doc(widget.uid)
                                   .update({
-                                'votes': vote,
-                                'poll_id': poll_id,
+                                  'votes': vote,
+                                  'poll_id': poll_id,
                               });
                             }
                           },
@@ -108,8 +107,8 @@ class _ViewPollState extends State<ViewPoll> {
                                   .collection("Profile")
                                   .doc(widget.uid)
                                   .update({
-                                'votes': vote,
-                                'poll_id': poll_id,
+                                  'votes': vote,
+                                  'poll_id': poll_id,
                               });
                             }
                           },
@@ -134,11 +133,12 @@ class _ViewPollState extends State<ViewPoll> {
                                       .collection("Profile")
                                       .doc(widget.uid)
                                       .update({
-                                    'votes': vote,
-                                    'poll_id': poll_id,
+                                      'votes': vote,
+                                      'poll_id': poll_id,
                                   });
                                 }
                               },
+
                               child: Text(
                                 option[2],
                                 style: TextStyle(fontSize: 22),
@@ -150,11 +150,12 @@ class _ViewPollState extends State<ViewPoll> {
                                 .collection("Profile")
                                 .doc(widget.uid)
                                 .update({
-                              'options': FieldValue.delete(),
-                              'votes': FieldValue.delete(),
-                              'poll_id': FieldValue.delete(),
+                                'options': FieldValue.delete(),
+                                'votes': FieldValue.delete(),
+                                'poll_id': FieldValue.delete(),
                             });
                           },
+
                           child: Text("Delete pole")),
                       ElevatedButton(onPressed: (){
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>poll_graph(widget.uid)));

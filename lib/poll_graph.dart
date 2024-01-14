@@ -33,10 +33,8 @@ class poll_graph extends StatelessWidget{
           }
 
         }
-
-
-
           }
+
         return Center(
           child: Container(
             width: 400,
