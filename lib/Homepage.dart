@@ -3,11 +3,18 @@ import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
+
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
+
+
+
 import 'package:uni_craft/resources/data.dart';
 import 'package:uni_craft/utils.dart';
+
+
 
 
 final formKey = GlobalKey<FormState>();
@@ -32,7 +39,7 @@ class _HomepageState extends State<Homepage> {
   bool check_for_save = false;
   var x = 0;
   var data = 1;
-  var y;
+  var y=null;
   int c=0;
   var val_join=false;
   var join_check=false;
@@ -70,9 +77,9 @@ class _HomepageState extends State<Homepage> {
     double screenH = MediaQuery.of(context).size.height;
     // TODO: implement build
     return Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: const Color(0xffb8d8d8),
         appBar: AppBar(
-          backgroundColor: Colors.black87,
+          backgroundColor:const Color(0xffb8d8d8),
           actions: [
             IconButton(
                 onPressed: () {
@@ -85,7 +92,7 @@ class _HomepageState extends State<Homepage> {
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
-              SizedBox(
+              Container(
                 height: 0,
                 child: StreamBuilder(
                   stream: FirebaseFirestore.instance
@@ -93,9 +100,10 @@ class _HomepageState extends State<Homepage> {
                       .where('uid', isEqualTo: currentUser.currentUser!.uid)
                       .snapshots(),
                   builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if(snapshot.hasData){
                     data = 1;
 
-                    data = snapshot.data!.docs.length;
+                    data = snapshot.data!.docs.length;}
                     return const Text("Null");
 
                     //data1=snapshot.data!.docs[0]['uid'];
@@ -115,7 +123,7 @@ class _HomepageState extends State<Homepage> {
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 25,
-                    color: Colors.white),
+                    color: Colors.black),
               ),
               SizedBox.fromSize(size: const Size(0, 21 / 872) * screenH),
               Stack(
@@ -129,7 +137,7 @@ class _HomepageState extends State<Homepage> {
                           radius: 51,
                           backgroundImage:
                               AssetImage("assets/images/profile.png"),
-                          backgroundColor: Colors.grey,
+                          backgroundColor:  Color(0xff1b6e70),
                         ),
                   Positioned(
                       bottom: -5,
@@ -138,7 +146,7 @@ class _HomepageState extends State<Homepage> {
                           onPressed: selectImage,
                           icon: const Icon(
                             Icons.add_a_photo,
-                            color: Colors.white,
+                            color:  Color(0xffe0feff),
                           ))),
                 ],
               ),
@@ -146,7 +154,8 @@ class _HomepageState extends State<Homepage> {
               DropdownButton(
                 // Initial Value
                 value: dropdownvalue,
-                dropdownColor: Colors.black,
+                dropdownColor: const Color(0xffb7eced),
+                borderRadius: BorderRadius.circular(12),
 
                 // Down Arrow Icon
                 icon: const Icon(Icons.keyboard_arrow_down),
@@ -157,7 +166,7 @@ class _HomepageState extends State<Homepage> {
                     value: items,
                     child: Text(
                       items,
-                      style: const TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.black),
                     ),
                   );
                 }).toList(),
@@ -177,31 +186,33 @@ class _HomepageState extends State<Homepage> {
                       padding: EdgeInsets.symmetric(
                           horizontal: (10 / 372) * screenW),
                       child: TextFormField(
-                        style: const TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.black),
                         controller: name,
                         decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(14),
+                              borderRadius: BorderRadius.circular(12),
                               borderSide: const BorderSide(
-                                color: Colors.white70,
+                                width: 2,
+                                color:  Color(0xff4f6367),
                               )),
                           enabledBorder: UnderlineInputBorder(
                               borderRadius: BorderRadius.circular(1),
+
                               borderSide: const BorderSide(
-                                color: Colors.white70,
+                                width: 2,
+                                color: Color(0xff4f6367),
                               )),
                           label: const Text(
                             "Name",
-                            style: TextStyle(color: Colors.white70),
+                            style: TextStyle(color: Colors.black),
                           ),
                         ),
                         validator: (value) {
                           if (value!.isEmpty ||
                               !RegExp(r'[a-zA-Z]').hasMatch(value)) {
                             return "Enter Your name ";
-                          } else {
+                          } else
                             return null;
-                          }
                         },
                       ),
                     ),
@@ -210,30 +221,31 @@ class _HomepageState extends State<Homepage> {
                       padding: EdgeInsets.symmetric(
                           horizontal: (10 / 372) * screenW),
                       child: TextFormField(
-                        style: const TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.black),
                         controller: age,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(14),
+                              borderRadius: BorderRadius.circular(12),
                               borderSide: const BorderSide(
-                                color: Colors.white70,
+                                width: 2,
+                                color:  Color(0xff4f6367),
                               )),
                           enabledBorder: UnderlineInputBorder(
                               borderRadius: BorderRadius.circular(1),
                               borderSide: const BorderSide(
-                                color: Colors.white70,
+                                width: 2,
+                                color:  Color(0xff4f6367),
                               )),
                           label: const Text("Age: ",
-                              style: TextStyle(color: Colors.white70)),
+                              style: TextStyle(color: Colors.black)),
                         ),
                         validator: (value) {
                           if (value!.isEmpty ||
                               !RegExp(r'[0-9]').hasMatch(value)) {
                             return "Enter Your age ";
-                          } else {
+                          } else
                             return null;
-                          }
                         },
                       ),
                     ),
@@ -242,32 +254,33 @@ class _HomepageState extends State<Homepage> {
                       padding: EdgeInsets.symmetric(
                           horizontal: (10 / 372) * screenW),
                       child: TextFormField(
-                        style: const TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.black),
                         controller: email,
                         decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(14),
+                              borderRadius: BorderRadius.circular(12),
                               borderSide: const BorderSide(
-                                color: Colors.white70,
+                                width: 2,
+                                color:  Color(0xff4f6367),
                               )),
                           enabledBorder: UnderlineInputBorder(
                               borderRadius: BorderRadius.circular(1),
                               borderSide: const BorderSide(
-                                color: Colors.white70,
+                                width: 2,
+                                color:  Color(0xff4f6367),
                               )),
                           label: const Text("Enter your Email address",
-                              style: TextStyle(color: Colors.white70)),
+                              style: TextStyle(color: Colors.black)),
                           hintText: email1,
                           hintStyle:
-                              const TextStyle(color: Colors.white54, fontSize: 15),
+                          const TextStyle(color: Colors.black26, fontSize: 15),
                         ),
                         validator: (value) {
                           if (value!.isEmpty ||
                               !RegExp(r'[@]*[.]').hasMatch(value)) {
                             return "Enter Your Email address ";
-                          } else {
+                          } else
                             return null;
-                          }
                         },
                       ),
                     ),
@@ -276,74 +289,78 @@ class _HomepageState extends State<Homepage> {
                       padding: EdgeInsets.symmetric(
                           horizontal: (10 / 372) * screenW),
                       child: TextFormField(
-                        style: const TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.black),
                         controller: roll,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(14),
+                              borderRadius: BorderRadius.circular(12),
                               borderSide: const BorderSide(
-                                color: Colors.white70,
+                                width: 2,
+                                color:  Color(0xff4f6367),
                               )),
                           enabledBorder: UnderlineInputBorder(
                               borderRadius: BorderRadius.circular(1),
                               borderSide: const BorderSide(
-                                color: Colors.white70,
+                                width: 2,
+                                color:  Color(0xff4f6367),
                               )),
                           label: const Text("Roll Number",
-                              style: TextStyle(color: Colors.white70)),
+                              style: TextStyle(color: Colors.black)),
                         ),
                         validator: (value) {
                           if (value!.isEmpty ||
                               !RegExp(r'[0-9]').hasMatch(value)) {
                             return "Enter Your roll number ";
-                          } else {
+                          } else
                             return null;
-                          }
                         },
                       ),
                     ),
                     SizedBox.fromSize(size: Size(0, (21 / 872) * screenH)),
                     dropdownvalue == "Administrator"
-                        ? SizedBox(
+                        ? Container(
                             height: (50 / 872) * screenH,
                             child: x != 0
                                 ? Text(
-                                    "Join code:$x",
-                                    style: const TextStyle(color: Colors.white),
+                                    "Join code:" + x.toString(),
+                                    style: TextStyle(color: Colors.grey.shade800,fontWeight: FontWeight.bold,fontSize: 19),
                                   )
-                                : const Text("Please Generate Code",
-                                    style: TextStyle(color: Colors.white)),
+                                : Text("Please Generate Code",
+                                    style: TextStyle(color: Colors.grey.shade800,fontWeight: FontWeight.bold,fontSize: 19),
+                            )
                           )
                         : Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: (10 / 372) * screenW),
                             child: TextFormField(
-                              style: const TextStyle(color: Colors.white),
+                              style: const TextStyle(color: Colors.black),
                               controller: join_code,
                               decoration: InputDecoration(
                                 focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(14),
+                                    borderRadius: BorderRadius.circular(12),
                                     borderSide: const BorderSide(
-                                      color: Colors.white70,
+                                      width: 2,
+                                      color:   Color(0xff4f6367),
                                     )),
                                 enabledBorder: UnderlineInputBorder(
                                     borderRadius: BorderRadius.circular(1),
                                     borderSide: const BorderSide(
-                                      color: Colors.white70,
+                                      width: 2,
+                                      color:  Color(0xff4f6367),
                                     )),
                                 label: const Text("joining code",
-                                    style: TextStyle(color: Colors.white70)),
+                                    style: TextStyle(color: Colors.black)),
                               ),
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   return "Enter Your joining code  ";
-                                } else {
+                                } else
                                   return null;
-                                }
                               },
                             ),
                           ),
+                   // SizedBox.fromSize(size:Size(0,0.05*screenH)),
                   ],
                 ),
               ),
@@ -366,7 +383,8 @@ class _HomepageState extends State<Homepage> {
                     {
                       c=0;
                       final res=snapshot.data?.docs.toList();
-                      print(val_join);
+
+
 
                       for(var r in res!) {
                         c++;
@@ -402,55 +420,66 @@ class _HomepageState extends State<Homepage> {
 
                   })
                   : const Center(),
-              SizedBox.fromSize(size: Size(0, (21 / 872) * screenH)),
+              //SizedBox.fromSize(size: Size(0, (5 / 872) * screenH)),
               dropdownvalue == "Administrator"
-                  ? ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          if (x == 0) x = UniqueKey().hashCode;
-                        });
+                  ? Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor:  const Color(0xff35797a),
+                          elevation: 6,
+                          shadowColor: Colors.grey,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          )),
+
+                          onPressed: () {
+                            setState(() {
+                              if (x == 0) x = UniqueKey().hashCode;
+                            });
 
 
-                      },
-                      child: const Text("Generate code"))
-                  : const Center(),
+                          },
+                          child:const Text("Generate Code",style:TextStyle(color:Colors.white,fontWeight: FontWeight.bold, fontSize: 18),)),
+                     SizedBox.fromSize(size: Size(0.06*screenW,0),),
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor:  const Color(0xff35797a),
+                              elevation: 6,
+                              shadowColor: Colors.grey,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              )),
+                          onPressed: () async {
+                            // setState(() {
+                            //
+                            //
+                            // });
+                            formKey.currentState!.validate();
 
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      elevation: 6,
-                      shadowColor: Colors.grey,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(21),
-                      )),
-                  onPressed: () async {
-                    // setState(() {
-                    //
-                    //
-                    // });
-                    formKey.currentState!.validate();
+                            //Navigator.push(context, MaterialPageRoute(builder: (context)=>Dashboard()));
+                            // showDialog(
+                            //     context: context,
+                            //     builder: (context) {
+                            //       return AlertDialog(
+                            //         title: Text(
+                            //           "sdfsdf",
+                            //         ),
+                            //       );
+                            //     });
+                            // Navigator.pop(context);
+                            // Navigator.push(context,MaterialPageRoute(builder: (context)=>Dashboard()) );
 
-                    //Navigator.push(context, MaterialPageRoute(builder: (context)=>Dashboard()));
-                    // showDialog(
-                    //     context: context,
-                    //     builder: (context) {
-                    //       return AlertDialog(
-                    //         title: Text(
-                    //           "sdfsdf",
-                    //         ),
-                    //       );
-                    //     });
-                    // Navigator.pop(context);
-                    // Navigator.push(context,MaterialPageRoute(builder: (context)=>Dashboard()) );
-
-                    try {
-                      final result = await InternetAddress.lookup('google.com');
-                      if (result.isNotEmpty &&
-                          result[0].rawAddress.isNotEmpty) {
-                        check_for_save = true;
-                      }
-                    } on SocketException catch (_) {
-                      check_for_save = false;
-                    }
+                            try {
+                              final result = await InternetAddress.lookup('google.com');
+                              if (result.isNotEmpty &&
+                                  result[0].rawAddress.isNotEmpty) {
+                                check_for_save = true;
+                              }
+                            } on SocketException catch (_) {
+                              check_for_save = false;
+                            }
 
 
 
@@ -460,113 +489,280 @@ class _HomepageState extends State<Homepage> {
 
 
 //print (data);
-                    //print (data1);
-                    if (data == 0 && check_for_save && formKey.currentState!.validate()) {
+                            //print (data1);
+                            if (data == 0 && check_for_save && formKey.currentState!.validate()) {
 
 
-                      if (x == 0 && dropdownvalue == 'Administrator') {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return const AlertDialog(
-                                elevation: 51,
-                                shadowColor: Colors.black26,
-                                icon: Icon(Icons.warning_amber),
-                                iconColor: Colors.red,
-                                backgroundColor: Colors.blueGrey,
-                                title: Text(
-                                  "Please Generate a Code",
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              );
-                            });
-                      }
-                      else if(val_join==false && dropdownvalue!="Administrator")
-                        {
+                              if (x == 0 && dropdownvalue == 'Administrator') {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return const AlertDialog(
+                                        elevation: 51,
+                                        shadowColor: Colors.black26,
+                                        icon:  Icon(Icons.warning_amber),
+                                        iconColor:  Color(0xffff8080),
+                                        backgroundColor:   Color(0xff35797a),
+                                        title:  Text(
+                                          "Please Generate a Code",
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      );
+                                    });
+                              }
+                              else if(val_join==false && dropdownvalue!="Administrator")
+                              {
 
-                        showDialog(
-                        context: context,
-                        builder: (context) {
-                        return const AlertDialog(
-                        elevation: 51,
-                        shadowColor: Colors.black26,
-                        icon: Icon(Icons.warning_amber),
-                        iconColor: Colors.red,
-                        backgroundColor: Colors.blueGrey,
-                        title: Text(
-                        "Wrong joining code, Try again",
-                        style: TextStyle(color: Colors.white),
-                        ),
-                        );
-                        });
-
-
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return const AlertDialog(
+                                        elevation: 51,
+                                        shadowColor: Colors.black26,
+                                        icon: Icon(Icons.warning_amber),
+                                        iconColor: Color(0xffff8080),
+                                        backgroundColor:  Color(0xff35797a),
+                                        title: Text(
+                                          "Wrong joining code, Try again",
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      );
+                                    });
 
 
 
+
+
+                              }
+
+                              else if (_image == null) {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return const AlertDialog(
+                                        elevation: 51,
+                                        shadowColor: Colors.black26,
+                                        icon: Icon(Icons.warning_amber),
+                                        iconColor: Color(0xffff8080),
+                                        backgroundColor:  Color(0xff35797a),
+                                        title: Text(
+                                          "Add an Image",
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      );
+                                    });
+                              } else {
+                                if (dropdownvalue == 'Choose a ROLE') {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return const AlertDialog(
+                                          elevation: 51,
+                                          shadowColor: Colors.black26,
+                                          icon:  Icon(Icons.warning_amber),
+                                          iconColor:  Color(0xffff8080),
+                                          backgroundColor:   Color(0xff35797a),
+                                          title:  Text(
+                                            "Please select a role",
+                                            style: TextStyle(color: Colors.white),
+                                          ),
+                                        );
+                                      });
+                                } else {
+
+
+                                  var name1 = name.text;
+                                  var age1 = age.text;
+                                  var roll1 = roll.text;
+                                  var email1 = email.text;
+
+
+                                  if(dropdownvalue=='Administrator'){
+
+
+                                     await StoreData().savedData(
+
+                                      name: name1,
+                                      age: age1,
+                                      file: _image!,
+                                      roll: roll1,
+                                      email: email1,
+                                      role: dropdownvalue,
+
+                                      code: x,
+                                    );
+                                    FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
+                                      '0':"",
+                                      '1':"",
+                                    });
+                                  }
+                                  else{
+                                    await StoreData().savedData(
+
+                                      name: name1,
+                                      age: age1,
+                                      file: _image!,
+                                      roll: roll1,
+                                      email: email1,
+                                      role: dropdownvalue,
+
+                                      code: y,
+                                    );
+                                  }
+
+
+                                }
+                              }
+                            }
+                          },
+                          child: const Text(
+                            "Save Profile",
+                            style: TextStyle(color:Colors.white,fontWeight: FontWeight.bold, fontSize: 19),
+                          )),
+
+                    ],
+                  )
+                  :
+
+              Padding(
+                padding:  EdgeInsets.symmetric(vertical: 0.05*screenH),
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor:  const Color(0xff35797a),
+                        elevation: 6,
+                        shadowColor: Colors.grey,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        )),
+                    onPressed: () async {
+                      // setState(() {
+                      //
+                      //
+                      // });
+                      formKey.currentState!.validate();
+
+                      //Navigator.push(context, MaterialPageRoute(builder: (context)=>Dashboard()));
+                      // showDialog(
+                      //     context: context,
+                      //     builder: (context) {
+                      //       return AlertDialog(
+                      //         title: Text(
+                      //           "sdfsdf",
+                      //         ),
+                      //       );
+                      //     });
+                      // Navigator.pop(context);
+                      // Navigator.push(context,MaterialPageRoute(builder: (context)=>Dashboard()) );
+
+                      try {
+                        final result = await InternetAddress.lookup('google.com');
+                        if (result.isNotEmpty &&
+                            result[0].rawAddress.isNotEmpty) {
+                          check_for_save = true;
                         }
+                      } on SocketException catch (_) {
+                        check_for_save = false;
+                      }
 
-                      else if (_image == null) {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return const AlertDialog(
-                                elevation: 51,
-                                shadowColor: Colors.black26,
-                                icon: Icon(Icons.warning_amber),
-                                iconColor: Colors.red,
-                                backgroundColor: Colors.blueGrey,
-                                title: Text(
-                                  "Add an Image",
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              );
-                            });
-                      } else {
-                        if (dropdownvalue == 'Choose a ROLE') {
+
+
+
+
+
+
+
+                //print (data);
+                      //print (data1);
+                      if (data == 0 && check_for_save && formKey.currentState!.validate()) {
+
+
+                        if (x == 0 && dropdownvalue == 'Administrator') {
                           showDialog(
                               context: context,
                               builder: (context) {
                                 return const AlertDialog(
                                   elevation: 51,
                                   shadowColor: Colors.black26,
-                                  icon: Icon(Icons.warning_amber),
-                                  iconColor: Colors.red,
-                                  backgroundColor: Colors.blueGrey,
-                                  title: Text(
-                                    "Please select a role",
+                                  icon:  Icon(Icons.warning_amber),
+                                  iconColor:  Color(0xffff8080),
+                                  backgroundColor:   Color(0xff35797a),
+                                  title:  Text(
+                                    "Please Generate a Code",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                );
+                              });
+                        }
+                        else if(val_join==false && dropdownvalue!="Administrator")
+                          {
+
+                          showDialog(
+                          context: context,
+                          builder: (context) {
+                          return const AlertDialog(
+                          elevation: 51,
+                          shadowColor: Colors.black26,
+                          icon:  Icon(Icons.warning_amber),
+                            iconColor:  Color(0xffff8080),
+                            backgroundColor:   Color(0xff35797a),
+                          title:  Text(
+                          "Wrong joining code, Try again",
+                          style: TextStyle(color: Colors.white),
+                          ),
+                          );
+                          });
+
+
+
+
+
+                          }
+
+                        else if (_image == null) {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return const AlertDialog(
+                                  elevation: 51,
+                                  shadowColor: Colors.black26,
+                                  icon:  Icon(Icons.warning_amber),
+                                  iconColor:  Color(0xffff8080),
+                                  backgroundColor:   Color(0xff35797a),
+                                  title:  Text(
+                                    "Add an Image",
                                     style: TextStyle(color: Colors.white),
                                   ),
                                 );
                               });
                         } else {
-                          var name1 = name.text;
-                          var age1 = age.text;
-                          var roll1 = roll.text;
-                          var email1 = email.text;
+                          if (dropdownvalue == 'Choose a ROLE') {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return const AlertDialog(
+                                    elevation: 51,
+                                    shadowColor: Colors.black26,
+                                    icon:  Icon(Icons.warning_amber),
+                                    iconColor:  Color(0xffff8080),
+                                    backgroundColor:   Color(0xff35797a),
+                                    title:  Text(
+                                      "Please select a role",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  );
+                                });
+                          } else {
+                            const CircularProgressIndicator();
+                            var name1 = name.text;
+                            var age1 = age.text;
+                            var roll1 = roll.text;
+                            var email1 = email.text;
 
 
-                          if(dropdownvalue=='Administrator'){
+                            if(dropdownvalue=='Administrator'){
 
 
-                          String resp = await StoreData().savedData(
-
-                            name: name1,
-                            age: age1,
-                            file: _image!,
-                            roll: roll1,
-                            email: email1,
-                            role: dropdownvalue,
-
-                            code: x,
-                          );
-                          FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
-                            '0':"",
-                            '1':"",
-                          });
-                          }
-                          else{
-                            String resp = await StoreData().savedData(
+                             await StoreData().savedData(
 
                               name: name1,
                               age: age1,
@@ -575,18 +771,36 @@ class _HomepageState extends State<Homepage> {
                               email: email1,
                               role: dropdownvalue,
 
-                              code: y,
+                              code: x,
                             );
-                          }
+                            FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
+                              '0':"",
+                              '1':"",
+                            });
+                            }
+                            else{
+                               await StoreData().savedData(
 
+                                name: name1,
+                                age: age1,
+                                file: _image!,
+                                roll: roll1,
+                                email: email1,
+                                role: dropdownvalue,
+
+                                code: y,
+                              );
+                            }
+
+                          }
                         }
                       }
-                    }
-                  },
-                  child: const Text(
-                    "Save Profile",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                  )),
+                    },
+                    child: const Text(
+                      "Save Profile",
+                      style: TextStyle(color:Colors.white,fontWeight: FontWeight.bold, fontSize: 20),
+                    )),
+              ),
             ],
           ),
         ));

@@ -2,143 +2,217 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:uni_craft/report/marks_section.dart';
+import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
-class add_course extends StatefulWidget{
+import 'Homepage.dart';
+
+class add_notice extends StatefulWidget {
   @override
-  State<add_course> createState() => _add_courseState();
+  State<add_notice> createState() => _add_noticeState();
 }
 
-class _add_courseState extends State<add_course> {
-  var course_n=TextEditingController();
+class _add_noticeState extends State<add_notice> {
+  var text = TextEditingController();
 
-  List course_name=[];
+  var caption = TextEditingController();
 
-  var join_code;
+  var count = "";
+  int c = 0;
+  var strm_opn=false;
+  String? string;
+
+
+
 
   @override
   Widget build(BuildContext context) {
     double screenW = MediaQuery.of(context).size.width;
     double screenH = MediaQuery.of(context).size.height;
-    // TODO: implement build
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Report",
-          style: TextStyle(
-            color: Colors.blueGrey,
-            fontWeight: FontWeight.bold,
-            fontSize: 35,
-          ),),
-      ),
-      body:Column(
-        children: [
-          StreamBuilder(stream: FirebaseFirestore.instance.collection("Profile").snapshots(), builder: (context,snapshots){
-            if(snapshots.hasData)
-              {
-                var res=snapshots.data?.docs.toList();
+      backgroundColor: Colors.black,
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            //mainAxisAlignment: MainAxisAlignment.center,
 
-                for(var r in res!)
-                  {
-                    if(r['uid']==FirebaseAuth.instance.currentUser!.uid)
-                      {
-                        try{
-                          course_name=r['course'];
-                        }catch(e){
+            children: [
+              StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection("Profile")
+                      .snapshots(),
+                  builder: (context, snapshots) {
+                    if (snapshots.hasData && strm_opn==true) {
+                      final res = snapshots.data!.docs.toList();
+                      for (var r in res) {
+                        if (r['uid'] ==
+                            FirebaseAuth.instance.currentUser!.uid) {
+                          c = 0;
+                          int t = c + 1;
+                          int d=t+1;
+                          while(true) {
+                            try {
+                              if (r['notice' + c.toString()]=="" ) {
 
+                                FirebaseFirestore.instance
+                                    .collection("Profile")
+                                    .doc(FirebaseAuth.instance.currentUser!.uid)
+                                    .update({
+                                  'notice' + c.toString():caption.text.toString(),
+                                  'notice' + t.toString(): text.text.toString(),
+                                  'notice' + d.toString(): string,
+                                });
+
+                                strm_opn=false;
+                                break;
+                              }
+                              else{
+
+                                c = c + 3;
+                                t = c + 1;
+                              d=t+1;
+                              }
+
+                            } catch (e) {
+
+                              FirebaseFirestore.instance
+                                  .collection("Profile")
+                                  .doc(FirebaseAuth.instance.currentUser!.uid)
+                                  .update({
+                                'notice' + c.toString():caption.text.toString(),
+                                'notice' + t.toString(): text.text.toString(),
+                                'notice' + d.toString(): string,
+                              });
+                              strm_opn=false;
+                              break;
+                            }
+                          }
+                          break;
                         }
+
                       }
-                  }
-              }
-            return Column(
-              children: [
-                GestureDetector(
-                  onTap: (){
-                    showDialog(
-                      context: context,
-                      builder: (ctx) => AlertDialog(
+                    }
+                    return Center();
+                  }),
 
-                        actions: <Widget>[
-                          TextField(
-                            controller:course_n ,
+              Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    SizedBox.fromSize(size: Size(0,(100/872)*screenH),),
+                    TextFormField(
+                      style: TextStyle(color: Colors.white),
+                      controller: caption,
+                      minLines: 2,
+                      maxLines: 3,
+                      keyboardType: TextInputType.multiline,
+                      validator: (value) {
+                        if (value!.isEmpty ||
+                            !RegExp(r'[a-zA-Z]').hasMatch(value)) {
+                          return "Enter any caption ";
+                        } else
+                          return null;
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          count = (80 - value.length).toString();
+                        });
+                      },
+                      maxLength: 80,
+                      maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                      decoration: InputDecoration(
+                          label: Text(
+                            'Caption',
+                            style: TextStyle(color: Colors.grey),
                           ),
-                          ElevatedButton(onPressed: (){
-                            course_name.add(course_n.text.toString());
-                            FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
-                              'course':course_name,
-                            });
-                            setState(() {
-                              Navigator.pop(context);
-                            });
-
-
-                          }, child: Text("Add"))
-
-                        ],
-                      ),
-                    );
-                  },
-                  child: Container(
-                    height: 0.08*screenH,
-                    color: Colors.greenAccent.shade100,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.add),
-                        Text("Add courses"),
-                      ],
+                          counterStyle: TextStyle(
+                            color: Colors.white,
+                          ),
+                          counterText: 'Remaining: $count',
+                          floatingLabelAlignment: FloatingLabelAlignment.start,
+                          alignLabelWithHint: true,
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                            color: Colors.grey,
+                          ))),
                     ),
-                  ),
-                ),
-                SizedBox(height: 10,),
-                ListView.builder(
-                  shrinkWrap: true,
-                    itemCount:course_name.length,
-                    itemBuilder: (context,index){
-                      return ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blueGrey[200]?.withOpacity(0.5),//Colors.white.withOpacity(0.7), // Set the background color here
+                    SizedBox.fromSize(
+                      size: Size(0, ((10 / 872)) * screenH),
+                    ),
+                    TextFormField(
+                      style: TextStyle(color: Colors.white),
+                      controller: text,
+                      minLines: 18,
+                      maxLines: 20,
+                      keyboardType: TextInputType.multiline,
+
+
+
+                      decoration: InputDecoration(
+                          label: Text(
+                            'Text..',
+                            style: TextStyle(color: Colors.grey, fontSize: 20),
                           ),
-                          onPressed: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>marks_sec()));
-
-                      }, child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Course"+" : "+course_name[index],
-                            style: TextStyle(color: Colors.black),),
-                          Text("        "),
-
-                          GestureDetector(
-                              onTap: (){
-                                course_name.removeAt(index);
-                                FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
-                                  'course':course_name,
-
-                                });
-                                setState(() {
-
-                                });
-                              },
-
-                              child:
-                                  Icon(Icons.delete,size: 20,color: Colors.red.shade300,),
-                              ),
-                        ],
-                      ));
-                    }),
-              ],
-            );
-          })
+                          floatingLabelAlignment: FloatingLabelAlignment.start,
+                          alignLabelWithHint: true,
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                            color: Colors.grey,
+                          ))),
+                      validator: (value){
+                        if (value!.isEmpty ||
+                            !RegExp(r'[a-zA-Z]').hasMatch(value!)) {
+                          return "Enter any caption ";
+                        } else
+                          return null;
 
 
-        ],
+                      },
+                    ),
 
+
+                    ElevatedButton(onPressed: () {
+                     if(formKey.currentState!.validate()){
+
+
+                       DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
+                       string = dateFormat.format(DateTime.now());
+                       Navigator.pop(context);
+                       setState(() {
+                        strm_opn=true;
+
+                      });}
+
+
+
+                    }, child: Text("Publish")),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
-        backgroundColor: Colors.grey[300],
-      //Colors.grey[300]
-
-
     );
   }
 }
