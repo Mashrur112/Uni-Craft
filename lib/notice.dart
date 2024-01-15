@@ -40,6 +40,14 @@ class _noticeState extends State<notice> {
     double screenH = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
+        title: Text(
+          "Notice",
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: Colors.blueGrey.shade200,
         actions: [
           IconButton(onPressed: (){
             Navigator.push(context, MaterialPageRoute(builder: (context)=>const add_notice()));
@@ -53,8 +61,6 @@ class _noticeState extends State<notice> {
 
       ),
       body:
-
-
 
       StreamBuilder(
           stream: FirebaseFirestore.instance
@@ -182,6 +188,7 @@ class _noticeState extends State<notice> {
 
             });
           }),
+      backgroundColor:  Colors.grey[300],
 
     );
   }

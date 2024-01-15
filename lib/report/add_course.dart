@@ -23,7 +23,14 @@ class _add_courseState extends State<add_course> {
     double screenH = MediaQuery.of(context).size.height;
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text("Report",
+          style: TextStyle(
+            color: Colors.blueGrey,
+            fontWeight: FontWeight.bold,
+            fontSize: 35,
+          ),),
+      ),
       body:Column(
         children: [
           StreamBuilder(stream: FirebaseFirestore.instance.collection("Profile").snapshots(), builder: (context,snapshots){
@@ -73,7 +80,7 @@ class _add_courseState extends State<add_course> {
                   },
                   child: Container(
                     height: 0.08*screenH,
-                    color: Colors.yellow,
+                    color: Colors.greenAccent.shade100,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -83,17 +90,24 @@ class _add_courseState extends State<add_course> {
                     ),
                   ),
                 ),
+                SizedBox(height: 10,),
                 ListView.builder(
                   shrinkWrap: true,
                     itemCount:course_name.length,
                     itemBuilder: (context,index){
-                      return ElevatedButton(onPressed: (){
+                      return ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blueGrey[200]?.withOpacity(0.5),//Colors.white.withOpacity(0.7), // Set the background color here
+                          ),
+                          onPressed: (){
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>marks_sec()));
 
                       }, child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(course_name[index]),
+                          Text("Course"+" : "+course_name[index],
+                            style: TextStyle(color: Colors.black),),
+                          Text("        "),
 
                           GestureDetector(
                               onTap: (){
@@ -106,7 +120,10 @@ class _add_courseState extends State<add_course> {
 
                                 });
                               },
-                              child: Icon(Icons.delete,size: 20,)),
+
+                              child:
+                                  Icon(Icons.delete,size: 20,color: Colors.red.shade300,),
+                              ),
                         ],
                       ));
                     }),
@@ -117,7 +134,9 @@ class _add_courseState extends State<add_course> {
 
         ],
 
-      )
+      ),
+        backgroundColor: Colors.grey[300],
+      //Colors.grey[300]
 
 
     );

@@ -18,6 +18,9 @@ import 'edit_Profile.dart';
 import 'members.dart';
 import 'notice.dart';
 
+//drawer - 825
+//
+
 class Dashboard extends StatefulWidget {
   var role, uid_admin;
   Dashboard(this.role, this.uid_admin, {super.key});
@@ -862,7 +865,7 @@ class _DashboardState extends State<Dashboard> {
                         children: [
                           Stack(
                             children: [
-                              Image.asset("assets/images/bg02.jpg"),
+                              Image.asset("assets/images/bg_03.jpeg"),
                               Positioned(
                                 bottom: (100 / 872) * screenH,
                                 left: (12 / 392) * screenW,
@@ -897,7 +900,7 @@ class _DashboardState extends State<Dashboard> {
                                   child: Text(
                                     profile_info[3],
                                     style:
-                                    const TextStyle(color: Colors.white54),
+                                    const TextStyle(color: Colors.white),
                                   )),
                               Positioned(
                                 bottom: (140 / 872) * screenH,
@@ -945,7 +948,7 @@ class _DashboardState extends State<Dashboard> {
                                 child: Text(
                                   "Joining code: " + profile_info[6],
                                   style: const TextStyle(
-                                      color: Colors.black,
+                                      color: Colors.white,
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold),
                                 ),

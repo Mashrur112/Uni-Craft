@@ -77,41 +77,50 @@ class members extends StatelessWidget{
                 elevation: 10,
                 margin: EdgeInsets.fromLTRB(((10/392)*screenW), ((10/872)*screenH), ((10/392)*screenW), ((0/872)*screenH)),
 
-                child: Column(
-                  children: [
-                    SizedBox.fromSize(size: const Size(0,20),),
-                    Stack(
-                      children: [
+                child: ListView(
+                  physics: NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.fromLTRB(
+                    (10 / 392) * screenW,
+                    (10 / 872) * screenH,
+                    (10 / 392) * screenW,
+                    (0 / 872) * screenH,
+                  ),
+                    children: <Widget>[ Column(
+                    children: [
+                      SizedBox.fromSize(size: const Size(0,20),),
+                      Stack(
+                        children: [
 
-                        CircleAvatar(
-                          radius: 31,
-                          backgroundImage: CachedNetworkImageProvider(prsn[(index*6)+4]),
-                        )
-                      ],
-
-
-                    ),
-                    Text("Name: "+prsn[index*6]),
-                    Text("Role: "+prsn[(index*6)+1]),
-                    Text("roll: "+prsn[(index*6)+2]),
-                    Text("Email: "+prsn[(index*6)+3]),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: ElevatedButton(onPressed: (){
-                            FirebaseFirestore.instance.collection("Profile").doc(prsn[(index*6)+5]).delete();
+                          CircleAvatar(
+                            radius: 31,
+                            backgroundImage: CachedNetworkImageProvider(prsn[(index*6)+4]),
+                          )
+                        ],
 
 
+                      ),
+                      Text("Name: "+prsn[index*6]),
+                      Text("Role: "+prsn[(index*6)+1]),
+                      Text("Roll: "+prsn[(index*6)+2]),
+                      Text("Email: "+prsn[(index*6)+3]),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: ElevatedButton(onPressed: (){
+                              FirebaseFirestore.instance.collection("Profile").doc(prsn[(index*6)+5]).delete();
 
 
-                          }, child: const Text("Delete")),
-                        ),
-                      ],
-                    ),
 
-                  ],
+
+                            }, child: const Text("Delete")),
+                          ),
+                        ],
+                      ),
+
+                    ],
+                  ),],
                 ),
 
               ),
@@ -143,7 +152,7 @@ class members extends StatelessWidget{
                         ),
                         Text("Name: "+prsn[index*6]),
                         Text("Role: "+prsn[(index*6)+1]),
-                        Text("roll: "+prsn[(index*6)+2]),
+                        Text("Roll: "+prsn[(index*6)+2]),
                         Text("Email: "+prsn[(index*6)+3]),
                       ],
                     ),
@@ -160,39 +169,52 @@ class members extends StatelessWidget{
                 elevation: 10,
                 margin: EdgeInsets.fromLTRB(((10/392)*screenW), ((10/872)*screenH), ((10/392)*screenW), ((0/872)*screenH)),
 
-                child: Column(
-                  children: [
-                    SizedBox.fromSize(size: const Size(0,20),),
-                    Stack(
-                      children: [
+                child: ListView(
+                    //padding: const EdgeInsets.all(8),
+                  physics: NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.fromLTRB(
+                    (10 / 392) * screenW,
+                    (10 / 872) * screenH,
+                    (10 / 392) * screenW,
+                    (0 / 872) * screenH,
+                  ),
+                  children: <Widget>[ Column(
+                    children: [
+                      SizedBox.fromSize(size: const Size(0,20),),
+                      Stack(
+                        children: [
+                  
+                          CircleAvatar(
+                            radius: 31,
+                            backgroundImage: CachedNetworkImageProvider(prsn[(index*6)+4]),
+                          )
+                        ],
+                  
+                  
+                      ),
+                      Text("Name: "+prsn[index*6]),
+                      Text("Role: "+prsn[(index*6)+1]),
+                      Text("Roll: "+prsn[(index*6)+2]),
+                      Text("Email: "+prsn[(index*6)+3]),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: ElevatedButton(onPressed: (){
+                              FirebaseFirestore.instance.collection("Profile").doc(prsn[(index*6)+5]).delete();
+                  
+                  
+                  
+                  
+                            }, child: const Text("Delete"),),
 
-                        CircleAvatar(
-                          radius: 31,
-                          backgroundImage: CachedNetworkImageProvider(prsn[(index*6)+4]),
-                        )
-                      ],
+                          ),
 
-
-                    ),
-                    Text("Name: "+prsn[index*6]),
-                    Text("Role: "+prsn[(index*6)+1]),
-                    Text("roll: "+prsn[(index*6)+2]),
-                    Text("Email: "+prsn[(index*6)+3]),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: ElevatedButton(onPressed: (){
-                            FirebaseFirestore.instance.collection("Profile").doc(prsn[(index*6)+5]).delete();
-
-
-
-
-                          }, child: const Text("Delete")),
-                        ),
-                      ],
-                    ),
+                        ],
+                      ),
+                    ],
+                  ),
                   ],
                 ),
 
@@ -231,7 +253,7 @@ class members extends StatelessWidget{
                           ),
                           Text("Name: "+prsn[index*6]),
                           Text("Role: "+prsn[(index*6)+1]),
-                          Text("roll: "+prsn[(index*6)+2]),
+                          Text("Roll: "+prsn[(index*6)+2]),
                           Text("Email: "+prsn[(index*6)+3]),
                         ],
                       ),
@@ -275,7 +297,7 @@ class members extends StatelessWidget{
                           ),
                           Text("Name: "+prsn[index*6]),
                           Text("Role: "+prsn[(index*6)+1]),
-                          Text("roll: "+prsn[(index*6)+2]),
+                          Text("Roll: "+prsn[(index*6)+2]),
                           Text("Email: "+prsn[(index*6)+3]),
                         ],
                       ),
@@ -317,7 +339,7 @@ class members extends StatelessWidget{
                           ),
                           Text("Name: "+prsn[index*6]),
                           Text("Role: "+prsn[(index*6)+1]),
-                          Text("roll: "+prsn[(index*6)+2]),
+                          Text("Roll: "+prsn[(index*6)+2]),
                           Text("Email: "+prsn[(index*6)+3]),
 
                         ],
