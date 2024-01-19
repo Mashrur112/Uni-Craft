@@ -214,132 +214,79 @@ class _DashboardState extends State<Dashboard> {
                     ),
                     widget.role != "General member"
                         ? GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => members()));
+                      },
+                      child: Row(
+                        children: [
+                          SizedBox.fromSize(
+                            size: Size((40 / 392) * screenW,
+                                ((20 / 872) * screenH)),
+                          ),
+                          Container(
+                            height: (150 / 872) * screenH,
+                            width: (140 / 392) * screenW,
+                            decoration: BoxDecoration(
+                                color: Color(0xffb8d8d8),
+                                borderRadius: BorderRadius.circular(14),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Colors.black54,
+                                    offset: Offset(0, 7),
+                                    spreadRadius: 0,
+                                    blurRadius: 2,
+                                  )
+                                ]),
+                            child: Stack(children: [
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(
+                                    (0 / 392) * screenW,
+                                    (0 / 872) * screenH,
+                                    (12 / 392) * screenW,
+                                    0),
+                                child: Image.asset(
+                                  "assets/images/members.png",
+                                  height: (140 / 872) * screenH,
+                                  width: (140 / 392) * screenW,
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(
+                                    (35 / 392) * screenW,
+                                    (115 / 872) * screenH,
+                                    0,
+                                    0),
+                                child: Text(
+                                  "Members",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17),
+                                ),
+                              ),
+                            ]),
+                          ),
+                          SizedBox.fromSize(
+                            size: Size((40 / 392) * screenW,
+                                ((20 / 872) * screenH)),
+                          ),
+                          GestureDetector(
                             onTap: () {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => members()));
+                                      builder: (context) => notice()));
                             },
-                            child: Row(
-                              children: [
-                                SizedBox.fromSize(
-                                  size: Size((40 / 392) * screenW,
-                                      ((20 / 872) * screenH)),
-                                ),
-                                Container(
-                                  height: (150 / 872) * screenH,
-                                  width: (140 / 392) * screenW,
-                                  decoration: BoxDecoration(
-                                      color: Color(0xffb8d8d8),
-                                      borderRadius: BorderRadius.circular(14),
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          color: Colors.black54,
-                                          offset: Offset(0, 7),
-                                          spreadRadius: 0,
-                                          blurRadius: 2,
-                                        )
-                                      ]),
-                                  child: Stack(children: [
-                                    Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                          (0 / 392) * screenW,
-                                          (0 / 872) * screenH,
-                                          (12 / 392) * screenW,
-                                          0),
-                                      child: Image.asset(
-                                        "assets/images/members.png",
-                                        height: (140 / 872) * screenH,
-                                        width: (140 / 392) * screenW,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                          (35 / 392) * screenW,
-                                          (115 / 872) * screenH,
-                                          0,
-                                          0),
-                                      child: Text(
-                                        "Members",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 17),
-                                      ),
-                                    ),
-                                  ]),
-                                ),
-                                SizedBox.fromSize(
-                                  size: Size((40 / 392) * screenW,
-                                      ((20 / 872) * screenH)),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => notice()));
-                                  },
-                                  child: Center(
-                                    child: Container(
-                                      height: (150 / 872) * screenH,
-                                      width: (140 / 392) * screenW,
-                                      decoration: BoxDecoration(
-                                          color: Color(0xffb8d8d8),
-                                          borderRadius:
-                                              BorderRadius.circular(14),
-                                          boxShadow: const [
-                                            BoxShadow(
-                                              color: Colors.black54,
-                                              offset: Offset(0, 7),
-                                              spreadRadius: 0,
-                                              blurRadius: 2,
-                                            )
-                                          ]),
-                                      child: Stack(children: [
-                                        Padding(
-                                          padding: EdgeInsets.fromLTRB(
-                                              (10 / 392) * screenW,
-                                              (2 / 872) * screenH,
-                                              0,
-                                              0),
-                                          child: Image.asset(
-                                            "assets/images/Notice.png",
-                                            height: (115 / 872) * screenH,
-                                            width: (115 / 392) * screenW,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.fromLTRB(
-                                              (45 / 392) * screenW,
-                                              (115 / 872) * screenH,
-                                              0,
-                                              0),
-                                          child: Text(
-                                            "Notice",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 17),
-                                          ),
-                                        ),
-                                      ]),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          )
-                        : Row(
-                            children: [
-                              SizedBox.fromSize(
-                                size: Size((40 / 392) * screenW,
-                                    ((20 / 872) * screenH)),
-                              ),
-                              Container(
+                            child: Center(
+                              child: Container(
                                 height: (150 / 872) * screenH,
                                 width: (140 / 392) * screenW,
                                 decoration: BoxDecoration(
-                                    color: Colors.grey,
-                                    borderRadius: BorderRadius.circular(14),
+                                    color: Color(0xffb8d8d8),
+                                    borderRadius:
+                                    BorderRadius.circular(14),
                                     boxShadow: const [
                                       BoxShadow(
                                         color: Colors.black54,
@@ -351,334 +298,387 @@ class _DashboardState extends State<Dashboard> {
                                 child: Stack(children: [
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(
-                                        (0 / 392) * screenW,
-                                        (0 / 872) * screenH,
-                                        (12 / 392) * screenW,
+                                        (10 / 392) * screenW,
+                                        (2 / 872) * screenH,
+                                        0,
                                         0),
                                     child: Image.asset(
-                                      "assets/images/members.png",
-                                      height: (140 / 872) * screenH,
-                                      width: (140 / 392) * screenW,
+                                      "assets/images/Notice.png",
+                                      height: (115 / 872) * screenH,
+                                      width: (115 / 392) * screenW,
                                     ),
                                   ),
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(
-                                        (30 / 392) * screenW,
-                                        (116 / 872) * screenH,
+                                        (45 / 392) * screenW,
+                                        (115 / 872) * screenH,
                                         0,
                                         0),
                                     child: Text(
-                                      "Members",
+                                      "Notice",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 17),
                                     ),
                                   ),
-                                  Center(
-                                      child: Icon(
-                                    Icons.lock,
-                                    size: 90,
-                                    color: Colors.black.withOpacity(0.7),
-                                  )),
                                 ]),
                               ),
-                              SizedBox.fromSize(
-                                size: Size((40 / 392) * screenW,
-                                    ((20 / 872) * screenH)),
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                        : Row(
+                      children: [
+                        SizedBox.fromSize(
+                          size: Size((40 / 392) * screenW,
+                              ((20 / 872) * screenH)),
+                        ),
+                        Container(
+                          height: (150 / 872) * screenH,
+                          width: (140 / 392) * screenW,
+                          decoration: BoxDecoration(
+                              color: Colors.grey,
+                              borderRadius: BorderRadius.circular(14),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.black54,
+                                  offset: Offset(0, 7),
+                                  spreadRadius: 0,
+                                  blurRadius: 2,
+                                )
+                              ]),
+                          child: Stack(children: [
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                  (0 / 392) * screenW,
+                                  (0 / 872) * screenH,
+                                  (12 / 392) * screenW,
+                                  0),
+                              child: Image.asset(
+                                "assets/images/members.png",
+                                height: (140 / 872) * screenH,
+                                width: (140 / 392) * screenW,
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => notice()));
-                                },
-                                child: Center(
-                                  child: Container(
-                                    height: (150 / 872) * screenH,
-                                    width: (140 / 392) * screenW,
-                                    decoration: BoxDecoration(
-                                        color: Color(0xffb8d8d8),
-                                        borderRadius: BorderRadius.circular(14),
-                                        boxShadow: const [
-                                          BoxShadow(
-                                            color: Colors.black54,
-                                            offset: Offset(0, 7),
-                                            spreadRadius: 0,
-                                            blurRadius: 2,
-                                          )
-                                        ]),
-                                    child: Stack(children: [
-                                      Padding(
-                                        padding: EdgeInsets.fromLTRB(
-                                            (10 / 392) * screenW,
-                                            (2 / 872) * screenH,
-                                            0,
-                                            0),
-                                        child: Image.asset(
-                                          "assets/images/Notice.png",
-                                          height: (115 / 872) * screenH,
-                                          width: (115 / 392) * screenW,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.fromLTRB(
-                                            (45 / 392) * screenW,
-                                            (115 / 872) * screenH,
-                                            0,
-                                            0),
-                                        child: Text(
-                                          "Notice",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 17),
-                                        ),
-                                      ),
-                                    ]),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                  (30 / 392) * screenW,
+                                  (116 / 872) * screenH,
+                                  0,
+                                  0),
+                              child: Text(
+                                "Members",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17),
+                              ),
+                            ),
+                            Center(
+                                child: Icon(
+                                  Icons.lock,
+                                  size: 90,
+                                  color: Colors.black.withOpacity(0.7),
+                                )),
+                          ]),
+                        ),
+                        SizedBox.fromSize(
+                          size: Size((40 / 392) * screenW,
+                              ((20 / 872) * screenH)),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => notice()));
+                          },
+                          child: Center(
+                            child: Container(
+                              height: (150 / 872) * screenH,
+                              width: (140 / 392) * screenW,
+                              decoration: BoxDecoration(
+                                  color: Color(0xffb8d8d8),
+                                  borderRadius: BorderRadius.circular(14),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Colors.black54,
+                                      offset: Offset(0, 7),
+                                      spreadRadius: 0,
+                                      blurRadius: 2,
+                                    )
+                                  ]),
+                              child: Stack(children: [
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                      (10 / 392) * screenW,
+                                      (2 / 872) * screenH,
+                                      0,
+                                      0),
+                                  child: Image.asset(
+                                    "assets/images/Notice.png",
+                                    height: (115 / 872) * screenH,
+                                    width: (115 / 392) * screenW,
                                   ),
                                 ),
-                              )
-                            ],
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                      (45 / 392) * screenW,
+                                      (115 / 872) * screenH,
+                                      0,
+                                      0),
+                                  child: Text(
+                                    "Notice",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 17),
+                                  ),
+                                ),
+                              ]),
+                            ),
                           ),
+                        )
+                      ],
+                    ),
                     SizedBox.fromSize(
                       size: Size((40 / 392) * screenW, ((40 / 872) * screenH)),
                     ),
                     widget.role != "General member"
                         ? Row(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(
-                                    ((40 / 392) * screenW), 0, 0, 0),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                CreatePoll(widget.uid_admin)));
-                                  },
-                                  child: Container(
-                                    height: (150 / 872) * screenH,
-                                    width: (140 / 392) * screenW,
-                                    decoration: BoxDecoration(
-                                        color: Color(0xffb8d8d8),
-                                        borderRadius: BorderRadius.circular(14),
-                                        boxShadow: const [
-                                          BoxShadow(
-                                            color: Colors.black54,
-                                            offset: Offset(0, 7),
-                                            spreadRadius: 0,
-                                            blurRadius: 2,
-                                          )
-                                        ]),
-                                    child: Stack(children: [
-                                      Padding(
-                                        padding: EdgeInsets.fromLTRB(
-                                            (20 / 392) * screenW,
-                                            (14 / 872) * screenH,
-                                            0,
-                                            0),
-                                        child: Image.asset(
-                                          "assets/images/poll.png",
-                                          height: (100 / 872) * screenH,
-                                          width: (100 / 392) * screenW,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.fromLTRB(
-                                            (25 / 392) * screenW,
-                                            (115 / 872) * screenH,
-                                            0,
-                                            0),
-                                        child: Text(
-                                          "Create Poll",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 17),
-                                        ),
-                                      ),
-                                    ]),
-                                  ),
-                                ),
-                              ),
-                              SizedBox.fromSize(
-                                size: Size((5 / 392) * screenW,
-                                    ((20 / 872) * screenH)),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(
-                                    ((40 / 392) * screenW), 0, 0, 0),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => ViewPoll(
-                                                  widget.uid_admin,
-                                                )));
-                                  },
-                                  child: Container(
-                                    height: (150 / 872) * screenH,
-                                    width: (140 / 392) * screenW,
-                                    decoration: BoxDecoration(
-                                        color: Color(0xffb8d8d8),
-                                        borderRadius: BorderRadius.circular(14),
-                                        boxShadow: const [
-                                          BoxShadow(
-                                            color: Colors.black54,
-                                            offset: Offset(0, 7),
-                                            spreadRadius: 0,
-                                            blurRadius: 2,
-                                          )
-                                        ]),
-                                    child: Stack(children: [
-                                      Padding(
-                                        padding: EdgeInsets.fromLTRB(
-                                            (20 / 392) * screenW,
-                                            (14 / 872) * screenH,
-                                            0,
-                                            0),
-                                        child: Image.asset(
-                                          "assets/images/poll_v.png",
-                                          height: (100 / 872) * screenH,
-                                          width: (100 / 392) * screenW,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.fromLTRB(
-                                            (25 / 392) * screenW,
-                                            (115 / 872) * screenH,
-                                            0,
-                                            0),
-                                        child: Text(
-                                          "view Poll",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 17),
-                                        ),
-                                      ),
-                                    ]),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          )
-                        : Row(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(
-                                    ((40 / 392) * screenW), 0, 0, 0),
-                                child: Container(
-                                  height: (150 / 872) * screenH,
-                                  width: (140 / 392) * screenW,
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey,
-                                      borderRadius: BorderRadius.circular(14),
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          color: Colors.black54,
-                                          offset: Offset(0, 7),
-                                          spreadRadius: 0,
-                                          blurRadius: 2,
-                                        )
-                                      ]),
-                                  child: Stack(children: [
-                                    Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                          (20 / 392) * screenW,
-                                          (14 / 872) * screenH,
-                                          0,
-                                          0),
-                                      child: Image.asset(
-                                        "assets/images/poll.png",
-                                        height: (100 / 872) * screenH,
-                                        width: (100 / 392) * screenW,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                          (25 / 392) * screenW,
-                                          (115 / 872) * screenH,
-                                          0,
-                                          0),
-                                      child: Text(
-                                        "Create Poll",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 17),
-                                      ),
-                                    ),
-                                    Center(
-                                        child: Icon(
-                                      Icons.lock,
-                                      size: 90,
-                                      color: Colors.black.withOpacity(0.7),
-                                    )),
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(
+                              ((40 / 392) * screenW), 0, 0, 0),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          CreatePoll(widget.uid_admin)));
+                            },
+                            child: Container(
+                              height: (150 / 872) * screenH,
+                              width: (140 / 392) * screenW,
+                              decoration: BoxDecoration(
+                                  color: Color(0xffb8d8d8),
+                                  borderRadius: BorderRadius.circular(14),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Colors.black54,
+                                      offset: Offset(0, 7),
+                                      spreadRadius: 0,
+                                      blurRadius: 2,
+                                    )
                                   ]),
+                              child: Stack(children: [
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                      (20 / 392) * screenW,
+                                      (14 / 872) * screenH,
+                                      0,
+                                      0),
+                                  child: Image.asset(
+                                    "assets/images/poll.png",
+                                    height: (100 / 872) * screenH,
+                                    width: (100 / 392) * screenW,
+                                  ),
                                 ),
-                              ),
-                              SizedBox.fromSize(
-                                size: Size((5 / 392) * screenW,
-                                    ((20 / 872) * screenH)),
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                      (25 / 392) * screenW,
+                                      (115 / 872) * screenH,
+                                      0,
+                                      0),
+                                  child: Text(
+                                    "Create Poll",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 17),
+                                  ),
+                                ),
+                              ]),
+                            ),
+                          ),
+                        ),
+                        SizedBox.fromSize(
+                          size: Size((5 / 392) * screenW,
+                              ((20 / 872) * screenH)),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(
+                              ((40 / 392) * screenW), 0, 0, 0),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ViewPoll(
+                                        widget.uid_admin,
+                                      )));
+                            },
+                            child: Container(
+                              height: (150 / 872) * screenH,
+                              width: (140 / 392) * screenW,
+                              decoration: BoxDecoration(
+                                  color: Color(0xffb8d8d8),
+                                  borderRadius: BorderRadius.circular(14),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Colors.black54,
+                                      offset: Offset(0, 7),
+                                      spreadRadius: 0,
+                                      blurRadius: 2,
+                                    )
+                                  ]),
+                              child: Stack(children: [
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                      (20 / 392) * screenW,
+                                      (14 / 872) * screenH,
+                                      0,
+                                      0),
+                                  child: Image.asset(
+                                    "assets/images/poll_v.png",
+                                    height: (100 / 872) * screenH,
+                                    width: (100 / 392) * screenW,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                      (25 / 392) * screenW,
+                                      (115 / 872) * screenH,
+                                      0,
+                                      0),
+                                  child: Text(
+                                    "view Poll",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 17),
+                                  ),
+                                ),
+                              ]),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                        : Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(
+                              ((40 / 392) * screenW), 0, 0, 0),
+                          child: Container(
+                            height: (150 / 872) * screenH,
+                            width: (140 / 392) * screenW,
+                            decoration: BoxDecoration(
+                                color: Colors.grey,
+                                borderRadius: BorderRadius.circular(14),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Colors.black54,
+                                    offset: Offset(0, 7),
+                                    spreadRadius: 0,
+                                    blurRadius: 2,
+                                  )
+                                ]),
+                            child: Stack(children: [
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(
+                                    (20 / 392) * screenW,
+                                    (14 / 872) * screenH,
+                                    0,
+                                    0),
+                                child: Image.asset(
+                                  "assets/images/poll.png",
+                                  height: (100 / 872) * screenH,
+                                  width: (100 / 392) * screenW,
+                                ),
                               ),
                               Padding(
                                 padding: EdgeInsets.fromLTRB(
-                                    ((40 / 392) * screenW), 0, 0, 0),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => ViewPoll(
-                                                  widget.uid_admin,
-                                                )));
-                                  },
-                                  child: Container(
-                                    height: (150 / 872) * screenH,
-                                    width: (140 / 392) * screenW,
-                                    decoration: BoxDecoration(
-                                        color: Color(0xffb8d8d8),
-                                        borderRadius: BorderRadius.circular(14),
-                                        boxShadow: const [
-                                          BoxShadow(
-                                            color: Colors.black54,
-                                            offset: Offset(0, 7),
-                                            spreadRadius: 0,
-                                            blurRadius: 2,
-                                          )
-                                        ]),
-                                    child: Stack(children: [
-                                      Padding(
-                                        padding: EdgeInsets.fromLTRB(
-                                            (20 / 392) * screenW,
-                                            (14 / 872) * screenH,
-                                            0,
-                                            0),
-                                        child: Image.asset(
-                                          "assets/images/poll_v.png",
-                                          height: (100 / 872) * screenH,
-                                          width: (100 / 392) * screenW,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.fromLTRB(
-                                            (25 / 392) * screenW,
-                                            (115 / 872) * screenH,
-                                            0,
-                                            0),
-                                        child: Text(
-                                          "view Poll",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 17),
-                                        ),
-                                      ),
-                                    ]),
-                                  ),
+                                    (25 / 392) * screenW,
+                                    (115 / 872) * screenH,
+                                    0,
+                                    0),
+                                child: Text(
+                                  "Create Poll",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17),
                                 ),
                               ),
-                            ],
+                              Center(
+                                  child: Icon(
+                                    Icons.lock,
+                                    size: 90,
+                                    color: Colors.black.withOpacity(0.7),
+                                  )),
+                            ]),
                           ),
+                        ),
+                        SizedBox.fromSize(
+                          size: Size((5 / 392) * screenW,
+                              ((20 / 872) * screenH)),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(
+                              ((40 / 392) * screenW), 0, 0, 0),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ViewPoll(
+                                        widget.uid_admin,
+                                      )));
+                            },
+                            child: Container(
+                              height: (150 / 872) * screenH,
+                              width: (140 / 392) * screenW,
+                              decoration: BoxDecoration(
+                                  color: Color(0xffb8d8d8),
+                                  borderRadius: BorderRadius.circular(14),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Colors.black54,
+                                      offset: Offset(0, 7),
+                                      spreadRadius: 0,
+                                      blurRadius: 2,
+                                    )
+                                  ]),
+                              child: Stack(children: [
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                      (20 / 392) * screenW,
+                                      (14 / 872) * screenH,
+                                      0,
+                                      0),
+                                  child: Image.asset(
+                                    "assets/images/poll_v.png",
+                                    height: (100 / 872) * screenH,
+                                    width: (100 / 392) * screenW,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                      (25 / 392) * screenW,
+                                      (115 / 872) * screenH,
+                                      0,
+                                      0),
+                                  child: Text(
+                                    "view Poll",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 17),
+                                  ),
+                                ),
+                              ]),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                     SizedBox.fromSize(
                       size: Size((40 / 392) * screenW, ((40 / 872) * screenH)),
                     ),
@@ -896,7 +896,7 @@ class _DashboardState extends State<Dashboard> {
                                   child: Text(
                                     profile_info[3],
                                     style:
-                                        const TextStyle(color: Colors.white54),
+                                    const TextStyle(color: Colors.white54),
                                   )),
                               Positioned(
                                 bottom: (140 / 872) * screenH,
@@ -920,46 +920,46 @@ class _DashboardState extends State<Dashboard> {
                                     });
                                   },
                                   icon:
-                                      const Icon(Icons.remove_red_eye_rounded),
+                                  const Icon(Icons.remove_red_eye_rounded),
                                   color: Colors.white,
                                 ),
                               ),
                               view_more == true
                                   ? Positioned(
-                                      bottom: (110 / 872) * screenH,
-                                      left: (160 / 392) * screenW,
-                                      child: Text(
-                                        "Age: " + profile_info[2],
-                                        style: const TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    )
+                                bottom: (110 / 872) * screenH,
+                                left: (160 / 392) * screenW,
+                                child: Text(
+                                  "Age: " + profile_info[2],
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              )
                                   : const Center(),
                               view_more == true
                                   ? Positioned(
-                                      bottom: (200 / 872) * screenH,
-                                      left: (90 / 392) * screenW,
-                                      child: Text(
-                                        "Joining code: " + profile_info[6],
-                                        style: const TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    )
+                                bottom: (200 / 872) * screenH,
+                                left: (90 / 392) * screenW,
+                                child: Text(
+                                  "Joining code: " + profile_info[6],
+                                  style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              )
                                   : const Center(),
                               view_more == true
                                   ? Positioned(
-                                      bottom: (18 / 872) * screenH,
-                                      left: (16 / 392) * screenW,
-                                      child: Text(profile_info[4],
-                                          style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold)),
-                                    )
+                                bottom: (18 / 872) * screenH,
+                                left: (16 / 392) * screenW,
+                                child: Text(profile_info[4],
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold)),
+                              )
                                   : const Center(),
                             ],
                           ),
