@@ -27,112 +27,114 @@ class _add_courseState extends State<add_course> {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(),
-      body:Column(
-        children: [
-          StreamBuilder(stream: FirebaseFirestore.instance.collection("Profile").snapshots(), builder: (context,snapshots){
-            if(snapshots.hasData)
-              {
-                var res=snapshots.data?.docs.toList();
-
-                for(var r in res!)
-                  {
-                    if(r['uid']==FirebaseAuth.instance.currentUser!.uid)
-                      {
-                        try{
-                          course_name=r['course'];
-                        }catch(e){
-
+      body:SingleChildScrollView(
+        child: Column(
+          children: [
+            StreamBuilder(stream: FirebaseFirestore.instance.collection("Profile").snapshots(), builder: (context,snapshots){
+              if(snapshots.hasData)
+                {
+                  var res=snapshots.data?.docs.toList();
+        
+                  for(var r in res!)
+                    {
+                      if(r['uid']==FirebaseAuth.instance.currentUser!.uid)
+                        {
+                          try{
+                            course_name=r['course'];
+                          }catch(e){
+        
+                          }
                         }
-                      }
-                  }
-              }
-            return Column(
-              children: [
-                GestureDetector(
-                  onTap: (){
-                    showDialog(
-                      context: context,
-                      builder: (ctx) => AlertDialog(
-
-                        actions: <Widget>[
-                          TextField(
-                            controller:course_n ,
-                          ),
-                          ElevatedButton(onPressed: (){
-                            var map={};
-                            map['Name']=course_n.text.toString();
-                            map['quiz']=0;
-                            map['mid']=0;
-                            map['final']=0;
-                            course_name.add(map);
-                            FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
-                              'course':course_name,
-                            });
-                            setState(() {
-                              Navigator.pop(context);
-                            });
-
-
-                          }, child: Text("Add"))
-
-                        ],
-                      ),
-                    );
-                  },
-                  child: Container(
-                    height: 0.08*screenH,
-                    color: Colors.yellow,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.add),
-                        Text("Add courses"),
-                      ],
-                    ),
-                  ),
-                ),
-                ListView.builder(
-                  shrinkWrap: true,
-                    itemCount:course_name.length,
-                    itemBuilder: (context,index){
-                      return ElevatedButton(onPressed: (){
-                        int idx=index;
-                        List temp=[];
-                        temp.add(course_name);
-                        temp.add(idx);
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>marks_sec(temp)));
-
-                      }, child: Row(
+                    }
+                }
+              return Column(
+                children: [
+                  GestureDetector(
+                    onTap: (){
+                      showDialog(
+                        context: context,
+                        builder: (ctx) => AlertDialog(
+        
+                          actions: <Widget>[
+                            TextField(
+                              controller:course_n ,
+                            ),
+                            ElevatedButton(onPressed: (){
+                              var map={};
+                              map['Name']=course_n.text.toString();
+                              map['quiz']=0;
+                              map['mid']=0;
+                              map['final']=0;
+                              course_name.add(map);
+                              FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
+                                'course':course_name,
+                              });
+                              setState(() {
+                                Navigator.pop(context);
+                              });
+        
+        
+                            }, child: Text("Add"))
+        
+                          ],
+                        ),
+                      );
+                    },
+                    child: Container(
+                      height: 0.08*screenH,
+                      color: Colors.yellow,
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(course_name[index]['Name']),
-
-                          GestureDetector(
-                              onTap: (){
-                                course_name.removeAt(index);
-                                FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
-                                  'course':course_name,
-
-                                });
-                                setState(() {
-
-                                });
-                              },
-                              child: Icon(Icons.delete,size: 20,)),
+                          Icon(Icons.add),
+                          Text("Add courses"),
                         ],
-                      ));
-                    }),
-                ElevatedButton(onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>report_graph()));
-
-                }, child: Text("Graph"))
-              ],
-            );
-          })
-
-
-        ],
-
+                      ),
+                    ),
+                  ),
+                  ListView.builder(
+                    shrinkWrap: true,
+                      itemCount:course_name.length,
+                      itemBuilder: (context,index){
+                        return ElevatedButton(onPressed: (){
+                          int idx=index;
+                          List temp=[];
+                          temp.add(course_name);
+                          temp.add(idx);
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>marks_sec(temp)));
+        
+                        }, child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                           Text(course_name[index]['Name']),
+        
+                            GestureDetector(
+                                onTap: (){
+                                  course_name.removeAt(index);
+                                  FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
+                                    'course':course_name,
+        
+                                  });
+                                  setState(() {
+        
+                                  });
+                                },
+                                child: Icon(Icons.delete,size: 20,)),
+                          ],
+                        ));
+                      }),
+                  ElevatedButton(onPressed: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>report_graph()));
+        
+                  }, child: Text("Graph"))
+                ],
+              );
+            })
+        
+        
+          ],
+        
+        ),
       )
 
 
