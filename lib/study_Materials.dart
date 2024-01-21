@@ -62,12 +62,12 @@ class _study_MaterialsState extends State<study_Materials> {
       child: Scaffold(
         appBar: AppBar(
           actions: [
-widget.r1=="Administrator"?
+            widget.r1=="Administrator"?
             IconButton(onPressed: (){
               Navigator.push(context, MaterialPageRoute(builder: (context)=>uploadFile()));
-              
-              
-              
+
+
+
             }, icon: Icon(Icons.file_upload_outlined)
             ):Padding(
               padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
@@ -119,7 +119,7 @@ widget.r1=="Administrator"?
                               while (true) {
                                 try {
                                   if (r[c.toString()] == "")
-                                  break;
+                                    break;
 
                                   else{
 
@@ -220,7 +220,7 @@ widget.r1=="Administrator"?
                               0, ((50 / 872) * screenH), 0, 0),
                           child: GridView.builder(
                             gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
+                            SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 3,
                               mainAxisSpacing: 0,
                               crossAxisSpacing: 1,
@@ -240,7 +240,7 @@ widget.r1=="Administrator"?
                                     child: GestureDetector(
                                       onTap: () async {
                                         final url =
-                                            Uri.parse(image_link[index]);
+                                        Uri.parse(image_link[index]);
                                         if (!await launchUrl(url))
                                           throw Exception(
                                               'Could not launch $url');
@@ -249,7 +249,7 @@ widget.r1=="Administrator"?
                                       child: CachedNetworkImage(
                                         imageUrl: image_link[index],
                                         progressIndicatorBuilder: (context, url,
-                                                downloadProgress) =>
+                                            downloadProgress) =>
                                             Center(
                                                 child: Text(image_name[index])),
                                         errorWidget: (context, url, error) =>
@@ -268,31 +268,31 @@ widget.r1=="Administrator"?
                                   // SizedBox.fromSize(size: Size(0,50),),
                                   role == "Administrator"
                                       ? ElevatedButton(
-                                          onPressed: () {
-                                            for(int i=0;i<count1;i++)
-                                              {
-                                                if(image_name[index]==name[i])
-                                                  {
-                                                    index1=i;
-                                                    break;
-                                                  }
+                                      onPressed: () {
+                                        for(int i=0;i<count1;i++)
+                                        {
+                                          if(image_name[index]==name[i])
+                                          {
+                                            index1=i;
+                                            break;
+                                          }
 
 
-                                              }
-                                            // int total=count1-index1-1;
-                                            delete1(index1);
-                                            setState(() {
-                                              del_1=true;
+                                        }
+                                        // int total=count1-index1-1;
+                                        delete1(index1);
+                                        setState(() {
+                                          del_1=true;
 
-                                            });
-                                            // Navigator.push(
-                                            //     context,
-                                            //     MaterialPageRoute(
-                                            //         builder: (context) =>
-                                            //             delete_file(name, link,
-                                            //                 index1, count1)));
-                                          },
-                                          child: Text("Delete"))
+                                        });
+                                        // Navigator.push(
+                                        //     context,
+                                        //     MaterialPageRoute(
+                                        //         builder: (context) =>
+                                        //             delete_file(name, link,
+                                        //                 index1, count1)));
+                                      },
+                                      child: Text("Delete"))
                                       : Container(),
                                 ],
                               );
@@ -434,15 +434,15 @@ widget.r1=="Administrator"?
                                     child: GestureDetector(
                                       onTap: () async {
                                         final url =
-                                            Uri.parse(file_link[index]);
+                                        Uri.parse(file_link[index]);
                                         if (!await launchUrl(url))
                                           throw Exception(
                                               'Could not launch $url');
                                       },
 
                                       child:
-                                          Text(file_name[index]),
-                                          //SizedBox.fromSize(size: Size(((50/392)*screenW),0)),
+                                      Text(file_name[index]),
+                                      //SizedBox.fromSize(size: Size(((50/392)*screenW),0)),
 
 
 
@@ -459,32 +459,32 @@ widget.r1=="Administrator"?
                                   // SizedBox.fromSize(size: Size(0,50),),
                                   role == "Administrator"
                                       ? ElevatedButton(
-                                          onPressed: () {
-                                            for(int i=0;i<count1;i++)
-                                            {
-                                              if(file_name[index]==name[i])
-                                              {
-                                                index1=i;
-                                                break;
-                                              }
+                                      onPressed: () {
+                                        for(int i=0;i<count1;i++)
+                                        {
+                                          if(file_name[index]==name[i])
+                                          {
+                                            index1=i;
+                                            break;
+                                          }
 
 
-                                            }
-                                            delete1(index1);
-                                            setState(() {
-                                              del_2=true;
+                                        }
+                                        delete1(index1);
+                                        setState(() {
+                                          del_2=true;
 
-                                            });
+                                        });
 
 
-                                            // Navigator.push(
-                                            //     context,
-                                            //     MaterialPageRoute(
-                                            //         builder: (context) =>
-                                            //             delete_file(name, link,
-                                            //                 index1, count1)));
-                                          },
-                                          child: Text("Delete"))
+                                        // Navigator.push(
+                                        //     context,
+                                        //     MaterialPageRoute(
+                                        //         builder: (context) =>
+                                        //             delete_file(name, link,
+                                        //                 index1, count1)));
+                                      },
+                                      child: Text("Delete"))
                                       : Container(),
                                 ],
                               );

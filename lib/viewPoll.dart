@@ -66,109 +66,109 @@ class _ViewPollState extends State<ViewPoll> {
 
             return v_poll == true && check==true
                 ? Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        caption,
-                        style: TextStyle(fontSize: 22),
-                      ),
-                      ElevatedButton(
-                          onPressed: () {
-                            if (poll == true) {
-                              poll = false;
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  caption,
+                  style: TextStyle(fontSize: 22),
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      if (poll == true) {
+                        poll = false;
 
-                              poll_id.add(FirebaseAuth.instance.currentUser!.uid
-                                  .toString());
+                        poll_id.add(FirebaseAuth.instance.currentUser!.uid
+                            .toString());
 
-                              int temp = int.parse(vote[0]);
-                              temp++;
-                              vote[0] = temp.toString();
-                              FirebaseFirestore.instance
-                                  .collection("Profile")
-                                  .doc(widget.uid)
-                                  .update({
-                                'votes': vote,
-                                'poll_id': poll_id,
-                              });
-                            }
-                          },
-                          child: Text(
-                            option[0],
-                            style: TextStyle(fontSize: 22),
-                          )),
-                      ElevatedButton(
-                          onPressed: () {
-                            if (poll == true) {
-                              poll = false;
+                        int temp = int.parse(vote[0]);
+                        temp++;
+                        vote[0] = temp.toString();
+                        FirebaseFirestore.instance
+                            .collection("Profile")
+                            .doc(widget.uid)
+                            .update({
+                          'votes': vote,
+                          'poll_id': poll_id,
+                        });
+                      }
+                    },
+                    child: Text(
+                      option[0],
+                      style: TextStyle(fontSize: 22),
+                    )),
+                ElevatedButton(
+                    onPressed: () {
+                      if (poll == true) {
+                        poll = false;
 
-                              poll_id.add(FirebaseAuth.instance.currentUser!.uid
-                                  .toString());
+                        poll_id.add(FirebaseAuth.instance.currentUser!.uid
+                            .toString());
 
-                              int temp = int.parse(vote[1]);
-                              temp++;
-                              vote[1] = temp.toString();
-                              FirebaseFirestore.instance
-                                  .collection("Profile")
-                                  .doc(widget.uid)
-                                  .update({
-                                'votes': vote,
-                                'poll_id': poll_id,
-                              });
-                            }
-                          },
-                          child: Text(
-                            option[1],
-                            style: TextStyle(fontSize: 22),
-                          )),
-                      option3 == true
-                          ? ElevatedButton(
-                              onPressed: () {
-                                if (poll == true) {
-                                  poll = false;
+                        int temp = int.parse(vote[1]);
+                        temp++;
+                        vote[1] = temp.toString();
+                        FirebaseFirestore.instance
+                            .collection("Profile")
+                            .doc(widget.uid)
+                            .update({
+                          'votes': vote,
+                          'poll_id': poll_id,
+                        });
+                      }
+                    },
+                    child: Text(
+                      option[1],
+                      style: TextStyle(fontSize: 22),
+                    )),
+                option3 == true
+                    ? ElevatedButton(
+                    onPressed: () {
+                      if (poll == true) {
+                        poll = false;
 
-                                  poll_id.add(FirebaseAuth
-                                      .instance.currentUser!.uid
-                                      .toString());
+                        poll_id.add(FirebaseAuth
+                            .instance.currentUser!.uid
+                            .toString());
 
-                                  int temp = int.parse(vote[2]);
-                                  temp++;
-                                  vote[2] = temp.toString();
-                                  FirebaseFirestore.instance
-                                      .collection("Profile")
-                                      .doc(widget.uid)
-                                      .update({
-                                    'votes': vote,
-                                    'poll_id': poll_id,
-                                  });
-                                }
-                              },
-                              child: Text(
-                                option[2],
-                                style: TextStyle(fontSize: 22),
-                              ))
-                          : Center(),
-                      ElevatedButton(
-                          onPressed: () {
-                            FirebaseFirestore.instance
-                                .collection("Profile")
-                                .doc(widget.uid)
-                                .update({
-                              'options': FieldValue.delete(),
-                              'votes': FieldValue.delete(),
-                              'poll_id': FieldValue.delete(),
-                            });
-                          },
-                          child: Text("Delete pole")),
-                      ElevatedButton(onPressed: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>poll_graph(widget.uid)));
+                        int temp = int.parse(vote[2]);
+                        temp++;
+                        vote[2] = temp.toString();
+                        FirebaseFirestore.instance
+                            .collection("Profile")
+                            .doc(widget.uid)
+                            .update({
+                          'votes': vote,
+                          'poll_id': poll_id,
+                        });
+                      }
+                    },
+                    child: Text(
+                      option[2],
+                      style: TextStyle(fontSize: 22),
+                    ))
+                    : Center(),
+                ElevatedButton(
+                    onPressed: () {
+                      FirebaseFirestore.instance
+                          .collection("Profile")
+                          .doc(widget.uid)
+                          .update({
+                        'options': FieldValue.delete(),
+                        'votes': FieldValue.delete(),
+                        'poll_id': FieldValue.delete(),
+                      });
+                    },
+                    child: Text("Delete pole")),
+                ElevatedButton(onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>poll_graph(widget.uid)));
 
 
-                      }, child: Text("view poll graph"))
-                    ],
-                  )
+                }, child: Text("view poll graph"))
+              ],
+            )
                 : Center(
-                    child: Text("No poll has created"),
-                  );
+              child: Text("No poll has created"),
+            );
           }),
     );
   }
