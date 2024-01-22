@@ -875,37 +875,36 @@ class _DashboardState extends State<Dashboard> {
                             Stack(
                               children: [
                                 Container(
-                                  height: 550,
+                                  height: 0.660*screenH,
                                   color:  Color(0xff77a5b5),
                                 ),
                                 Positioned(
-                                  bottom: 200,
+                                  bottom: 0.550*screenH,
+                                  right: 0.07*screenW,
                                   child: Padding(
                                     padding: const EdgeInsets.fromLTRB(40, 0, 0, 0),
-                                    child: Container(
-                                      height: 0.05*screenH,
-                                      width: 0.3*screenW,
-                                      decoration: BoxDecoration(
-                                        color:  Color(0xff549492),
-                                        borderRadius: BorderRadius.circular(6),
-                                      ),
-                                      child: GestureDetector(
-
-
-
-
-
-                                          onTap: () {
-                                            // profile_info[0]="sdf";
-                                            //print(profile_info.length);
-
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) => edit_profile(profile_info)));
-                                          },
-                                          child: Center(child: const Text("Edit Profile",style: TextStyle(color: Colors.white),))),
-                                    ),
+                                    child: GestureDetector(
+                                    
+                                    
+                                    
+                                    
+                                    
+                                        onTap: () {
+                                          // profile_info[0]="sdf";
+                                          //print(profile_info.length);
+                                    
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => edit_profile(profile_info)));
+                                        },
+                                        child:Row(
+                                          children: [
+                                            Text("Edit Profile",style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.bold),),
+                                            SizedBox.fromSize(size: Size(0.03*screenW,0),),
+                                            Icon(Icons.edit,size: 25,),
+                                          ],
+                                        )),
                                   ),
                                 ),
 
@@ -1017,6 +1016,7 @@ class _DashboardState extends State<Dashboard> {
                   },
                 ),
               ),
+              SizedBox.fromSize(size: Size(0, 0.1*screenH),),
 
               Container(
                 height: 0.05*screenH,

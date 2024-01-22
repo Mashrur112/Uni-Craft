@@ -119,7 +119,7 @@ class _HomepageState extends State<Homepage> {
               ),
               SizedBox.fromSize(size: Size(0, (15 / 872) * screenH)),
               const Text(
-                "Set up you profile!",
+                "Set up your profile!",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 25,

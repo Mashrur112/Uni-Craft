@@ -70,12 +70,16 @@ class _edit_profileState extends State<edit_profile> {
 
     // TODO: implement build
     return Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: const Color(0xffb8d8d8),
+        appBar: AppBar(
+          backgroundColor: Color(0xffb8d8d8),
+        ),
         body: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+
               StreamBuilder(stream: FirebaseFirestore.instance.collection("Profile").snapshots(), builder: (context,AsyncSnapshot<QuerySnapshot> snapshot){
                 //print(del);
                 if(snapshot.hasData && del==true )
@@ -102,6 +106,16 @@ class _edit_profileState extends State<edit_profile> {
                   return Center();
 
               }),
+              SizedBox.fromSize(
+                size: Size(0, 0.020*screenH),
+              ),
+              const Text(
+                "Edit Profile !",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                    color: Colors.black),
+              ),
 
 
 
@@ -109,7 +123,7 @@ class _edit_profileState extends State<edit_profile> {
 
 
               SizedBox.fromSize(
-                size: Size(0, 200),
+                size: Size(0, 0.02*screenH),
               ),
               Stack(
                 children: [
@@ -170,20 +184,20 @@ class _edit_profileState extends State<edit_profile> {
                       padding:
                       EdgeInsets.symmetric(horizontal: (10 / 372) * screenW),
                       child: TextFormField(
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.black,fontSize: 20),
                         controller: name,
                         decoration: InputDecoration(
                           hintText: widget.profile_info[1],
-                          hintStyle: TextStyle(color: Colors.white70),
+                          hintStyle: TextStyle(color: Colors.black54,fontSize: 20),
                           focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(14),
                               borderSide: BorderSide(
-                                color: Colors.white70,
+                                color: Color(0xff4f6367),
                               )),
                           enabledBorder: UnderlineInputBorder(
                               borderRadius: BorderRadius.circular(1),
                               borderSide: BorderSide(
-                                color: Colors.white70,
+                                color:  Color(0xff4f6367),
                               )),
                           // label: Text(
                           //   "Name",
@@ -206,21 +220,21 @@ class _edit_profileState extends State<edit_profile> {
                       padding:
                       EdgeInsets.symmetric(horizontal: (10 / 372) * screenW),
                       child: TextFormField(
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.black,fontSize: 20),
                         controller: age,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           hintText: widget.profile_info[2],
-                          hintStyle: TextStyle(color: Colors.white70),
+                          hintStyle: TextStyle(color: Colors.black54,fontSize: 20),
                           focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(14),
                               borderSide: BorderSide(
-                                color: Colors.white70,
+                                color:  Color(0xff4f6367),
                               )),
                           enabledBorder: UnderlineInputBorder(
                               borderRadius: BorderRadius.circular(1),
                               borderSide: BorderSide(
-                                color: Colors.white70,
+                                color:  Color(0xff4f6367),
                               )),
 
                         ),
@@ -240,20 +254,20 @@ class _edit_profileState extends State<edit_profile> {
                       padding:
                       EdgeInsets.symmetric(horizontal: (10 / 372) * screenW),
                       child: TextFormField(
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.black,fontSize: 20),
                         controller: email,
                         decoration: InputDecoration(
                           hintText: widget.profile_info[4],
-                          hintStyle: TextStyle(color: Colors.white70),
+                          hintStyle: TextStyle(color: Colors.black54,fontSize: 20),
                           focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(14),
                               borderSide: BorderSide(
-                                color: Colors.white70,
+                                color:  Color(0xff4f6367),
                               )),
                           enabledBorder: UnderlineInputBorder(
                               borderRadius: BorderRadius.circular(1),
                               borderSide: BorderSide(
-                                color: Colors.white70,
+                                color: Color(0xff4f6367),
                               )),
 
                         ),
@@ -273,21 +287,21 @@ class _edit_profileState extends State<edit_profile> {
                       padding:
                       EdgeInsets.symmetric(horizontal: (10 / 372) * screenW),
                       child: TextFormField(
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.black,fontSize: 20),
                         controller: roll,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           hintText: widget.profile_info[3],
-                          hintStyle: TextStyle(color: Colors.white70),
+                          hintStyle: TextStyle(color: Colors.black54,fontSize: 20),
                           focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(14),
                               borderSide: BorderSide(
-                                color: Colors.white70,
+                                color:  Color(0xff4f6367),
                               )),
                           enabledBorder: UnderlineInputBorder(
                               borderRadius: BorderRadius.circular(1),
                               borderSide: BorderSide(
-                                color: Colors.white70,
+                                color:  Color(0xff4f6367),
                               )),
 
                         ),
@@ -305,92 +319,112 @@ class _edit_profileState extends State<edit_profile> {
                   ],
                 ),
               ),
-              SizedBox.fromSize(size: Size(0, (31 / 872) * screenH)),
+              SizedBox.fromSize(size: Size(0, (91 / 872) * screenH)),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ElevatedButton(onPressed: () async {
-                   if( !formKey.currentState!.validate()){}
-                   else {
-                     //print(widget.profile_info[1]);
+                  Container(
+                    height: 0.05*screenH,
+                    width: 0.3*screenW,
+                    decoration: BoxDecoration(
+                     // color:  Color(0xffa84747),
+                      color: Color(0xff33678a),
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    child: GestureDetector(onTap: () async {
+                     if( !formKey.currentState!.validate()){}
+                     else {
+                       //print(widget.profile_info[1]);
+                       Navigator.pop(context);
 
 
-                     if (name.text.toString() != widget.profile_info[1] &&
-                         name.text.toString() != '') {
-                       FirebaseFirestore.instance.collection('Profile').doc(
-                           FirebaseAuth.instance.currentUser!.uid).update(
-                           {
-                             'name1': name.text.toString(),
-                           });
+                       if (name.text.toString() != widget.profile_info[1] &&
+                           name.text.toString() != '') {
+                         FirebaseFirestore.instance.collection('Profile').doc(
+                             FirebaseAuth.instance.currentUser!.uid).update(
+                             {
+                               'name1': name.text.toString(),
+                             });
+                       }
+                       if (age.text.toString() != widget.profile_info[2] &&
+                           age.text.toString() != '') {
+                         FirebaseFirestore.instance.collection('Profile').doc(
+                             FirebaseAuth.instance.currentUser!.uid).update(
+                             {
+                               'age1': age.text.toString(),
+                             });
+                       }
+                       if (email.text.toString() != widget.profile_info[4] &&
+                           email.text.toString() != '') {
+                         FirebaseFirestore.instance.collection('Profile').doc(
+                             FirebaseAuth.instance.currentUser!.uid).update(
+                             {
+                               'email': email.text.toString(),
+                             });
+                       }
+                       if (roll.text.toString() != widget.profile_info[3] &&
+                           roll.text.toString() != '') {
+                         FirebaseFirestore.instance.collection('Profile').doc(
+                             FirebaseAuth.instance.currentUser!.uid).update(
+                             {
+                               'roll': roll.text.toString(),
+                             });
+                       }
+                       if (dropdownvalue != widget.profile_info[5] && widget.profile_info[5]!="Administrator" &&  widget.profile_info[5]!="General member") {
+                         FirebaseFirestore.instance.collection('Profile').doc(
+                             FirebaseAuth.instance.currentUser!.uid).update(
+                             {
+                               'role': dropdownvalue,
+                             });
+                       }
+
+
+                       if (_image != null)
+
+                         await UpdateData().savedData(file: _image!);
+
                      }
-                     if (age.text.toString() != widget.profile_info[2] &&
-                         age.text.toString() != '') {
-                       FirebaseFirestore.instance.collection('Profile').doc(
-                           FirebaseAuth.instance.currentUser!.uid).update(
-                           {
-                             'age1': age.text.toString(),
-                           });
-                     }
-                     if (email.text.toString() != widget.profile_info[4] &&
-                         email.text.toString() != '') {
-                       FirebaseFirestore.instance.collection('Profile').doc(
-                           FirebaseAuth.instance.currentUser!.uid).update(
-                           {
-                             'email': email.text.toString(),
-                           });
-                     }
-                     if (roll.text.toString() != widget.profile_info[3] &&
-                         roll.text.toString() != '') {
-                       FirebaseFirestore.instance.collection('Profile').doc(
-                           FirebaseAuth.instance.currentUser!.uid).update(
-                           {
-                             'roll': roll.text.toString(),
-                           });
-                     }
-                     if (dropdownvalue != widget.profile_info[5] && widget.profile_info[5]!="Administrator" &&  widget.profile_info[5]!="General member") {
-                       FirebaseFirestore.instance.collection('Profile').doc(
-                           FirebaseAuth.instance.currentUser!.uid).update(
-                           {
-                             'role': dropdownvalue,
-                           });
-                     }
 
 
-                     if (_image != null)
+                    }, child:  Center(child: const Text("Save Profile",style: TextStyle(color: Colors.white),))),
+                  ),
+                  SizedBox.fromSize(size: Size((20/392)*screenW, 0),),
+                  Container(
+                    height: 0.05*screenH,
+                    width: 0.3*screenW,
+                    decoration: BoxDecoration(
+                       color:  Color(0xffa84747),
+                     // color: Color(0xff33678a),
+                      borderRadius: BorderRadius.circular(6),
+                    ),
 
-                       await UpdateData().savedData(file: _image!);
-
-                   }
-
-
-                  }, child: Text("Save Profile")),
-                  SizedBox.fromSize(size: Size((10/392)*screenW, 0),),
-                  ElevatedButton(onPressed: () async {
-                    try {
-                      final result = await InternetAddress.lookup('google.com');
-                      if (result.isNotEmpty &&
-                          result[0].rawAddress.isNotEmpty) {
-                        check_for_save = true;
+                    child: GestureDetector(onTap: () async {
+                      try {
+                        final result = await InternetAddress.lookup('google.com');
+                        if (result.isNotEmpty &&
+                            result[0].rawAddress.isNotEmpty) {
+                          check_for_save = true;
+                        }
+                      } on SocketException catch (_) {
+                        check_for_save = false;
                       }
-                    } on SocketException catch (_) {
-                      check_for_save = false;
-                    }
-                    setState(() {
-                      if(widget.profile_info[5]=="Administrator" && check_for_save==true)
-                        del=true;
-                    });
-                    if(check_for_save==true)
-                      {
+                      setState(() {
+                        if(widget.profile_info[5]=="Administrator" && check_for_save==true)
+                          del=true;
+                      });
+                      if(check_for_save==true)
+                        {
 
 
 
 
 
-                    await FirebaseFirestore.instance.collection('Profile').doc(FirebaseAuth.instance.currentUser!.uid).delete();
-                          Navigator.pop(context);}
+                      await FirebaseFirestore.instance.collection('Profile').doc(FirebaseAuth.instance.currentUser!.uid).delete();
+                            Navigator.pop(context);}
 
 
-                  }, child: Text("Delete Profile"))
+                    }, child:Center(child: const Text("Delete Profile",style: TextStyle(color: Colors.white),))),
+                  )
                 ],
               )
             ],

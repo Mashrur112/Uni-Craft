@@ -35,15 +35,18 @@ class _noticeState extends State<notice> {
   int l1 = 0;
   int count2 = 0;
   int count3 = 0;
-  var date=[];
-
+  var date = [];
 
   @override
   Widget build(BuildContext context) {
     double screenW = MediaQuery.of(context).size.width;
     double screenH = MediaQuery.of(context).size.height;
     return Scaffold(
+      backgroundColor: Color(0xffb8d8d8),
       appBar: AppBar(
+        title: Text("Notice"),
+       // backgroundColor: Color(0xff77a5b5),
+        backgroundColor: Color(0xff7a9e9f),
         actions: [
           IconButton(
               onPressed: () {
@@ -52,7 +55,7 @@ class _noticeState extends State<notice> {
               },
               icon: Icon(
                 Icons.add,
-                color: Colors.green,
+                color: Colors.white,
               )),
         ],
       ),
@@ -62,14 +65,13 @@ class _noticeState extends State<notice> {
             if (snapshots.hasData) {
               l = 0;
               l1 = l + 1;
-              int d=l1+1;
-             count2 = 0;
+              int d = l1 + 1;
+              count2 = 0;
               count3 = 0;
 
               final res = snapshots.data!.docs.toList();
               for (var r in res!) {
-                if (r['uid'] ==
-                    FirebaseAuth.instance.currentUser!.uid) {
+                if (r['uid'] == FirebaseAuth.instance.currentUser!.uid) {
                   join_code = r['code'];
                   role = r['role'];
 
@@ -77,34 +79,34 @@ class _noticeState extends State<notice> {
                 }
               }
               for (var r in res!) {
-                if (r['code'] == join_code.toString() ) {
-
+                if (r['code'] == join_code.toString()) {
                   //print(count1);
 
                   while (true) {
                     try {
-
-                      if (r['notice'+l.toString()] == "")
+                      if (r['notice' + l.toString()] == "")
                         break;
                       else {
-
                         notice_n.insert(
                             count2,
-                            snapshots.data!.docs[count3]['notice'+l.toString()]
+                            snapshots
+                                .data!.docs[count3]['notice' + l.toString()]
                                 .toString());
                         notice_t.insert(
                             count2,
-                            snapshots.data!.docs[count3]['notice'+l1.toString()]
+                            snapshots
+                                .data!.docs[count3]['notice' + l1.toString()]
                                 .toString());
                         date.insert(
                             count2,
-                            snapshots.data!.docs[count3]['notice'+d.toString()]
+                            snapshots
+                                .data!.docs[count3]['notice' + d.toString()]
                                 .toString());
 
                         count2++;
                         l = l + 3;
                         l1 = l + 1;
-                        d=l1+1;
+                        d = l1 + 1;
                       }
                     } catch (e) {
                       break;
@@ -114,43 +116,49 @@ class _noticeState extends State<notice> {
                   count3++;
               }
             }
-            if(del_n==true)
-            {
-              int idx_link=index1;
-              final res=snapshots.data!.docs.toList();
-              for(var r in res!) {
+            if (del_n == true) {
+              int idx_link = index1;
+              final res = snapshots.data!.docs.toList();
+              for (var r in res!) {
                 if (r['uid'] == FirebaseAuth.instance.currentUser!.uid) {
-
-                  while(true){
+                  while (true) {
                     // print(widget.index);
                     // print(widget.count1);
-                    if(index1==count2)
+                    if (index1 == count2)
                       break;
-                    else{
-
-                      if(index1==(count2-1)) {
-                        FirebaseFirestore.instance.collection("Profile").doc(
-                            FirebaseAuth.instance.currentUser!.uid).update({
-                          'notice'+(3*index1).toString(): "",
-                          'notice'+((3*index1) + 1).toString(): "",
-                          'notice'+((3*index1) + 2).toString(): "",
+                    else {
+                      if (index1 == (count2 - 1)) {
+                        FirebaseFirestore.instance
+                            .collection("Profile")
+                            .doc(FirebaseAuth.instance.currentUser!.uid)
+                            .update({
+                          'notice' + (3 * index1).toString(): "",
+                          'notice' + ((3 * index1) + 1).toString(): "",
+                          'notice' + ((3 * index1) + 2).toString(): "",
                         });
                         break;
-                      }
-                      else{
-                        idx_link=idx_link+1;
+                      } else {
+                        idx_link = idx_link + 1;
 
-                        FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
-                          'notice'+ (3*index1).toString():notice_n[idx_link].toString(),
-                          'notice'+((3*index1)+1).toString():notice_t[idx_link].toString(),
-                          'notice'+((3*index1)+2).toString():date[idx_link].toString(),
+                        FirebaseFirestore.instance
+                            .collection("Profile")
+                            .doc(FirebaseAuth.instance.currentUser!.uid)
+                            .update({
+                          'notice' + (3 * index1).toString():
+                              notice_n[idx_link].toString(),
+                          'notice' + ((3 * index1) + 1).toString():
+                              notice_t[idx_link].toString(),
+                          'notice' + ((3 * index1) + 2).toString():
+                              date[idx_link].toString(),
                         });
 
-                        index1++;}}
+                        index1++;
+                      }
+                    }
                   }
                 }
               }
-              del_n=false;
+              del_n = false;
             }
 
             return ListView.builder(
@@ -159,35 +167,74 @@ class _noticeState extends State<notice> {
                   return GestureDetector(
                     child: Column(
                       children: [
+
                         Container(
-                          height: (250 / 872) * screenH,
-                          child: Card(
-                            child: Row(
-                              children: [
-                                Text(date[index]),
-                                FittedBox(
-                                    child: Text(
-                                  notice_n[index],
-                                  style:
-                                      TextStyle(color: Colors.black, fontSize: 20),
-                                )),
-                              ],
-                            ),
+                        height: (230 / 872) * screenH,
+                        width: screenW,
+                        child: Card(
+                          margin: EdgeInsets.fromLTRB(0.016*screenW, 0.009*screenH, 0.016*screenW, 0.001*screenH),
+                          shadowColor: Colors.black,
+                          elevation: 4,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                           side: BorderSide(color:Color(0xff217096))
+                          ),
+
+                          color:  Color(0xff77a5b5),
+                          child: Column(
+                            children: [
+
+                              Padding(
+                                padding:  EdgeInsets.fromLTRB(0, 0.01*screenH, 0, 0),
+                                child: Text(
+                                  date[index],
+                                  style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              SizedBox.fromSize(size: Size(0,screenH*0.02),),
+                              Expanded(
+                                child: Padding(
+                                  padding:  EdgeInsets.fromLTRB(0.04*screenW, 0.01*screenH, 0.04*screenW, 0.03*screenH),
+                                  child: Text(
+                                    notice_n[index],
+                                    maxLines: 4,
+                                    //textDirection: TextDirection.ltr,
+                                    textAlign: TextAlign.justify,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 24,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding:  EdgeInsets.fromLTRB(0, 0, 0, 0.014*screenH),
+                                child: Container(
+                                  height: 0.036*screenH,
+                                  width: 0.2*screenW,
+                                  decoration: BoxDecoration(
+                                    color:  Color(0xffa84747),
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  child: GestureDetector(
+                                      onTap: () {
+                                        int total = index;
+
+                                        del(total);
+
+                                        setState(() {
+                                          del_n = true;
+                                        });
+                                      },
+                                      child:Center(child: Text("Delete",style: TextStyle(color: Colors.white),))),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        ElevatedButton(
-                            onPressed: () {
-                              int total = index;
+                                                  ),
 
-
-
-                              del(total);
-
-                              setState(() {
-                                del_n = true;
-                              });
-                            },
-                            child: Text("Delete")),
                       ],
                     ),
                     onTap: () {
