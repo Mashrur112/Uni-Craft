@@ -8,8 +8,10 @@ class notice_text extends StatelessWidget{
   Widget build(BuildContext context) {
 
     return Scaffold(
+      backgroundColor: Color(0xffb8d8d8),
       appBar: AppBar(
-        title: Text("Notice"),
+        title: Text("Description"),
+        backgroundColor: Color(0xff7a9e9f),
 
       ),
       body: SingleChildScrollView(

@@ -17,7 +17,12 @@ class members extends StatelessWidget{
     double screenW = MediaQuery.of(context).size.width;
     double screenH = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: AppBar(),
+      backgroundColor: Color(0xffb8d8d8),
+      appBar: AppBar(
+        title: Text("Members"),
+        backgroundColor: Color(0xff77a5b5),
+
+      ),
       body: Padding(
         padding:  EdgeInsets.symmetric(vertical: 30),
         child: StreamBuilder(stream: FirebaseFirestore.instance.collection('Profile').snapshots(), builder: (context,snapshots){
