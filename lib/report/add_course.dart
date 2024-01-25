@@ -2,217 +2,140 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
+import 'package:get/get.dart';
+import 'package:uni_craft/report/marks_section.dart';
+import 'package:uni_craft/report/report_graph.dart';
 
-import 'Homepage.dart';
-
-class add_notice extends StatefulWidget {
+class add_course extends StatefulWidget{
   @override
-  State<add_notice> createState() => _add_noticeState();
+  State<add_course> createState() => _add_courseState();
 }
 
-class _add_noticeState extends State<add_notice> {
-  var text = TextEditingController();
+class _add_courseState extends State<add_course> {
 
-  var caption = TextEditingController();
+  var course_n=TextEditingController();
+  //var twoDList = List<List>.generate(1, (i) => List<dynamic>.generate(3, (index) => null, growable: false), growable: false);
 
-  var count = "";
-  int c = 0;
-  var strm_opn=false;
-  String? string;
+  List course_name=<Map>[];
 
-
-
+  var join_code;
 
   @override
   Widget build(BuildContext context) {
     double screenW = MediaQuery.of(context).size.width;
     double screenH = MediaQuery.of(context).size.height;
+    // TODO: implement build
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            //mainAxisAlignment: MainAxisAlignment.center,
+        appBar: AppBar(),
+        body:Column(
+          children: [
+            StreamBuilder(stream: FirebaseFirestore.instance.collection("Profile").snapshots(), builder: (context,snapshots){
+              if(snapshots.hasData)
+              {
+                var res=snapshots.data?.docs.toList();
 
-            children: [
-              StreamBuilder(
-                  stream: FirebaseFirestore.instance
-                      .collection("Profile")
-                      .snapshots(),
-                  builder: (context, snapshots) {
-                    if (snapshots.hasData && strm_opn==true) {
-                      final res = snapshots.data!.docs.toList();
-                      for (var r in res) {
-                        if (r['uid'] ==
-                            FirebaseAuth.instance.currentUser!.uid) {
-                          c = 0;
-                          int t = c + 1;
-                          int d=t+1;
-                          while(true) {
-                            try {
-                              if (r['notice' + c.toString()]=="" ) {
+                for(var r in res!)
+                {
+                  if(r['uid']==FirebaseAuth.instance.currentUser!.uid)
+                  {
+                    try{
+                      course_name=r['course'];
+                    }catch(e){
 
-                                FirebaseFirestore.instance
-                                    .collection("Profile")
-                                    .doc(FirebaseAuth.instance.currentUser!.uid)
-                                    .update({
-                                  'notice' + c.toString():caption.text.toString(),
-                                  'notice' + t.toString(): text.text.toString(),
-                                  'notice' + d.toString(): string,
-                                });
-
-                                strm_opn=false;
-                                break;
-                              }
-                              else{
-
-                                c = c + 3;
-                                t = c + 1;
-                              d=t+1;
-                              }
-
-                            } catch (e) {
-
-                              FirebaseFirestore.instance
-                                  .collection("Profile")
-                                  .doc(FirebaseAuth.instance.currentUser!.uid)
-                                  .update({
-                                'notice' + c.toString():caption.text.toString(),
-                                'notice' + t.toString(): text.text.toString(),
-                                'notice' + d.toString(): string,
-                              });
-                              strm_opn=false;
-                              break;
-                            }
-                          }
-                          break;
-                        }
-
-                      }
                     }
-                    return Center();
-                  }),
+                  }
+                }
+              }
+              return Column(
+                children: [
+                  GestureDetector(
+                    onTap: (){
+                      showDialog(
+                        context: context,
+                        builder: (ctx) => AlertDialog(
 
-              Form(
-                key: formKey,
-                child: Column(
-                  children: [
-                    SizedBox.fromSize(size: Size(0,(100/872)*screenH),),
-                    TextFormField(
-                      style: TextStyle(color: Colors.white),
-                      controller: caption,
-                      minLines: 2,
-                      maxLines: 3,
-                      keyboardType: TextInputType.multiline,
-                      validator: (value) {
-                        if (value!.isEmpty ||
-                            !RegExp(r'[a-zA-Z]').hasMatch(value)) {
-                          return "Enter any caption ";
-                        } else
-                          return null;
-                      },
-                      onChanged: (value) {
-                        setState(() {
-                          count = (80 - value.length).toString();
-                        });
-                      },
-                      maxLength: 80,
-                      maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                      decoration: InputDecoration(
-                          label: Text(
-                            'Caption',
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                          counterStyle: TextStyle(
-                            color: Colors.white,
-                          ),
-                          counterText: 'Remaining: $count',
-                          floatingLabelAlignment: FloatingLabelAlignment.start,
-                          alignLabelWithHint: true,
-                          errorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.grey,
+                          actions: <Widget>[
+                            TextField(
+                              controller:course_n ,
                             ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.grey,
-                            ),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                            color: Colors.grey,
-                          ))),
+                            ElevatedButton(onPressed: (){
+                              var map={};
+                              map['Name']=course_n.text.toString();
+                              map['quiz']=0;
+                              map['mid']=0;
+                              map['final']=0;
+                              course_name.add(map);
+                              FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
+                                'course':course_name,
+                              });
+                              setState(() {
+                                Navigator.pop(context);
+                              });
+
+
+                            }, child: Text("Add"))
+
+                          ],
+                        ),
+                      );
+                    },
+                    child: Container(
+                      height: 0.08*screenH,
+                      color: Colors.yellow,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.add),
+                          Text("Add courses"),
+                        ],
+                      ),
                     ),
-                    SizedBox.fromSize(
-                      size: Size(0, ((10 / 872)) * screenH),
-                    ),
-                    TextFormField(
-                      style: TextStyle(color: Colors.white),
-                      controller: text,
-                      minLines: 18,
-                      maxLines: 20,
-                      keyboardType: TextInputType.multiline,
+                  ),
+                  ListView.builder(
+                      shrinkWrap: true,
+                      itemCount:course_name.length,
+                      itemBuilder: (context,index){
+                        return ElevatedButton(onPressed: (){
+                          int idx=index;
+                          List temp=[];
+                          temp.add(course_name);
+                          temp.add(idx);
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>marks_sec(temp)));
+
+                        }, child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(course_name[index]['Name']),
+
+                            GestureDetector(
+                                onTap: (){
+                                  course_name.removeAt(index);
+                                  FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
+                                    'course':course_name,
+
+                                  });
+                                  setState(() {
+
+                                  });
+                                },
+                                child: Icon(Icons.delete,size: 20,)),
+                          ],
+                        ));
+                      }),
+                  ElevatedButton(onPressed: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>report_graph()));
+
+                  }, child: Text("Graph"))
+                ],
+              );
+            })
 
 
+          ],
 
-                      decoration: InputDecoration(
-                          label: Text(
-                            'Text..',
-                            style: TextStyle(color: Colors.grey, fontSize: 20),
-                          ),
-                          floatingLabelAlignment: FloatingLabelAlignment.start,
-                          alignLabelWithHint: true,
-                          errorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.grey,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.grey,
-                            ),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                            color: Colors.grey,
-                          ))),
-                      validator: (value){
-                        if (value!.isEmpty ||
-                            !RegExp(r'[a-zA-Z]').hasMatch(value!)) {
-                          return "Enter any caption ";
-                        } else
-                          return null;
+        )
 
 
-                      },
-                    ),
-
-
-                    ElevatedButton(onPressed: () {
-                     if(formKey.currentState!.validate()){
-
-
-                       DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
-                       string = dateFormat.format(DateTime.now());
-                       Navigator.pop(context);
-                       setState(() {
-                        strm_opn=true;
-
-                      });}
-
-
-
-                    }, child: Text("Publish")),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }
