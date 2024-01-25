@@ -134,123 +134,129 @@ class _CountDownTimerState extends State<CountDownTimer>
               ),
               Padding(
                 padding: EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Expanded(
-                      child: Align(
-                        alignment: FractionalOffset.center,
-                        child: AspectRatio(
-                          aspectRatio: 1.0,
-                          child: Stack(
-                            children: <Widget>[
-                              Positioned.fill(
-                                child: CustomPaint(
-                                  painter: CustomTimerPainter(
-                                    animation: controller,
-                                    backgroundColor: Colors.white,
-                                    color: themeData.indicatorColor,
+                child: SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      SingleChildScrollView(
+                        physics: NeverScrollableScrollPhysics(),
+                        child: Expanded(
+                          child: Align(
+                            alignment: FractionalOffset.center,
+                            child: AspectRatio(
+                              aspectRatio: 1.0,
+                              child: Stack(
+                                children: <Widget>[
+                                  Positioned.fill(
+                                    child: CustomPaint(
+                                      painter: CustomTimerPainter(
+                                        animation: controller,
+                                        backgroundColor: Colors.white,
+                                        color: themeData.indicatorColor,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                              Align(
-                                alignment: FractionalOffset.center,
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text(
-                                      "Start Your Test!",
-                                      //"Countdown Timer",
-                                      style: TextStyle(
-                                          fontSize: 20.0, color: Colors.white),
+                                  Align(
+                                    alignment: FractionalOffset.center,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        Text(
+                                          "Start Your Test!",
+                                          //"Countdown Timer",
+                                          style: TextStyle(
+                                              fontSize: 20.0, color: Colors.white),
+                                        ),
+                                        Text(
+                                          timerString,
+                                          style: TextStyle(
+                                              fontSize: 112.0, color: Colors.white),
+                                        ),
+                                      ],
                                     ),
-                                    Text(
-                                      timerString,
-                                      style: TextStyle(
-                                          fontSize: 112.0, color: Colors.white),
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Expanded(
-                          child: TextField(
-                            controller: minuteController,
-                            keyboardType: TextInputType.number,
-                            decoration: InputDecoration(
-                              labelText: 'Minutes',
-                              labelStyle: TextStyle(
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Expanded(
+                            child: TextField(
+                              controller: minuteController,
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                labelText: 'Minutes',
+                                labelStyle: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              style: TextStyle(
                                 color: Colors.white,
                               ),
                             ),
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
                           ),
-                        ),
-                        SizedBox(width: 10),
-                        Expanded(
-                          child: TextField(
-                            controller: secondController,
-                            keyboardType: TextInputType.number,
-                            decoration: InputDecoration(
-                              labelText: 'Seconds',
-                              labelStyle: TextStyle(
+                          SizedBox(width: 10),
+                          Expanded(
+                            child: TextField(
+                              controller: secondController,
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                labelText: 'Seconds',
+                                labelStyle: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              style: TextStyle(
                                 color: Colors.white,
                               ),
                             ),
-                            style: TextStyle(
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          FloatingActionButton.extended(
+                            onPressed: isTimerRunning ? pauseTimer : startTimer,
+                            backgroundColor: Color.fromARGB(255, 96, 156, 168),
+                            foregroundColor: Colors.white,
+                            icon: Icon(
+                              isTimerRunning ? Icons.pause : Icons.play_arrow,
                               color: Colors.white,
                             ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        FloatingActionButton.extended(
-                          onPressed: isTimerRunning ? pauseTimer : startTimer,
-                          backgroundColor: Color.fromARGB(255, 96, 156, 168),
-                          foregroundColor: Colors.white,
-                          icon: Icon(
-                            isTimerRunning ? Icons.pause : Icons.play_arrow,
-                            color: Colors.white,
-                          ),
-                          label: Text(
-                            isTimerRunning ? "Pause" : "Play",
-                            style: TextStyle(
-                              color: Colors.white,
+                            label: Text(
+                              isTimerRunning ? "Pause" : "Play",
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
                             ),
                           ),
-                        ),
-                        FloatingActionButton.extended(
-                          onPressed: resetTimer,
-                          backgroundColor: Color.fromARGB(255, 96, 168, 144),
-                          foregroundColor: Colors.white,
-                          icon: Icon(
-                            Icons.stop,
-                            color: Colors.white,
-                          ),
-                          label: Text(
-                            "Stop",
-                            style: TextStyle(
+                          FloatingActionButton.extended(
+                            onPressed: resetTimer,
+                            backgroundColor: Color.fromARGB(255, 96, 168, 144),
+                            foregroundColor: Colors.white,
+                            icon: Icon(
+                              Icons.stop,
                               color: Colors.white,
                             ),
+                            label: Text(
+                              "Stop",
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
