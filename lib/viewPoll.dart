@@ -25,6 +25,13 @@ class _ViewPollState extends State<ViewPoll> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xff7a9e9f),
+        title: Text(" View Poll",
+        style: TextStyle(
+          //fontSize: 35,
+        ),),
+      ),
       body: StreamBuilder(
           stream: FirebaseFirestore.instance
               .collection("Profile")
@@ -170,6 +177,7 @@ class _ViewPollState extends State<ViewPoll> {
                     child: Text("No poll has created"),
                   );
           }),
+      backgroundColor: Color(0xffb8d8d8),
     );
   }
 }

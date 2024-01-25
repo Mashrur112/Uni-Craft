@@ -161,7 +161,8 @@ class _CountDownTimerState extends State<CountDownTimer>
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Text(
-                                      "Countdown Timer",
+                                      "Start Your Test!",
+                                      //"Countdown Timer",
                                       style: TextStyle(
                                           fontSize: 20.0, color: Colors.white),
                                     ),
@@ -340,7 +341,7 @@ class _MyHomePageState extends State<StopwatchView> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             Text(
-              'Stopwatch',
+              'Track Your Time!',
               style: Theme.of(context)
                   .textTheme
                   .headlineMedium
