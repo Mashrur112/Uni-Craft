@@ -15,10 +15,11 @@ class ViewPoll extends StatefulWidget {
 }
 
 class _ViewPollState extends State<ViewPoll> {
-  var caption, option, vote, poll_id, poll_idIdx;
+  var  option, vote, poll_id, poll_idIdx;
+  var caption;
   var option3 = false;
   var poll = false;
-  bool v_poll = true;
+  bool v_poll = true,check=false;
 
   @override
   Widget build(BuildContext context) {
@@ -54,13 +55,15 @@ class _ViewPollState extends State<ViewPoll> {
                 } catch (e) {
                   option3 = false;
                 }
+                check=true;
               } catch (e) {
                 v_poll = false;
+                check=false;
               }
               ;
             }
 
-            return v_poll == true
+            return v_poll == true && check==true
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

@@ -26,6 +26,7 @@ class _add_courseState extends State<add_course> {
     double screenH = MediaQuery.of(context).size.height;
     // TODO: implement build
     return Scaffold(
+<<<<<<< HEAD
         appBar: AppBar(),
         body:Column(
           children: [
@@ -46,6 +47,29 @@ class _add_courseState extends State<add_course> {
                   }
                 }
               }
+=======
+      appBar: AppBar(),
+      body:SingleChildScrollView(
+        child: Column(
+          children: [
+            StreamBuilder(stream: FirebaseFirestore.instance.collection("Profile").snapshots(), builder: (context,snapshots){
+              if(snapshots.hasData)
+                {
+                  var res=snapshots.data?.docs.toList();
+        
+                  for(var r in res!)
+                    {
+                      if(r['uid']==FirebaseAuth.instance.currentUser!.uid)
+                        {
+                          try{
+                            course_name=r['course'];
+                          }catch(e){
+        
+                          }
+                        }
+                    }
+                }
+>>>>>>> 4b0d5b3ca56e345a0d21f5e4f53f1843d94e38e4
               return Column(
                 children: [
                   GestureDetector(
@@ -53,7 +77,11 @@ class _add_courseState extends State<add_course> {
                       showDialog(
                         context: context,
                         builder: (ctx) => AlertDialog(
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> 4b0d5b3ca56e345a0d21f5e4f53f1843d94e38e4
                           actions: <Widget>[
                             TextField(
                               controller:course_n ,
@@ -71,10 +99,17 @@ class _add_courseState extends State<add_course> {
                               setState(() {
                                 Navigator.pop(context);
                               });
+<<<<<<< HEAD
 
 
                             }, child: Text("Add"))
 
+=======
+        
+        
+                            }, child: Text("Add"))
+        
+>>>>>>> 4b0d5b3ca56e345a0d21f5e4f53f1843d94e38e4
                           ],
                         ),
                       );
@@ -92,7 +127,11 @@ class _add_courseState extends State<add_course> {
                     ),
                   ),
                   ListView.builder(
+<<<<<<< HEAD
                       shrinkWrap: true,
+=======
+                    shrinkWrap: true,
+>>>>>>> 4b0d5b3ca56e345a0d21f5e4f53f1843d94e38e4
                       itemCount:course_name.length,
                       itemBuilder: (context,index){
                         return ElevatedButton(onPressed: (){
@@ -101,21 +140,37 @@ class _add_courseState extends State<add_course> {
                           temp.add(course_name);
                           temp.add(idx);
                           Navigator.push(context, MaterialPageRoute(builder: (context)=>marks_sec(temp)));
+<<<<<<< HEAD
 
                         }, child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(course_name[index]['Name']),
 
+=======
+        
+                        }, child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                           Text(course_name[index]['Name']),
+        
+>>>>>>> 4b0d5b3ca56e345a0d21f5e4f53f1843d94e38e4
                             GestureDetector(
                                 onTap: (){
                                   course_name.removeAt(index);
                                   FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
                                     'course':course_name,
+<<<<<<< HEAD
 
                                   });
                                   setState(() {
 
+=======
+        
+                                  });
+                                  setState(() {
+        
+>>>>>>> 4b0d5b3ca56e345a0d21f5e4f53f1843d94e38e4
                                   });
                                 },
                                 child: Icon(Icons.delete,size: 20,)),
@@ -124,16 +179,29 @@ class _add_courseState extends State<add_course> {
                       }),
                   ElevatedButton(onPressed: (){
                     Navigator.push(context, MaterialPageRoute(builder: (context)=>report_graph()));
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> 4b0d5b3ca56e345a0d21f5e4f53f1843d94e38e4
                   }, child: Text("Graph"))
                 ],
               );
             })
+<<<<<<< HEAD
 
 
           ],
 
         )
+=======
+        
+        
+          ],
+        
+        ),
+      )
+>>>>>>> 4b0d5b3ca56e345a0d21f5e4f53f1843d94e38e4
 
 
     );
