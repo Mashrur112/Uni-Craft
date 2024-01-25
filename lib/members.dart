@@ -81,41 +81,44 @@ class members extends StatelessWidget{
                 elevation: 10,
                 margin: EdgeInsets.fromLTRB(((10/392)*screenW), ((10/872)*screenH), ((10/392)*screenW), ((0/872)*screenH)),
 
-                child: Column(
-                  children: [
-                    SizedBox.fromSize(size: Size(0,20),),
-                    Stack(
-                      children: [
-
-                        CircleAvatar(
-                          radius: 31,
-                          backgroundImage: CachedNetworkImageProvider(prsn[(index*6)+4]),
-                        )
-                      ],
-
-
-                    ),
-                    Text("Name: "+prsn[index*6]),
-                    Text("Role: "+prsn[(index*6)+1]),
-                    Text("roll: "+prsn[(index*6)+2]),
-                    Text("Email: "+prsn[(index*6)+3]),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: ElevatedButton(onPressed: (){
-                            FirebaseFirestore.instance.collection("Profile").doc(prsn[(index*6)+5]).delete();
-
-
-
-
-                          }, child: Text("Delete")),
-                        ),
-                      ],
-                    ),
-
-                  ],
+                child: SingleChildScrollView(
+                  physics:NeverScrollableScrollPhysics(),
+                  child: Column(
+                    children: [
+                      SizedBox.fromSize(size: Size(0,20),),
+                      Stack(
+                        children: [
+                  
+                          CircleAvatar(
+                            radius: 31,
+                            backgroundImage: CachedNetworkImageProvider(prsn[(index*6)+4]),
+                          )
+                        ],
+                  
+                  
+                      ),
+                      Text("Name: "+prsn[index*6]),
+                      Text("Role: "+prsn[(index*6)+1]),
+                      Text("roll: "+prsn[(index*6)+2]),
+                      Text("Email: "+prsn[(index*6)+3]),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: ElevatedButton(onPressed: (){
+                              FirebaseFirestore.instance.collection("Profile").doc(prsn[(index*6)+5]).delete();
+                  
+                  
+                  
+                  
+                            }, child: Text("Delete")),
+                          ),
+                        ],
+                      ),
+                  
+                    ],
+                  ),
                 ),
 
               ),
@@ -164,40 +167,43 @@ class members extends StatelessWidget{
                 elevation: 10,
                 margin: EdgeInsets.fromLTRB(((10/392)*screenW), ((10/872)*screenH), ((10/392)*screenW), ((0/872)*screenH)),
 
-                child: Column(
-                  children: [
-                    SizedBox.fromSize(size: Size(0,20),),
-                    Stack(
-                      children: [
+                child: SingleChildScrollView(
+                  physics: NeverScrollableScrollPhysics(),
+                  child: Column(
+                    children: [
+                      SizedBox.fromSize(size: Size(0,20),),
+                      Stack(
+                        children: [
 
-                        CircleAvatar(
-                          radius: 31,
-                          backgroundImage: CachedNetworkImageProvider(prsn[(index*6)+4]),
-                        )
-                      ],
-
-
-                    ),
-                    Text("Name: "+prsn[index*6]),
-                    Text("Role: "+prsn[(index*6)+1]),
-                    Text("roll: "+prsn[(index*6)+2]),
-                    Text("Email: "+prsn[(index*6)+3]),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: ElevatedButton(onPressed: (){
-                            FirebaseFirestore.instance.collection("Profile").doc(prsn[(index*6)+5]).delete();
+                          CircleAvatar(
+                            radius: 31,
+                            backgroundImage: CachedNetworkImageProvider(prsn[(index*6)+4]),
+                          )
+                        ],
 
 
+                      ),
+                      Text("Name: "+prsn[index*6]),
+                      Text("Role: "+prsn[(index*6)+1]),
+                      Text("roll: "+prsn[(index*6)+2]),
+                      Text("Email: "+prsn[(index*6)+3]),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: ElevatedButton(onPressed: (){
+                              FirebaseFirestore.instance.collection("Profile").doc(prsn[(index*6)+5]).delete();
 
 
-                          }, child: Text("Delete")),
-                        ),
-                      ],
-                    ),
-                  ],
+
+
+                            }, child: Text("Delete")),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
 
               ),

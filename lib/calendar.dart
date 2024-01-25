@@ -46,7 +46,7 @@ class _CalendarState extends State<Calendar> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Academic Calendar"),
-        backgroundColor: Colors.black.withOpacity(0.35),
+        backgroundColor: Color(0xff7a9e9f),//Colors.black.withOpacity(0.35),
         actions: [
           IconButton(
             icon: Icon(Icons.calendar_view_week),
@@ -65,6 +65,8 @@ class _CalendarState extends State<Calendar> {
       ),
       body: Stack(
         children: [
+
+
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
@@ -78,6 +80,8 @@ class _CalendarState extends State<Calendar> {
               ),
             ),
           ),
+
+
           SingleChildScrollView(
             child: Center(
               child: Column(
@@ -114,6 +118,7 @@ class _CalendarState extends State<Calendar> {
           ),
         ],
       ),
+      backgroundColor: Color(0xffb8d8d8),
     );
   }
 }

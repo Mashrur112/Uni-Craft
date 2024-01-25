@@ -126,192 +126,194 @@ class _TimePlannerPageState extends State<TimePlannerPage> {
     await showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Add Meeting'),
-          content: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextField(
-                controller: eventNameController,
-                decoration: InputDecoration(labelText: 'Event Name'),
-              ),
-              SizedBox(height: 10),
-              Text('Select Date:'),
-              ElevatedButton(
-                onPressed: () async {
-                  DateTime? pickedDate = await showDatePicker(
-                    context: context,
-                    initialDate: selectedDate,
-                    firstDate: DateTime.now(),
-                    lastDate: DateTime(2100),
-                  );
-                  if (pickedDate != null && pickedDate != selectedDate) {
-                    setState(() {
-                      selectedDate = pickedDate;
-                    });
-                  }
-                },
-                child: Text(
-                  'Choose Date',
-                  style: TextStyle(color: Colors.black),
+        return SingleChildScrollView(
+          child: AlertDialog(
+            title: Text('Add Meeting'),
+            content: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextField(
+                  controller: eventNameController,
+                  decoration: InputDecoration(labelText: 'Event Name'),
                 ),
-              ),
-              SizedBox(height: 10),
-              Text('Select Time Range:'),
-              ElevatedButton(
-                onPressed: () async {
-                  TimeOfDay? pickedStartTime = await showTimePicker(
-                    context: context,
-                    initialTime: selectedStartTime,
-                  );
-                  if (pickedStartTime != null &&
-                      pickedStartTime != selectedStartTime) {
-                    setState(() {
-                      selectedStartTime = pickedStartTime;
-                    });
-                  }
-                },
-                child: Text(
-                  'Choose Start Time',
-                  style: TextStyle(color: Colors.black),
+                SizedBox(height: 10),
+                Text('Select Date:'),
+                ElevatedButton(
+                  onPressed: () async {
+                    DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: selectedDate,
+                      firstDate: DateTime.now(),
+                      lastDate: DateTime(2100),
+                    );
+                    if (pickedDate != null && pickedDate != selectedDate) {
+                      setState(() {
+                        selectedDate = pickedDate;
+                      });
+                    }
+                  },
+                  child: Text(
+                    'Choose Date',
+                    style: TextStyle(color: Colors.black),
+                  ),
                 ),
-              ),
-              ElevatedButton(
-                onPressed: () async {
-                  TimeOfDay? pickedEndTime = await showTimePicker(
-                    context: context,
-                    initialTime: selectedEndTime,
-                  );
-                  if (pickedEndTime != null &&
-                      pickedEndTime != selectedEndTime) {
-                    setState(() {
-                      selectedEndTime = pickedEndTime;
-                    });
-                  }
-                },
-                child: Text(
-                  'Choose End Time',
-                  style: TextStyle(color: Colors.black),
+                SizedBox(height: 10),
+                Text('Select Time Range:'),
+                ElevatedButton(
+                  onPressed: () async {
+                    TimeOfDay? pickedStartTime = await showTimePicker(
+                      context: context,
+                      initialTime: selectedStartTime,
+                    );
+                    if (pickedStartTime != null &&
+                        pickedStartTime != selectedStartTime) {
+                      setState(() {
+                        selectedStartTime = pickedStartTime;
+                      });
+                    }
+                  },
+                  child: Text(
+                    'Choose Start Time',
+                    style: TextStyle(color: Colors.black),
+                  ),
                 ),
-              ),
-              SizedBox(height: 10),
-              Text('Select Color:'),
+                ElevatedButton(
+                  onPressed: () async {
+                    TimeOfDay? pickedEndTime = await showTimePicker(
+                      context: context,
+                      initialTime: selectedEndTime,
+                    );
+                    if (pickedEndTime != null &&
+                        pickedEndTime != selectedEndTime) {
+                      setState(() {
+                        selectedEndTime = pickedEndTime;
+                      });
+                    }
+                  },
+                  child: Text(
+                    'Choose End Time',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+                SizedBox(height: 10),
+                Text('Select Color:'),
+                ElevatedButton(
+                  onPressed: () {
+                    _openColorPicker(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: selectedColor,
+                  ),
+                  child: Text('Choose Color'),
+                ),
+                SizedBox(height: 10),
+                Text('Select Recurrence Type:'),
+                DropdownButton<String>(
+                  value: selectedRecurrenceType,
+                  items: [
+                    DropdownMenuItem(
+                      child: Text('None'),
+                      value: null,
+                    ),
+                    DropdownMenuItem(
+                      child: Text('Daily'),
+                      value: 'FREQ=DAILY',
+                    ),
+                    DropdownMenuItem(
+                      child: Text('Weekly'),
+                      value: 'FREQ=WEEKLY',
+                    ),
+                    DropdownMenuItem(
+                      child: Text('Monthly'),
+                      value: 'FREQ=MONTHLY',
+                    ),
+                  ],
+                  onChanged: (String? type) {
+                    setState(() {
+                      selectedRecurrenceType = type;
+                    });
+                  },
+                ),
+                SizedBox(height: 10),
+                Text('Select Recurrence Count:'),
+                DropdownButton<int>(
+                  value: selectedRecurrenceCount,
+                  items: [
+                    DropdownMenuItem(
+                      child: Text('None'),
+                      value: null,
+                    ),
+                    DropdownMenuItem(
+                      child: Text('01'),
+                      value: 1,
+                    ),
+                    DropdownMenuItem(
+                      child: Text('02'),
+                      value: 2,
+                    ),
+                    DropdownMenuItem(
+                      child: Text('03'),
+                      value: 3,
+                    ),
+                    DropdownMenuItem(
+                      child: Text('04'),
+                      value: 4,
+                    ),
+                    DropdownMenuItem(
+                      child: Text('05'),
+                      value: 5,
+                    ),
+                  ],
+                  onChanged: (int? count) {
+                    setState(() {
+                      selectedRecurrenceCount = count;
+                    });
+                  },
+                ),
+              ],
+            ),
+            actions: [
               ElevatedButton(
                 onPressed: () {
-                  _openColorPicker(context);
+                  Navigator.of(context).pop();
                 },
-                style: ElevatedButton.styleFrom(
-                  primary: selectedColor,
-                ),
-                child: Text('Choose Color'),
+                child: Text('Cancel'),
               ),
-              SizedBox(height: 10),
-              Text('Select Recurrence Type:'),
-              DropdownButton<String>(
-                value: selectedRecurrenceType,
-                items: [
-                  DropdownMenuItem(
-                    child: Text('None'),
-                    value: null,
-                  ),
-                  DropdownMenuItem(
-                    child: Text('Daily'),
-                    value: 'FREQ=DAILY',
-                  ),
-                  DropdownMenuItem(
-                    child: Text('Weekly'),
-                    value: 'FREQ=WEEKLY',
-                  ),
-                  DropdownMenuItem(
-                    child: Text('Monthly'),
-                    value: 'FREQ=MONTHLY',
-                  ),
-                ],
-                onChanged: (String? type) {
+              ElevatedButton(
+                onPressed: () {
                   setState(() {
-                    selectedRecurrenceType = type;
+                    meetings.add(
+                      Meeting(
+                        eventNameController.text,
+                        DateTime(
+                          selectedDate.year,
+                          selectedDate.month,
+                          selectedDate.day,
+                          selectedStartTime.hour,
+                          selectedStartTime.minute,
+                        ),
+                        DateTime(
+                          selectedDate.year,
+                          selectedDate.month,
+                          selectedDate.day,
+                          selectedEndTime.hour,
+                          selectedEndTime.minute,
+                        ),
+                        selectedColor,
+                        false,
+                        recurrenceRule: _generateRecurrenceRule(
+                          type: selectedRecurrenceType,
+                          count: selectedRecurrenceCount,
+                        ),
+                      ),
+                    );
                   });
+                  Navigator.of(context).pop();
                 },
-              ),
-              SizedBox(height: 10),
-              Text('Select Recurrence Count:'),
-              DropdownButton<int>(
-                value: selectedRecurrenceCount,
-                items: [
-                  DropdownMenuItem(
-                    child: Text('None'),
-                    value: null,
-                  ),
-                  DropdownMenuItem(
-                    child: Text('01'),
-                    value: 1,
-                  ),
-                  DropdownMenuItem(
-                    child: Text('02'),
-                    value: 2,
-                  ),
-                  DropdownMenuItem(
-                    child: Text('03'),
-                    value: 3,
-                  ),
-                  DropdownMenuItem(
-                    child: Text('04'),
-                    value: 4,
-                  ),
-                  DropdownMenuItem(
-                    child: Text('05'),
-                    value: 5,
-                  ),
-                ],
-                onChanged: (int? count) {
-                  setState(() {
-                    selectedRecurrenceCount = count;
-                  });
-                },
+                child: Text('Add'),
               ),
             ],
           ),
-          actions: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Cancel'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  meetings.add(
-                    Meeting(
-                      eventNameController.text,
-                      DateTime(
-                        selectedDate.year,
-                        selectedDate.month,
-                        selectedDate.day,
-                        selectedStartTime.hour,
-                        selectedStartTime.minute,
-                      ),
-                      DateTime(
-                        selectedDate.year,
-                        selectedDate.month,
-                        selectedDate.day,
-                        selectedEndTime.hour,
-                        selectedEndTime.minute,
-                      ),
-                      selectedColor,
-                      false,
-                      recurrenceRule: _generateRecurrenceRule(
-                        type: selectedRecurrenceType,
-                        count: selectedRecurrenceCount,
-                      ),
-                    ),
-                  );
-                });
-                Navigator.of(context).pop();
-              },
-              child: Text('Add'),
-            ),
-          ],
         );
       },
     );
