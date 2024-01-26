@@ -137,7 +137,8 @@ class _LoginState extends State<Login> {
         child: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-                image: AssetImage("assets/images/LogIn.jpeg"), fit: BoxFit.cover),
+                image: AssetImage("assets/images/LogIn.jpeg"),
+                fit: BoxFit.cover),
           ),
           child: Column(
             //mainAxisAlignment: MainAxisAlignment.center,
@@ -145,7 +146,8 @@ class _LoginState extends State<Login> {
               Container(height: (30 / 872.72) * screenH),
 
               Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, ((50 / 392.72) * screenW), 0),
+                padding:
+                    EdgeInsets.fromLTRB(0, 0, ((50 / 392.72) * screenW), 0),
                 child: Image.asset(
                   "assets/images/logo.png",
                   height: (200 / 872.72) * screenH,
@@ -300,7 +302,7 @@ class _LoginState extends State<Login> {
                       child: Text(
                         "Forgot Password?",
                         style: TextStyle(
-                          color: Color(0xffd42020),
+                          color: Color.fromARGB(255, 241, 138, 101),
                           fontWeight: FontWeight.bold,
                           fontSize: 17,
                         ),
@@ -415,10 +417,11 @@ class _LoginState extends State<Login> {
                         "Register Now",
                         style: TextStyle(color: Colors.blue, fontSize: 14),
                       ))
-
                 ],
               ),
-              Container(height: 100,)
+              Container(
+                height: 100,
+              )
             ],
           ),
         ),
