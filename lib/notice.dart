@@ -163,6 +163,7 @@ class _noticeState extends State<notice> {
               }
               del_n = false;
             }
+            if(count2>0){
 
             return ListView.builder(
                 itemCount: count2,
@@ -233,7 +234,7 @@ class _noticeState extends State<notice> {
                                         },
                                         child:Center(child: Text("Delete",style: TextStyle(color: Colors.white),))),
                                   ),
-                                ):Center(),
+                                ):Center(child: Text("sdf"),),
                               ],
                             ),
                           ),
@@ -249,7 +250,11 @@ class _noticeState extends State<notice> {
                                   notice_text(notice_t[index])));
                     },
                   );
-                });
+                });}
+            else
+              {
+                return Center(child:Text("No notice here to show",style: TextStyle(fontSize: 21),));
+              }
           }),
     );
   }
