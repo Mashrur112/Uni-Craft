@@ -119,7 +119,21 @@ class _DashboardState extends State<Dashboard> {
                     Row(
                       children: [
                         GestureDetector(
-                          onTap: () {
+
+                         
+
+
+                         onTap: ()
+                          async {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return Center(child: CircularProgressIndicator());
+                              },
+                            );
+
+                            await Future.delayed(Duration(milliseconds: 500));
+                            Navigator.of(context).pop();
 
 
                             Navigator.push(
@@ -183,7 +197,18 @@ class _DashboardState extends State<Dashboard> {
                               (40 / 392) * screenW, ((20 / 872) * screenH)),
                         ),
                         GestureDetector(
-                          onTap: () {
+                          onTap: ()
+                          //Loading Screen
+                          async {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return Center(child: CircularProgressIndicator());
+                              },
+                            );
+
+                            await Future.delayed(Duration(milliseconds: 500));
+                            Navigator.of(context).pop();
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -240,7 +265,18 @@ class _DashboardState extends State<Dashboard> {
                     ),
                     widget.role != "General member"
                         ? GestureDetector(
-                            onTap: () {
+                            onTap: ()
+                            //Loading Screen
+                            async {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return Center(child: CircularProgressIndicator());
+                                },
+                              );
+
+                              await Future.delayed(Duration(milliseconds: 500));
+                              Navigator.of(context).pop();
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -300,9 +336,19 @@ class _DashboardState extends State<Dashboard> {
                                       ((20 / 872) * screenH)),
                                 ),
                                 GestureDetector(
-                                  onTap: () {
+                                 
+                                  onTap: ()
+                                  //Loading Screen
+                                  async {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return Center(child: CircularProgressIndicator());
+                                      },
+                                    );
 
-
+                                    await Future.delayed(Duration(milliseconds: 500));
+                                    Navigator.of(context).pop();
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -488,7 +534,18 @@ class _DashboardState extends State<Dashboard> {
                                 padding: EdgeInsets.fromLTRB(
                                     ((40 / 392) * screenW), 0, 0, 0),
                                 child: GestureDetector(
-                                  onTap: () {
+                                  onTap: ()
+                                  //Loading Screen
+                                  async {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return Center(child: CircularProgressIndicator());
+                                      },
+                                    );
+
+                                    await Future.delayed(Duration(milliseconds: 500));
+                                    Navigator.of(context).pop();
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -548,7 +605,18 @@ class _DashboardState extends State<Dashboard> {
                                 padding: EdgeInsets.fromLTRB(
                                     ((40 / 392) * screenW), 0, 0, 0),
                                 child: GestureDetector(
-                                  onTap: () {
+                                  onTap: ()
+                                  //Loading Screen
+                                  async {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return Center(child: CircularProgressIndicator());
+                                      },
+                                    );
+
+                                    await Future.delayed(Duration(milliseconds: 500));
+                                    Navigator.of(context).pop();
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -665,7 +733,18 @@ class _DashboardState extends State<Dashboard> {
                                 padding: EdgeInsets.fromLTRB(
                                     ((40 / 392) * screenW), 0, 0, 0),
                                 child: GestureDetector(
-                                  onTap: () {
+                                  onTap: ()
+                                  //Loading Screen
+                                  async {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return Center(child: CircularProgressIndicator());
+                                      },
+                                    );
+
+                                    await Future.delayed(Duration(milliseconds: 500));
+                                    Navigator.of(context).pop();
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -728,7 +807,18 @@ class _DashboardState extends State<Dashboard> {
                         padding: EdgeInsets.fromLTRB(
                             ((40 / 392) * screenW), 0, 0, 0),
                         child: GestureDetector(
-                          onTap: () {
+                          onTap: ()
+                          //Loading Screen
+                          async {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return Center(child: CircularProgressIndicator());
+                              },
+                            );
+
+                            await Future.delayed(Duration(milliseconds: 500));
+                            Navigator.of(context).pop();
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -786,7 +876,18 @@ class _DashboardState extends State<Dashboard> {
                         padding: EdgeInsets.fromLTRB(
                             ((40 / 392) * screenW), 0, 0, 0),
                         child: GestureDetector(
-                          onTap: () {
+                          onTap: ()
+                          //Loading Screen
+                          async {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return Center(child: CircularProgressIndicator());
+                              },
+                            );
+
+                            await Future.delayed(Duration(milliseconds: 500));
+                            Navigator.of(context).pop();
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -848,7 +949,18 @@ class _DashboardState extends State<Dashboard> {
             bottom: (30 / 872) * screenH,
             right: (20 / 392) * screenW,
             child: GestureDetector(
-              onTap: () {
+              onTap: ()
+              //Loading Screen
+              async {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return Center(child: CircularProgressIndicator());
+                  },
+                );
+
+                await Future.delayed(Duration(milliseconds: 500));
+                Navigator.of(context).pop();
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => ChatApp()));
               },

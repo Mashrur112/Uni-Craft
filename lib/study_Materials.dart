@@ -63,7 +63,7 @@ class _study_MaterialsState extends State<study_Materials> {
       child: Scaffold(
         backgroundColor: Color(0xffb8d8d8),
         appBar: AppBar(
-          backgroundColor: Color(0xffb8d8d8),
+          backgroundColor: Color(0xffc9d9e9),
           actions: [
             widget.r1 == "Administrator"
                 ? IconButton(

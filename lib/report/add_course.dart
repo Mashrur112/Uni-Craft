@@ -26,8 +26,16 @@ class _add_courseState extends State<add_course> {
     double screenH = MediaQuery.of(context).size.height;
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(),
-      body:SingleChildScrollView(
+      appBar: AppBar(
+        backgroundColor: Color(0xffb8d8d8),
+        title: Text(" Report",
+          style: TextStyle(
+            fontWeight: FontWeight.normal,
+            fontSize: 30,
+          ),),
+      ),
+      body:
+      SingleChildScrollView(
         child: Column(
           children: [
             StreamBuilder(stream: FirebaseFirestore.instance.collection("Profile").snapshots(), builder: (context,snapshots){
@@ -82,7 +90,7 @@ class _add_courseState extends State<add_course> {
                     },
                     child: Container(
                       height: 0.08*screenH,
-                      color: Colors.yellow,
+                      color: Color(0xff5a9e9f),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -133,9 +141,11 @@ class _add_courseState extends State<add_course> {
         
         
           ],
+
         
         ),
-      )
+      ),
+      backgroundColor: Color(0xffb8d8d8), //0xffc9d9e9
 
 
     );
