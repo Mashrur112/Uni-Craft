@@ -346,6 +346,10 @@ class _DashboardState extends State<Dashboard> {
                                         return Center(child: CircularProgressIndicator());
                                       },
                                     );
+                                    var token =await FirebaseMessaging.instance.getToken();
+                                    FirebaseFirestore.instance.collection('Profile').doc(FirebaseAuth.instance.currentUser!.uid).update({
+                                      'token':token.toString(),
+                                    });
 
                                     await Future.delayed(Duration(milliseconds: 500));
                                     Navigator.of(context).pop();
@@ -467,7 +471,7 @@ class _DashboardState extends State<Dashboard> {
                                 onTap: ()async {
 
                                   if(widget.role!="Administrator"){
-                                  final token=await FirebaseMessaging.instance.getToken();
+                                  var token=await FirebaseMessaging.instance.getToken();
                                   FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
                                     'token':token.toString(),
                                   });}
