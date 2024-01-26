@@ -19,7 +19,7 @@ class StoreData {
   }
 
   Future<String> savedData(
-      {required var name,required var roll,required var email , required var age, required Uint8List file,required role,required code}) async {
+      {required var token,required var name,required var roll,required var email , required var age, required Uint8List file,required role,required code}) async {
     String resp = "Some Error Occured";
     final auth = FirebaseAuth.instance;
 
@@ -37,6 +37,7 @@ class StoreData {
           'imageLink': imageUrl,
           'role':role,
           'code':code.toString(),
+          'token':token,
         });
 
 

@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'package:flutter/material.dart';
 
@@ -44,6 +45,8 @@ class _HomepageState extends State<Homepage> {
   var val_join=false;
   var join_check=false;
   String dropdownvalue = 'Choose a ROLE';
+  List token=[];
+  var same_dev=false;
 
   var items = [
     'Choose a ROLE',
@@ -388,6 +391,13 @@ class _HomepageState extends State<Homepage> {
 
                       for(var r in res!) {
                         c++;
+                        if(r['code']==join_code.text)
+                          {
+                            try{
+                              token.add(r['token']);
+
+                            }catch(e){};
+                          }
 
 
                         if(r['code']==join_code.text && r['role']=="Administrator")
@@ -457,6 +467,7 @@ class _HomepageState extends State<Homepage> {
                             //
                             // });
                             formKey.currentState!.validate();
+
 
                             //Navigator.push(context, MaterialPageRoute(builder: (context)=>Dashboard()));
                             // showDialog(
@@ -588,6 +599,7 @@ class _HomepageState extends State<Homepage> {
                                       roll: roll1,
                                       email: email1,
                                       role: dropdownvalue,
+                                      token: "",
 
                                       code: x,
                                     );
@@ -597,6 +609,8 @@ class _HomepageState extends State<Homepage> {
                                     });
                                   }
                                   else{
+                                    var token1=FirebaseMessaging.instance.getToken().toString();
+
                                     await StoreData().savedData(
 
                                       name: name1,
@@ -605,6 +619,7 @@ class _HomepageState extends State<Homepage> {
                                       roll: roll1,
                                       email: email1,
                                       role: dropdownvalue,
+                                      token: token1,
 
                                       code: y,
                                     );
@@ -770,6 +785,7 @@ class _HomepageState extends State<Homepage> {
                               roll: roll1,
                               email: email1,
                               role: dropdownvalue,
+                              token: "",
 
                               code: x,
                             );
@@ -779,6 +795,7 @@ class _HomepageState extends State<Homepage> {
                             });
                             }
                             else{
+                              final token1= await FirebaseMessaging.instance.getToken();
                                await StoreData().savedData(
 
                                 name: name1,
@@ -787,6 +804,7 @@ class _HomepageState extends State<Homepage> {
                                 roll: roll1,
                                 email: email1,
                                 role: dropdownvalue,
+                                token: token1.toString(),
 
                                 code: y,
                               );

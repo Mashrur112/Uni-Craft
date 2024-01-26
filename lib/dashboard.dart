@@ -1,31 +1,51 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:uni_craft/Stopwatch.dart';
 import 'package:uni_craft/chat.dart';
 import 'package:uni_craft/createPoll.dart';
+
 import 'package:uni_craft/report/add_course.dart';
 import 'package:uni_craft/study_Materials.dart';
 import 'package:uni_craft/viewPoll.dart';
-import 'package:uni_craft/widget/uploadFile.dart';
+
 
 import 'Homepage.dart';
 import 'calendar.dart';
 import 'edit_Profile.dart';
+import 'main.dart';
 import 'members.dart';
 import 'notice.dart';
+import 'notification.dart';
+
 
 class Dashboard extends StatefulWidget {
-  var role, uid_admin;
-  Dashboard(this.role, this.uid_admin, {super.key});
+  var role, uid_admin,code;
+  Dashboard(this.role, this.uid_admin,this.code, {super.key});
 
   @override
   State<Dashboard> createState() => _DashboardState();
 }
 
 class _DashboardState extends State<Dashboard> {
+ //NotificationServices notificationServices=NotificationServices();
+
+@override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   notificationServices.requestNotificationPermission();
+  //
+  //   notificationServices.getDeviceToken().then((value){
+  //     print('device token '+value);
+  //
+  //
+  //   });
+  //
+  // }
   final currentUser = FirebaseAuth.instance;
   var view_more = false;
   var c = 0;
@@ -38,6 +58,9 @@ class _DashboardState extends State<Dashboard> {
     await googleSign.signOut();
     FirebaseAuth.instance.signOut();
   }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +119,11 @@ class _DashboardState extends State<Dashboard> {
                     Row(
                       children: [
                         GestureDetector(
-                          onTap: ()
+
+                         
+
+
+                         onTap: ()
                           async {
                             showDialog(
                               context: context,
@@ -107,6 +134,7 @@ class _DashboardState extends State<Dashboard> {
 
                             await Future.delayed(Duration(milliseconds: 500));
                             Navigator.of(context).pop();
+
 
                             Navigator.push(
                                 context,
@@ -308,6 +336,7 @@ class _DashboardState extends State<Dashboard> {
                                       ((20 / 872) * screenH)),
                                 ),
                                 GestureDetector(
+                                 
                                   onTap: ()
                                   //Loading Screen
                                   async {
@@ -323,7 +352,7 @@ class _DashboardState extends State<Dashboard> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => notice()));
+                                            builder: (context) => notice(widget.code,widget.role)));
                                   },
                                   child: Center(
                                     child: Container(
@@ -435,11 +464,17 @@ class _DashboardState extends State<Dashboard> {
                                     ((20 / 872) * screenH)),
                               ),
                               GestureDetector(
-                                onTap: () {
+                                onTap: ()async {
+
+                                  if(widget.role!="Administrator"){
+                                  final token=await FirebaseMessaging.instance.getToken();
+                                  FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
+                                    'token':token.toString(),
+                                  });}
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => notice()));
+                                          builder: (context) => notice(widget.code,widget.role)));
                                 },
                                 child: Center(
                                   child: Container(
