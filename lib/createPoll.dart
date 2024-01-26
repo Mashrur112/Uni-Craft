@@ -30,7 +30,9 @@ class _CreatePollState extends State<CreatePoll> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xffb8d8d8),
       appBar: AppBar(
+        backgroundColor: Color(0xff7a9e9f),
         title: Text('Create Poll'),
       ),
       body: SingleChildScrollView(
@@ -63,23 +65,29 @@ class _CreatePollState extends State<CreatePoll> {
               SizedBox(height: 10),
               _buildOptionTextField(_option3Controller, 'Option 3'),
               SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    options.clear();
-                    if (_option1Controller.text.isNotEmpty) {
-                      options.add(_option1Controller.text);
-                    }
-                    if (_option2Controller.text.isNotEmpty) {
-                      options.add(_option2Controller.text);
-                    }
-                    if (_option3Controller.text.isNotEmpty) {
-                      options.add(_option3Controller.text);
-                    }
-                  });
-                  _createPoll();
-                },
-                child: Text('Create Poll'),
+              Container(
+                alignment: Alignment.center,
+                child: ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      options.clear();
+                      if (_option1Controller.text.isNotEmpty) {
+                        options.add(_option1Controller.text);
+                      }
+                      if (_option2Controller.text.isNotEmpty) {
+                        options.add(_option2Controller.text);
+                      }
+                      if (_option3Controller.text.isNotEmpty) {
+                        options.add(_option3Controller.text);
+                      }
+                    });
+                    _createPoll();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.all(20),
+                  ),
+                  child: Text('Create Poll'),
+                ),
               ),
             ],
           ),
@@ -88,7 +96,8 @@ class _CreatePollState extends State<CreatePoll> {
     );
   }
 
-  Widget _buildOptionTextField(TextEditingController controller, String hintText) {
+  Widget _buildOptionTextField(
+      TextEditingController controller, String hintText) {
     return TextField(
       controller: controller,
       decoration: InputDecoration(
@@ -114,7 +123,7 @@ class _CreatePollState extends State<CreatePoll> {
         'caption': caption,
         'options': options,
         'votes': List.filled(options.length, '0'),
-        'poll_id':List.filled(0, '0'),
+        'poll_id': List.filled(0, '0'),
       }).then((value) {
         // Successfully added to Firestore
         print('Poll created with ID: ${widget.uid_admin}');
@@ -126,6 +135,7 @@ class _CreatePollState extends State<CreatePoll> {
       });
     }
   }
+
   void _showErrorDialog() {
     showDialog(
       context: context,
