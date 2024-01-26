@@ -7,6 +7,8 @@ import 'add_notice.dart';
 import 'notice_text.dart';
 
 class notice extends StatefulWidget {
+  var code1,role1;
+  notice(this.code1,this.role1);
   @override
   State<notice> createState() => _noticeState();
 }
@@ -45,18 +47,19 @@ class _noticeState extends State<notice> {
       backgroundColor: Color(0xffb8d8d8),
       appBar: AppBar(
         title: Text("Notice"),
-       // backgroundColor: Color(0xff77a5b5),
+        // backgroundColor: Color(0xff77a5b5),
         backgroundColor: Color(0xff7a9e9f),
         actions: [
+          widget.role1=="Administrator"?
           IconButton(
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => add_notice()));
+                    MaterialPageRoute(builder: (context) => add_notice(widget.code1,widget.role1)));
               },
               icon: Icon(
                 Icons.add,
                 color: Colors.white,
-              )),
+              )):Icon(Icons.not_interested),
         ],
       ),
       body: StreamBuilder(
@@ -79,7 +82,7 @@ class _noticeState extends State<notice> {
                 }
               }
               for (var r in res!) {
-                if (r['code'] == join_code.toString()) {
+                if (r['code'] == join_code.toString()  && r['role']=='Administrator') {
                   //print(count1);
 
                   while (true) {
@@ -145,11 +148,11 @@ class _noticeState extends State<notice> {
                             .doc(FirebaseAuth.instance.currentUser!.uid)
                             .update({
                           'notice' + (3 * index1).toString():
-                              notice_n[idx_link].toString(),
+                          notice_n[idx_link].toString(),
                           'notice' + ((3 * index1) + 1).toString():
-                              notice_t[idx_link].toString(),
+                          notice_t[idx_link].toString(),
                           'notice' + ((3 * index1) + 2).toString():
-                              date[idx_link].toString(),
+                          date[idx_link].toString(),
                         });
 
                         index1++;
@@ -169,71 +172,72 @@ class _noticeState extends State<notice> {
                       children: [
 
                         Container(
-                        height: (230 / 872) * screenH,
-                        width: screenW,
-                        child: Card(
-                          margin: EdgeInsets.fromLTRB(0.016*screenW, 0.009*screenH, 0.016*screenW, 0.001*screenH),
-                          shadowColor: Colors.black,
-                          elevation: 4,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                           side: BorderSide(color:Color(0xff217096))
-                          ),
+                          height: (230 / 872) * screenH,
+                          width: screenW,
+                          child: Card(
+                            margin: EdgeInsets.fromLTRB(0.016*screenW, 0.009*screenH, 0.016*screenW, 0.001*screenH),
+                            shadowColor: Colors.black,
+                            elevation: 4,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                side: BorderSide(color:Color(0xff217096))
+                            ),
 
-                          color:  Color(0xff77a5b5),
-                          child: Column(
-                            children: [
+                            color:  Color(0xff77a5b5),
+                            child: Column(
+                              children: [
 
-                              Padding(
-                                padding:  EdgeInsets.fromLTRB(0, 0.01*screenH, 0, 0),
-                                child: Text(
-                                  date[index],
-                                  style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                              SizedBox.fromSize(size: Size(0,screenH*0.02),),
-                              Expanded(
-                                child: Padding(
-                                  padding:  EdgeInsets.fromLTRB(0.04*screenW, 0.01*screenH, 0.04*screenW, 0.03*screenH),
+                                Padding(
+                                  padding:  EdgeInsets.fromLTRB(0, 0.01*screenH, 0, 0),
                                   child: Text(
-                                    notice_n[index],
-                                    maxLines: 4,
-                                    //textDirection: TextDirection.ltr,
-                                    textAlign: TextAlign.justify,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 24,
+                                    date[index],
+                                    style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                SizedBox.fromSize(size: Size(0,screenH*0.02),),
+                                Expanded(
+                                  child: Padding(
+                                    padding:  EdgeInsets.fromLTRB(0.04*screenW, 0.01*screenH, 0.04*screenW, 0.03*screenH),
+                                    child: Text(
+                                      notice_n[index],
+                                      maxLines: 4,
+                                      //textDirection: TextDirection.ltr,
+                                      textAlign: TextAlign.justify,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 24,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Padding(
-                                padding:  EdgeInsets.fromLTRB(0, 0, 0, 0.014*screenH),
-                                child: Container(
-                                  height: 0.036*screenH,
-                                  width: 0.2*screenW,
-                                  decoration: BoxDecoration(
-                                    color:  Color(0xffa84747),
-                                    borderRadius: BorderRadius.circular(30),
+                                widget.role1=="Administrator"?
+                                Padding(
+                                  padding:  EdgeInsets.fromLTRB(0, 0, 0, 0.014*screenH),
+                                  child: Container(
+                                    height: 0.036*screenH,
+                                    width: 0.2*screenW,
+                                    decoration: BoxDecoration(
+                                      color:  Color(0xffa84747),
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                    child: GestureDetector(
+                                        onTap: () {
+                                          int total = index;
+
+                                          del(total);
+
+                                          setState(() {
+                                            del_n = true;
+                                          });
+                                        },
+                                        child:Center(child: Text("Delete",style: TextStyle(color: Colors.white),))),
                                   ),
-                                  child: GestureDetector(
-                                      onTap: () {
-                                        int total = index;
-
-                                        del(total);
-
-                                        setState(() {
-                                          del_n = true;
-                                        });
-                                      },
-                                      child:Center(child: Text("Delete",style: TextStyle(color: Colors.white),))),
-                                ),
-                              ),
-                            ],
+                                ):Center(),
+                              ],
+                            ),
                           ),
                         ),
-                                                  ),
 
                       ],
                     ),

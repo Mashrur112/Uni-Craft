@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+//import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +24,7 @@ class _AuthpageState2 extends State<Authpage2> {
   String collect1 = " ";
   var role, code, uid_admin;
   var snap = false;
+
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +67,7 @@ if(snapshot.hasData){
                       snapshot.data!.docs.length >= 1 &&
                       snap == true) {
                     snap = false;
-                    return Dashboard(role, uid_admin);
+                    return Dashboard(role, uid_admin,code);
                   } else {
                     return Homepage();
                   }
