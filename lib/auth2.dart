@@ -25,7 +25,6 @@ class _AuthpageState2 extends State<Authpage2> {
   var role, code, uid_admin;
   var snap = false;
 
-
   @override
   Widget build(BuildContext context) {
     double screenW = MediaQuery.of(context).size.width;
@@ -44,31 +43,33 @@ class _AuthpageState2 extends State<Authpage2> {
                     .collection('Profile')
                     .snapshots(),
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.hasData) {
+                    final res = snapshot.data!.docs.toList();
 
-if(snapshot.hasData){
-                  final res = snapshot.data!.docs.toList();
-
-                  for (var r in res) {
-                    if (r['uid'] == currentUser.currentUser!.uid) {
-                      role = r['role'];
-                      code = r['code'];
-                      snap = true;
-                      break;
+                    for (var r in res) {
+                      if (r['uid'] == currentUser.currentUser!.uid) {
+                        role = r['role'];
+                        code = r['code'];
+                        snap = true;
+                        break;
+                      }
+                    }
+                    for (var i in res) {
+                      if (code == i['code'] && i['role'] == "Administrator") {
+                        uid_admin = i['uid'];
+                        break;
+                      }
                     }
                   }
-                  for (var i in res) {
-                    if (code == i['code'] && i['role'] == "Administrator") {
-                      uid_admin = i['uid'];
-                      break;
-                    }
-                  }}
 
                   if (snapshot.hasData &&
                       snapshot.data!.docs.length >= 1 &&
                       snap == true) {
+
                     snap = false;
-                    return Dashboard(role, uid_admin,code);
+                    return Dashboard(role, uid_admin, code);
                   } else {
+
                     return Homepage();
                   }
                 },

@@ -43,7 +43,11 @@ class _uploadFileState extends State<uploadFile> {
     final fileName = file != null ? basename(file!.path) : 'No File Selected';
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor:Color(0xffb8d8d8),
+      appBar: AppBar(
+        title: Text("Upload File"),
+        backgroundColor: Color(0xff7a9e9f),
+      ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
@@ -131,17 +135,38 @@ class _uploadFileState extends State<uploadFile> {
                       return Container();
                   }),
             ),
-            SizedBox.fromSize(size: Size(0, (((150 / 872) * screenH)))),
+            SizedBox.fromSize(size: Size(0, (((50 / 872) * screenH)))),
             Container(
               padding: EdgeInsets.all(32),
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ButtonWidget(
-                      text: 'Select File',
-                      icon: Icons.attach_file,
-                      onClicked: selectFile,
+                    Container(
+                      height: 0.07 * screenH,
+                      width: 0.9 * screenW,
+                      decoration: BoxDecoration(
+                        // color:  Color(0xffa84747),
+                        color: Color(0xff33678a),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: GestureDetector(
+
+
+
+                        onTap: selectFile,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.attach_file,color: Colors.greenAccent,),
+                            Container(
+                              width: 0.01*screenW,
+                            ),
+                            Text("Select File",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20),),
+                          ],
+                        ),
+                      ),
+
                     ),
                     SizedBox(height: 8),
                     Text(
@@ -149,13 +174,34 @@ class _uploadFileState extends State<uploadFile> {
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
-                          color: Colors.white),
+                          color: Colors.black),
                     ),
                     SizedBox(height: 48),
-                    ButtonWidget(
-                      text: 'Upload File',
-                      icon: Icons.cloud_upload_outlined,
-                      onClicked: uploadFile,
+                    Container(
+                      height: 0.07 * screenH,
+                      width: 0.9 * screenW,
+                      decoration: BoxDecoration(
+                        // color:  Color(0xffa84747),
+                        color: Color(0xff33678a),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: GestureDetector(
+
+
+
+                        onTap: uploadFile,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.upload_file,color: Colors.greenAccent,),
+                            Container(
+                              width: 0.01*screenW,
+                            ),
+                            Text("Upload File",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20),),
+                          ],
+                        ),
+                      ),
+
                     ),
                     SizedBox(height: 20),
                     task != null ? buildUploadStatus(task!) : Container(),
@@ -166,28 +212,33 @@ class _uploadFileState extends State<uploadFile> {
                           children: [
                             Padding(
                               padding: EdgeInsets.symmetric(
-                                  horizontal: (10 / 372) * screenW),
+                                  horizontal: (0 / 372) * screenW),
                               child: TextFormField(
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(color: Colors.black, fontSize: 17),
                                 controller: caption,
-
                                 decoration: InputDecoration(
+                                  hintText: "Title",
+                                  hintStyle:
+                                  TextStyle(color: Colors.black54, fontSize: 17),
                                   focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(14),
                                       borderSide: BorderSide(
-                                        color: Colors.white70,
+                                        color: Color(0xff4f6367),
                                       )),
                                   enabledBorder: UnderlineInputBorder(
                                       borderRadius: BorderRadius.circular(1),
                                       borderSide: BorderSide(
-                                        color: Colors.white70,
+                                        color: Color(0xff4f6367),
                                       )),
-                                  label: Text("Caption",
-                                      style: TextStyle(color: Colors.white70)),
+                                  // label: Text(
+                                  //   "Name",
+                                  //   style: TextStyle(color: Colors.white70),
+                                  // ),
                                 ),
                                 validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return "Enter any caption ";
+                                  if (value!.isEmpty)
+                                   {
+                                    return "Enter a title ";
                                   } else
                                     return null;
                                 },
@@ -197,24 +248,28 @@ class _uploadFileState extends State<uploadFile> {
                                 size: Size(0, (41 / 872) * screenH)),
                             Padding(
                               padding: EdgeInsets.symmetric(
-                                  horizontal: (10 / 372) * screenW),
+                                  horizontal: (0 / 372) * screenW),
                               child: TextFormField(
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(color: Colors.black, fontSize: 17),
                                 controller: link,
-
                                 decoration: InputDecoration(
+                                  hintText: "Link (https://)",
+                                  hintStyle:
+                                  TextStyle(color: Colors.black54, fontSize: 17),
                                   focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(14),
                                       borderSide: BorderSide(
-                                        color: Colors.white70,
+                                        color: Color(0xff4f6367),
                                       )),
                                   enabledBorder: UnderlineInputBorder(
                                       borderRadius: BorderRadius.circular(1),
                                       borderSide: BorderSide(
-                                        color: Colors.white70,
+                                        color: Color(0xff4f6367),
                                       )),
-                                  label: Text("Link",
-                                      style: TextStyle(color: Colors.white70)),
+                                  // label: Text(
+                                  //   "Name",
+                                  //   style: TextStyle(color: Colors.white70),
+                                  // ),
                                 ),
                                 validator: (value) {
                                   if (value!.isEmpty ||  !RegExp(r'[h]*[t]*[t]*[p]*[s]*[:]*[/]*[.]*(https://)').hasMatch(value!)) {
@@ -226,31 +281,44 @@ class _uploadFileState extends State<uploadFile> {
                             ),
                           ],
                         )),
-                    ElevatedButton(
-                        onPressed: () async {
+                    Container(
+                      height: 0.04*screenH,
+                    ),
+                    Container(
+                      height: 0.05 * screenH,
+                      width: 0.3 * screenW,
+                      decoration: BoxDecoration(
+                        // color:  Color(0xffa84747),
+                        color: Color(0xff33678a),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: GestureDetector(
+                          onTap: () async {
 
-                          if(formKey.currentState!.validate())
-                          {
-                          try {
-                            final result = await InternetAddress.lookup('google.com');
-                            if (result.isNotEmpty &&
-                                result[0].rawAddress.isNotEmpty) {
-                              check_for_save = true;
+                            if(formKey.currentState!.validate())
+                            {
+                            try {
+                              final result = await InternetAddress.lookup('google.com');
+                              if (result.isNotEmpty &&
+                                  result[0].rawAddress.isNotEmpty) {
+                                check_for_save = true;
+                              }
+                            } on SocketException catch (_) {
+                              check_for_save = false;
                             }
-                          } on SocketException catch (_) {
-                            check_for_save = false;
-                          }
-                          if(check_for_save==true){
-                            DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
-                            string = dateFormat.format(DateTime.now());
-                          setState(() {
-                            link_up=true;
-                          });}
-                        }},
-                        child: Text(
-                          "Upload link",
-                          style: TextStyle(color: Colors.white),
-                        )),
+                            if(check_for_save==true){
+                              DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
+                              string = dateFormat.format(DateTime.now());
+                            setState(() {
+                              link_up=true;
+                            });}
+                          }},
+                          child: Center(
+                              child: const Text(
+                                "Upload Link",
+                                style: TextStyle(color: Colors.white),
+                              ))),
+                    ),
                   ],
                 ),
               ),

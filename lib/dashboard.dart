@@ -12,7 +12,6 @@ import 'package:uni_craft/report/add_course.dart';
 import 'package:uni_craft/study_Materials.dart';
 import 'package:uni_craft/viewPoll.dart';
 
-
 import 'Homepage.dart';
 import 'calendar.dart';
 import 'edit_Profile.dart';
@@ -21,19 +20,18 @@ import 'members.dart';
 import 'notice.dart';
 import 'notification.dart';
 
-
 class Dashboard extends StatefulWidget {
-  var role, uid_admin,code;
-  Dashboard(this.role, this.uid_admin,this.code, {super.key});
+  var role, uid_admin, code;
+  Dashboard(this.role, this.uid_admin, this.code, {super.key});
 
   @override
   State<Dashboard> createState() => _DashboardState();
 }
 
 class _DashboardState extends State<Dashboard> {
- //NotificationServices notificationServices=NotificationServices();
+  //NotificationServices notificationServices=NotificationServices();
 
-@override
+  @override
   // void initState() {
   //   // TODO: implement initState
   //   super.initState();
@@ -58,9 +56,6 @@ class _DashboardState extends State<Dashboard> {
     await googleSign.signOut();
     FirebaseAuth.instance.signOut();
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -119,22 +114,17 @@ class _DashboardState extends State<Dashboard> {
                     Row(
                       children: [
                         GestureDetector(
-
-                         
-
-
-                         onTap: ()
-                          async {
+                          onTap: () async {
                             showDialog(
                               context: context,
                               builder: (context) {
-                                return Center(child: CircularProgressIndicator());
+                                return Center(
+                                    child: CircularProgressIndicator());
                               },
                             );
 
-                            await Future.delayed(Duration(milliseconds: 500));
+                            await Future.delayed(Duration(milliseconds: 200));
                             Navigator.of(context).pop();
-
 
                             Navigator.push(
                                 context,
@@ -198,16 +188,17 @@ class _DashboardState extends State<Dashboard> {
                         ),
                         GestureDetector(
                           onTap: ()
-                          //Loading Screen
-                          async {
+                              //Loading Screen
+                              async {
                             showDialog(
                               context: context,
                               builder: (context) {
-                                return Center(child: CircularProgressIndicator());
+                                return Center(
+                                    child: CircularProgressIndicator());
                               },
                             );
 
-                            await Future.delayed(Duration(milliseconds: 500));
+                            await Future.delayed(Duration(milliseconds: 200));
                             Navigator.of(context).pop();
                             Navigator.push(
                                 context,
@@ -266,16 +257,17 @@ class _DashboardState extends State<Dashboard> {
                     widget.role != "General member"
                         ? GestureDetector(
                             onTap: ()
-                            //Loading Screen
-                            async {
+                                //Loading Screen
+                                async {
                               showDialog(
                                 context: context,
                                 builder: (context) {
-                                  return Center(child: CircularProgressIndicator());
+                                  return Center(
+                                      child: CircularProgressIndicator());
                                 },
                               );
 
-                              await Future.delayed(Duration(milliseconds: 500));
+                              await Future.delayed(Duration(milliseconds: 200));
                               Navigator.of(context).pop();
                               Navigator.push(
                                   context,
@@ -336,27 +328,34 @@ class _DashboardState extends State<Dashboard> {
                                       ((20 / 872) * screenH)),
                                 ),
                                 GestureDetector(
-                                 
                                   onTap: ()
-                                  //Loading Screen
-                                  async {
+                                      //Loading Screen
+                                      async {
                                     showDialog(
                                       context: context,
                                       builder: (context) {
-                                        return Center(child: CircularProgressIndicator());
+                                        return Center(
+                                            child: CircularProgressIndicator());
                                       },
                                     );
-                                    var token =await FirebaseMessaging.instance.getToken();
-                                    FirebaseFirestore.instance.collection('Profile').doc(FirebaseAuth.instance.currentUser!.uid).update({
-                                      'token':token.toString(),
+                                    await Future.delayed(
+                                        Duration(milliseconds: 200));
+                                    Navigator.of(context).pop();
+                                    var token = await FirebaseMessaging.instance
+                                        .getToken();
+                                    FirebaseFirestore.instance
+                                        .collection('Profile')
+                                        .doc(FirebaseAuth
+                                            .instance.currentUser!.uid)
+                                        .update({
+                                      'token': token.toString(),
                                     });
 
-                                    await Future.delayed(Duration(milliseconds: 500));
-                                    Navigator.of(context).pop();
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => notice(widget.code,widget.role)));
+                                            builder: (context) => notice(
+                                                widget.code, widget.role)));
                                   },
                                   child: Center(
                                     child: Container(
@@ -468,17 +467,35 @@ class _DashboardState extends State<Dashboard> {
                                     ((20 / 872) * screenH)),
                               ),
                               GestureDetector(
-                                onTap: ()async {
+                                onTap: () async {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return Center(
+                                          child: CircularProgressIndicator());
+                                    },
+                                  );
 
-                                  if(widget.role!="Administrator"){
-                                  var token=await FirebaseMessaging.instance.getToken();
-                                  FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
-                                    'token':token.toString(),
-                                  });}
+                                  await Future.delayed(
+                                      Duration(milliseconds: 200));
+                                  Navigator.of(context).pop();
+
+                                  if (widget.role != "Administrator") {
+                                    var token = await FirebaseMessaging.instance
+                                        .getToken();
+                                    FirebaseFirestore.instance
+                                        .collection("Profile")
+                                        .doc(FirebaseAuth
+                                            .instance.currentUser!.uid)
+                                        .update({
+                                      'token': token.toString(),
+                                    });
+                                  }
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => notice(widget.code,widget.role)));
+                                          builder: (context) => notice(
+                                              widget.code, widget.role)));
                                 },
                                 child: Center(
                                   child: Container(
@@ -539,16 +556,18 @@ class _DashboardState extends State<Dashboard> {
                                     ((40 / 392) * screenW), 0, 0, 0),
                                 child: GestureDetector(
                                   onTap: ()
-                                  //Loading Screen
-                                  async {
+                                      //Loading Screen
+                                      async {
                                     showDialog(
                                       context: context,
                                       builder: (context) {
-                                        return Center(child: CircularProgressIndicator());
+                                        return Center(
+                                            child: CircularProgressIndicator());
                                       },
                                     );
 
-                                    await Future.delayed(Duration(milliseconds: 500));
+                                    await Future.delayed(
+                                        Duration(milliseconds: 200));
                                     Navigator.of(context).pop();
                                     Navigator.push(
                                         context,
@@ -610,16 +629,18 @@ class _DashboardState extends State<Dashboard> {
                                     ((40 / 392) * screenW), 0, 0, 0),
                                 child: GestureDetector(
                                   onTap: ()
-                                  //Loading Screen
-                                  async {
+                                      //Loading Screen
+                                      async {
                                     showDialog(
                                       context: context,
                                       builder: (context) {
-                                        return Center(child: CircularProgressIndicator());
+                                        return Center(
+                                            child: CircularProgressIndicator());
                                       },
                                     );
 
-                                    await Future.delayed(Duration(milliseconds: 500));
+                                    await Future.delayed(
+                                        Duration(milliseconds: 200));
                                     Navigator.of(context).pop();
                                     Navigator.push(
                                         context,
@@ -738,16 +759,18 @@ class _DashboardState extends State<Dashboard> {
                                     ((40 / 392) * screenW), 0, 0, 0),
                                 child: GestureDetector(
                                   onTap: ()
-                                  //Loading Screen
-                                  async {
+                                      //Loading Screen
+                                      async {
                                     showDialog(
                                       context: context,
                                       builder: (context) {
-                                        return Center(child: CircularProgressIndicator());
+                                        return Center(
+                                            child: CircularProgressIndicator());
                                       },
                                     );
 
-                                    await Future.delayed(Duration(milliseconds: 500));
+                                    await Future.delayed(
+                                        Duration(milliseconds: 200));
                                     Navigator.of(context).pop();
                                     Navigator.push(
                                         context,
@@ -812,16 +835,17 @@ class _DashboardState extends State<Dashboard> {
                             ((40 / 392) * screenW), 0, 0, 0),
                         child: GestureDetector(
                           onTap: ()
-                          //Loading Screen
-                          async {
+                              //Loading Screen
+                              async {
                             showDialog(
                               context: context,
                               builder: (context) {
-                                return Center(child: CircularProgressIndicator());
+                                return Center(
+                                    child: CircularProgressIndicator());
                               },
                             );
 
-                            await Future.delayed(Duration(milliseconds: 500));
+                            await Future.delayed(Duration(milliseconds: 200));
                             Navigator.of(context).pop();
                             Navigator.push(
                                 context,
@@ -881,16 +905,17 @@ class _DashboardState extends State<Dashboard> {
                             ((40 / 392) * screenW), 0, 0, 0),
                         child: GestureDetector(
                           onTap: ()
-                          //Loading Screen
-                          async {
+                              //Loading Screen
+                              async {
                             showDialog(
                               context: context,
                               builder: (context) {
-                                return Center(child: CircularProgressIndicator());
+                                return Center(
+                                    child: CircularProgressIndicator());
                               },
                             );
 
-                            await Future.delayed(Duration(milliseconds: 500));
+                            await Future.delayed(Duration(milliseconds: 200));
                             Navigator.of(context).pop();
                             Navigator.push(
                                 context,
@@ -954,8 +979,8 @@ class _DashboardState extends State<Dashboard> {
             right: (20 / 392) * screenW,
             child: GestureDetector(
               onTap: ()
-              //Loading Screen
-              async {
+                  //Loading Screen
+                  async {
                 showDialog(
                   context: context,
                   builder: (context) {
@@ -963,7 +988,7 @@ class _DashboardState extends State<Dashboard> {
                   },
                 );
 
-                await Future.delayed(Duration(milliseconds: 500));
+                await Future.delayed(Duration(milliseconds: 200));
                 Navigator.of(context).pop();
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => ChatApp()));
@@ -979,9 +1004,8 @@ class _DashboardState extends State<Dashboard> {
       ),
       drawer: Drawer(
         backgroundColor: Color(0xffb8d8d8),
-        child: Stack(
-          children:[
-            Column(
+        child: Stack(children: [
+          Column(
             children: [
               // SizedBox.fromSize(
               //   size: Size(200, 100),
@@ -1010,48 +1034,62 @@ class _DashboardState extends State<Dashboard> {
                       }
                       profile_info.insert(
                           0, snapshot.data!.docs[c - 1]['imageLink']);
-                      profile_info.insert(1, snapshot.data!.docs[c - 1]['name1']);
-                      profile_info.insert(2, snapshot.data!.docs[c - 1]['age1']);
-                      profile_info.insert(3, snapshot.data!.docs[c - 1]['roll']);
-                      profile_info.insert(4, snapshot.data!.docs[c - 1]['email']);
-                      profile_info.insert(5, snapshot.data!.docs[c - 1]['role']);
-                      profile_info.insert(6, snapshot.data!.docs[c - 1]['code']);
+                      profile_info.insert(
+                          1, snapshot.data!.docs[c - 1]['name1']);
+                      profile_info.insert(
+                          2, snapshot.data!.docs[c - 1]['age1']);
+                      profile_info.insert(
+                          3, snapshot.data!.docs[c - 1]['roll']);
+                      profile_info.insert(
+                          4, snapshot.data!.docs[c - 1]['email']);
+                      profile_info.insert(
+                          5, snapshot.data!.docs[c - 1]['role']);
+                      profile_info.insert(
+                          6, snapshot.data!.docs[c - 1]['code']);
 
                       return Container(
-
                         child: Column(
                           children: [
                             Stack(
                               children: [
                                 Container(
-                                  height: 0.660*screenH,
-                                  color:  Color(0xff77a5b5),
+                                  height: 0.660 * screenH,
+                                  color: Color(0xff77a5b5),
                                 ),
                                 Positioned(
-                                  bottom: 0.550*screenH,
-                                  right: 0.07*screenW,
+                                  bottom: 0.550 * screenH,
+                                  right: 0.07 * screenW,
                                   child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(40, 0, 0, 0),
+                                    padding:
+                                        const EdgeInsets.fromLTRB(40, 0, 0, 0),
                                     child: GestureDetector(
-                                    
-                                    
-                                    
-                                    
-                                    
                                         onTap: () {
                                           // profile_info[0]="sdf";
                                           //print(profile_info.length);
-                                    
+
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                  builder: (context) => edit_profile(profile_info)));
+                                                  builder: (context) =>
+                                                      edit_profile(
+                                                          profile_info)));
                                         },
-                                        child:Row(
+                                        child: Row(
                                           children: [
-                                            Text("Edit Profile",style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.bold),),
-                                            SizedBox.fromSize(size: Size(0.03*screenW,0),),
-                                            Icon(Icons.edit,size: 25,),
+                                            Text(
+                                              "Edit Profile",
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            SizedBox.fromSize(
+                                              size: Size(0.03 * screenW, 0),
+                                            ),
+                                            Icon(
+                                              Icons.edit,
+                                              size: 25,
+                                            ),
                                           ],
                                         )),
                                   ),
@@ -1067,14 +1105,15 @@ class _DashboardState extends State<Dashboard> {
                                       BlendMode.srcATop,
                                     ),
                                     child: CircleAvatar(
-                                      backgroundImage: CachedNetworkImageProvider(
-                                          profile_info[0]),
+                                      backgroundImage:
+                                          CachedNetworkImageProvider(
+                                              profile_info[0]),
                                       radius: 60,
                                     ),
                                   ),
                                 ),
                                 Positioned(
-                                  bottom: (215 / 872) * screenH,
+                                  bottom: (225 / 872) * screenH,
                                   left: (17 / 392) * screenW,
                                   child: Text(
                                     profile_info[1],
@@ -1086,12 +1125,14 @@ class _DashboardState extends State<Dashboard> {
                                   ),
                                 ),
                                 Positioned(
-                                    bottom: (140 / 872) * screenH,
+                                    bottom: (180 / 872) * screenH,
                                     left: (17 / 392) * screenW,
-                                    child: Text( "Roll: "+
-                                      profile_info[3],
-                                      style:
-                                          const TextStyle(color: Colors.white,fontSize: 21,fontWeight: FontWeight.bold),
+                                    child: Text(
+                                      "Roll: " + profile_info[3],
+                                      style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 21,
+                                          fontWeight: FontWeight.bold),
                                     )),
                                 Positioned(
                                   bottom: (275 / 872) * screenH,
@@ -1101,7 +1142,6 @@ class _DashboardState extends State<Dashboard> {
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.cyanAccent,
-
                                         fontSize: 25),
                                   ),
                                 ),
@@ -1119,41 +1159,47 @@ class _DashboardState extends State<Dashboard> {
                                 //     color: Colors.white,
                                 //   ),
                                 // ),
-                                 Positioned(
-                                        bottom: (100 / 872) * screenH,
-                                        left: (17 / 392) * screenW,
-                                        child: Text(
-                                          "Age: " + profile_info[2],
-                                          style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 21,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-
-
-                                 Positioned(
-                                        bottom: (60 / 872) * screenH,
-                                        left: (15 / 392) * screenW,
-                                        child: Text(
-                                          "Joining code: " + profile_info[6],
-                                          style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 21,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      )
-                                ,
                                 Positioned(
-                                        bottom: (180 / 872) * screenH,
-                                        left: (17 / 392) * screenW,
-                                        child: Text(profile_info[4],
-                                            style: const TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold)),
-                                      )
-                               ,
+                                  bottom: (140 / 872) * screenH,
+                                  left: (17 / 392) * screenW,
+                                  child: Text(
+                                    "Age: " + profile_info[2],
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 21,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+
+                                Positioned(
+                                  bottom: (100 / 872) * screenH,
+                                  left: (15 / 392) * screenW,
+                                  child: Text(
+                                    "Joining code: " + profile_info[6],
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 21,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+
+                                Positioned(
+                                  bottom: (30 / 872) * screenH,
+                                  left: (17 / 392) * screenW,
+                                  child: Container(
+                                    width: 0.69*screenW,
+                                    height: 0.067*screenH,
+                                    child: Text(profile_info[4],
+
+                                        maxLines: 2,
+                                       // textAlign:TextAlign.start,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold)),
+                                  ),
+                                ),
                               ],
                             ),
                           ],
@@ -1165,32 +1211,33 @@ class _DashboardState extends State<Dashboard> {
                   },
                 ),
               ),
-              SizedBox.fromSize(size: Size(0, 0.1*screenH),),
+              SizedBox.fromSize(
+                size: Size(0, 0.1 * screenH),
+              ),
 
               Container(
-                height: 0.05*screenH,
-                width: 0.3*screenW,
+                height: 0.05 * screenH,
+                width: 0.3 * screenW,
                 decoration: BoxDecoration(
-                  color:  Color(0xffa84747),
+                  color: Color(0xffa84747),
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: GestureDetector(
-
-
-
-
-
                     onTap: () {
                       // profile_info[0]="sdf";
                       //print(profile_info.length);
 
-                     signout();
+                      signout();
                     },
-                    child: Center(child: const Text("Log Out",style: TextStyle(color: Colors.white),))),
+                    child: Center(
+                        child: const Text(
+                      "Log Out",
+                      style: TextStyle(color: Colors.white),
+                    ))),
               ),
             ],
-                      )]
-        ),
+          )
+        ]),
       ),
     );
   }

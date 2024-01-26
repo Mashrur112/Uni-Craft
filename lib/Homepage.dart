@@ -589,9 +589,20 @@ class _HomepageState extends State<Homepage> {
 
 
                                   if(dropdownvalue=='Administrator'){
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return Center(
+                                            child: CircularProgressIndicator());
+                                      },
+                                    );
 
 
-                                     await StoreData().savedData(
+
+
+
+
+                                      StoreData().savedData(
 
                                       name: name1,
                                       age: age1,
@@ -603,15 +614,30 @@ class _HomepageState extends State<Homepage> {
 
                                       code: x,
                                     );
+                                    await  Future.delayed(Duration(milliseconds: 5000));
+                                    Navigator.of(context).pop();
+
                                     FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
                                       '0':"",
                                       '1':"",
                                     });
+
                                   }
                                   else{
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return Center(
+                                            child: CircularProgressIndicator());
+                                      },
+                                    );
+
+
+
+
                                     var token1=FirebaseMessaging.instance.getToken().toString();
 
-                                    await StoreData().savedData(
+                                     StoreData().savedData(
 
                                       name: name1,
                                       age: age1,
@@ -623,6 +649,9 @@ class _HomepageState extends State<Homepage> {
 
                                       code: y,
                                     );
+                                    await  Future.delayed(Duration(milliseconds: 5000));
+                                    Navigator.of(context).pop();
+
                                   }
 
 
@@ -655,6 +684,10 @@ class _HomepageState extends State<Homepage> {
                       //
                       // });
                       formKey.currentState!.validate();
+
+
+
+
 
                       //Navigator.push(context, MaterialPageRoute(builder: (context)=>Dashboard()));
                       // showDialog(
@@ -767,7 +800,8 @@ class _HomepageState extends State<Homepage> {
                                   );
                                 });
                           } else {
-                            const CircularProgressIndicator();
+
+
                             var name1 = name.text;
                             var age1 = age.text;
                             var roll1 = roll.text;
@@ -777,7 +811,18 @@ class _HomepageState extends State<Homepage> {
                             if(dropdownvalue=='Administrator'){
 
 
-                             await StoreData().savedData(
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return Center(
+                                      child: CircularProgressIndicator());
+                                },
+                              );
+
+
+
+
+                              StoreData().savedData(
 
                               name: name1,
                               age: age1,
@@ -789,18 +834,32 @@ class _HomepageState extends State<Homepage> {
 
                               code: x,
                             );
+                              await  Future.delayed(Duration(milliseconds: 5000));
+                              Navigator.of(context).pop();
                             FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
                               '0':"",
                               '1':"",
                             });
+
                             }
                             else{
+
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return Center(
+                                      child: CircularProgressIndicator());
+                                },
+                              );
+
                               final token1= await FirebaseMessaging.instance.getToken();
-                               await StoreData().savedData(
+                                StoreData().savedData(
 
                                 name: name1,
                                 age: age1,
                                 file: _image!,
+
+
                                 roll: roll1,
                                 email: email1,
                                 role: dropdownvalue,
@@ -808,11 +867,17 @@ class _HomepageState extends State<Homepage> {
 
                                 code: y,
                               );
+                              await  Future.delayed(Duration(milliseconds: 5000));
+                              Navigator.of(context).pop();
+
                             }
 
                           }
                         }
                       }
+
+
+
                     },
                     child: const Text(
                       "Save Profile",

@@ -174,7 +174,7 @@ class _ViewPollState extends State<ViewPoll> {
                     ],
                   )
                 : Center(
-                    child: Text("No poll has created"),
+                    child: Text("No poll has created",style: TextStyle(fontSize: 21),),
                   );
           }),
       backgroundColor: Color(0xffb8d8d8),
