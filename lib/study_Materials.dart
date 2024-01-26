@@ -63,7 +63,7 @@ class _study_MaterialsState extends State<study_Materials> {
       child: Scaffold(
         backgroundColor: Color(0xffb8d8d8),
         appBar: AppBar(
-          backgroundColor: Color(0xffc9d9e9),
+          backgroundColor: Color(0xff7a9e9f),
           actions: [
             widget.r1 == "Administrator"
                 ? IconButton(
@@ -621,18 +621,35 @@ class _study_MaterialsState extends State<study_Materials> {
                             itemBuilder: (BuildContext context, int index) {
                               return Column(
                                 children: [
-                                  Container(
-                                    height: (70 / 872) * screenH,
-                                    child: GestureDetector(
+                                  Card(
+                                    elevation:
+                                        5.0, // Adjust the elevation for a shadow effect
+                                    margin: EdgeInsets.symmetric(
+                                        vertical: 8.0,
+                                        horizontal: 16.0), // Adjust margins
+                                    child: ListTile(
                                       onTap: () async {
                                         final url = Uri.parse(link_l[index]);
-
                                         if (!await launchUrl(url))
                                           throw Exception(
                                               'Could not launch $url');
                                       },
+                                      title: Text(
+                                        // Your title text goes here
 
-                                      child: Text(link_cap[index]),
+                                        link_cap[index],
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16.0,
+                                        ),
+                                      ),
+                                      subtitle: Text(
+                                        // Your subtitle text goes here
+                                        'Timestamp: ${date4[index]}',
+                                        style: TextStyle(
+                                          fontSize: 14.0,
+                                        ),
+                                      ),
 
                                       // Text(
                                       //   name[index],
@@ -642,7 +659,7 @@ class _study_MaterialsState extends State<study_Materials> {
                                       // ),
                                     ),
                                   ),
-                                  Text(date4[index]),
+
                                   // SizedBox.fromSize(size: Size(0,50),),
                                   role == "Administrator"
                                       ? ElevatedButton(
@@ -659,6 +676,11 @@ class _study_MaterialsState extends State<study_Materials> {
                                             //             delete_link(link_cap, link_l,
                                             //                 index, count2)));
                                           },
+                                          style: ElevatedButton.styleFrom(
+                                            primary: Colors.red,
+                                            onPrimary: Colors.white,
+                                            padding: EdgeInsets.all(8.0),
+                                          ),
                                           child: Text("Delete"))
                                       : Container(),
                                 ],
