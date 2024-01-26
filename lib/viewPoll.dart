@@ -74,6 +74,7 @@ class _ViewPollState extends State<ViewPoll> {
               ? Card(
                   elevation: 5.0,
                   margin: EdgeInsets.all(30.0),
+                  color: Color.fromARGB(255, 120, 179, 147),
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
