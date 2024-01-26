@@ -39,7 +39,6 @@ dependencies:
   firebase_auth: ^4.14.0
   google_sign_in: ^6.1.6
   http:
-
   image_picker: ^1.0.4
   image_picker_android: ^0.8.8+2
   cloud_firestore: ^4.13.3
