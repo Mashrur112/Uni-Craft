@@ -1,4 +1,4 @@
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+//import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:uni_craft/main.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,28 +10,16 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 class Login extends StatefulWidget {
- const Login({super.key});
+  const Login({super.key});
   @override
   State<Login> createState() => _LoginState();
 }
 
 class _LoginState extends State<Login> {
   bool _isLoggedIn = false;
-  Map _user={};
-
-
-
-
-
+  Map _user = {};
 
 //fb log in
-
-
-
-
-
-
-
 
 //reg
   void reg() {
@@ -138,15 +126,8 @@ class _LoginState extends State<Login> {
               image: AssetImage("assets/images/LogIn.jpeg"), fit: BoxFit.fill),
         ),
         child: Column(
-
           //mainAxisAlignment: MainAxisAlignment.center,
           children: [
-
-
-
-
-
-
             Container(height: (30 / 872.72) * screenH),
 
             Padding(
@@ -384,8 +365,6 @@ class _LoginState extends State<Login> {
                 GestureDetector(
                     onTap: () async {
                       await signInWithGoogle();
-
-
                     },
                     child: Image.asset(
                       "assets/images/google.png",
@@ -395,8 +374,6 @@ class _LoginState extends State<Login> {
                 SizedBox(
                   width: (0 / 392.72) * screenW,
                 ),
-
-
               ],
             ),
             Container(
