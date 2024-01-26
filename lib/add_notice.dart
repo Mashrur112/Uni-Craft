@@ -67,7 +67,7 @@ class _add_noticeState extends State<add_notice> {
               {
                 if(r['code']==widget.code.toString() && r['role']!="Administrator")
                   {
-                    print(r['name1']+widget.code);
+                   // print(r['name1']+widget.code);
                     try{
 
                       to.add(r['token']);
@@ -312,7 +312,7 @@ class _add_noticeState extends State<add_notice> {
                                     'to':to[i],
                                     'priority':'high',
                                     'notification':{
-                                      'title':caption.text.toString(),
+                                      'title':"Notice\n"+caption.text.toString(),
                                       'body':text.text.toString(),
                                     },
                                     'additional option':{
