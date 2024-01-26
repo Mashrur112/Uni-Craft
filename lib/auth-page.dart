@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:uni_craft/LoginPage.dart';
 import 'package:uni_craft/auth2.dart';
+import 'package:uni_craft/chat/passres.dart';
 import 'package:uni_craft/dashboard.dart';
 import 'package:uni_craft/main.dart';
 
@@ -18,13 +19,6 @@ class Authpage extends StatefulWidget{
 }
 
 class _AuthpageState extends State<Authpage> {
-
-
-
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +33,8 @@ class _AuthpageState extends State<Authpage> {
           //user logged in
           if(snapshot.hasData ) {
 
-
+          final result = snapshot.data;
+          PassRes( result: result,);
 
             return Authpage2();
           }
