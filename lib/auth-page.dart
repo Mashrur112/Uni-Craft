@@ -33,8 +33,6 @@ class _AuthpageState extends State<Authpage> {
           //user logged in
           if(snapshot.hasData ) {
 
-          final result = snapshot.data;
-          PassRes( result: result,);
 
             return Authpage2();
           }
