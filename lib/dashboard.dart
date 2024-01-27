@@ -196,8 +196,8 @@ class _DashboardState extends State<Dashboard> {
                         ),
                         GestureDetector(
                           onTap: ()
-                              //Loading Screen
-                              async {
+                          //Loading Screen
+                          async {
                             showDialog(
                               context: context,
                               builder: (context) {
@@ -264,9 +264,81 @@ class _DashboardState extends State<Dashboard> {
                     ),
                     widget.role != "General member"
                         ? GestureDetector(
+                      onTap: ()
+                      //Loading Screen
+                      async {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Center(
+                                child: CircularProgressIndicator());
+                          },
+                        );
+
+                        await Future.delayed(Duration(milliseconds: 200));
+                        Navigator.of(context).pop();
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => members()));
+                      },
+                      child: Row(
+                        children: [
+                          SizedBox.fromSize(
+                            size: Size((40 / 392) * screenW,
+                                ((20 / 872) * screenH)),
+                          ),
+                          Container(
+                            height: (150 / 872) * screenH,
+                            width: (140 / 392) * screenW,
+                            decoration: BoxDecoration(
+                                color: Color(0xff77a5b5),
+                                borderRadius: BorderRadius.circular(14),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Colors.black54,
+                                    offset: Offset(0, 7),
+                                    spreadRadius: 0,
+                                    blurRadius: 2,
+                                  )
+                                ]),
+                            child: Stack(children: [
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(
+                                    (17 / 392) * screenW,
+                                    (10 / 872) * screenH,
+                                    (12 / 392) * screenW,
+                                    0),
+                                child: Image.asset(
+                                  "assets/images/members.png",
+                                  height: (105 / 872) * screenH,
+                                  width: (105 / 392) * screenW,
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(
+                                    (35 / 392) * screenW,
+                                    (115 / 872) * screenH,
+                                    0,
+                                    0),
+                                child: Text(
+                                  "Members",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17),
+                                ),
+                              ),
+                            ]),
+                          ),
+                          SizedBox.fromSize(
+                            size: Size((40 / 392) * screenW,
+                                ((20 / 872) * screenH)),
+                          ),
+                          GestureDetector(
                             onTap: ()
-                                //Loading Screen
-                                async {
+                            //Loading Screen
+                            async {
                               showDialog(
                                 context: context,
                                 builder: (context) {
@@ -274,159 +346,33 @@ class _DashboardState extends State<Dashboard> {
                                       child: CircularProgressIndicator());
                                 },
                               );
-
-                              await Future.delayed(Duration(milliseconds: 200));
+                              await Future.delayed(
+                                  Duration(milliseconds: 200));
                               Navigator.of(context).pop();
+                              var token = await FirebaseMessaging.instance
+                                  .getToken();
+                              FirebaseFirestore.instance
+                                  .collection('Profile')
+                                  .doc(FirebaseAuth
+                                  .instance.currentUser!.uid)
+                                  .update({
+                                'token': token.toString(),
+                              });
+
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => members()));
+                                      builder: (context) => notice(
+                                          widget.code, widget.role)));
                             },
-                            child: Row(
-                              children: [
-                                SizedBox.fromSize(
-                                  size: Size((40 / 392) * screenW,
-                                      ((20 / 872) * screenH)),
-                                ),
-                                Container(
-                                  height: (150 / 872) * screenH,
-                                  width: (140 / 392) * screenW,
-                                  decoration: BoxDecoration(
-                                      color: Color(0xff77a5b5),
-                                      borderRadius: BorderRadius.circular(14),
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          color: Colors.black54,
-                                          offset: Offset(0, 7),
-                                          spreadRadius: 0,
-                                          blurRadius: 2,
-                                        )
-                                      ]),
-                                  child: Stack(children: [
-                                    Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                          (17 / 392) * screenW,
-                                          (10 / 872) * screenH,
-                                          (12 / 392) * screenW,
-                                          0),
-                                      child: Image.asset(
-                                        "assets/images/members.png",
-                                        height: (105 / 872) * screenH,
-                                        width: (105 / 392) * screenW,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                          (35 / 392) * screenW,
-                                          (115 / 872) * screenH,
-                                          0,
-                                          0),
-                                      child: Text(
-                                        "Members",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 17),
-                                      ),
-                                    ),
-                                  ]),
-                                ),
-                                SizedBox.fromSize(
-                                  size: Size((40 / 392) * screenW,
-                                      ((20 / 872) * screenH)),
-                                ),
-                                GestureDetector(
-                                  onTap: ()
-                                      //Loading Screen
-                                      async {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return Center(
-                                            child: CircularProgressIndicator());
-                                      },
-                                    );
-                                    await Future.delayed(
-                                        Duration(milliseconds: 200));
-                                    Navigator.of(context).pop();
-                                    var token = await FirebaseMessaging.instance
-                                        .getToken();
-                                    FirebaseFirestore.instance
-                                        .collection('Profile')
-                                        .doc(FirebaseAuth
-                                            .instance.currentUser!.uid)
-                                        .update({
-                                      'token': token.toString(),
-                                    });
-
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => notice(
-                                                widget.code, widget.role)));
-                                  },
-                                  child: Center(
-                                    child: Container(
-                                      height: (150 / 872) * screenH,
-                                      width: (140 / 392) * screenW,
-                                      decoration: BoxDecoration(
-                                          color: Color(0xff77a5b5),
-                                          borderRadius:
-                                              BorderRadius.circular(14),
-                                          boxShadow: const [
-                                            BoxShadow(
-                                              color: Colors.black54,
-                                              offset: Offset(0, 7),
-                                              spreadRadius: 0,
-                                              blurRadius: 2,
-                                            )
-                                          ]),
-                                      child: Stack(children: [
-                                        Padding(
-                                          padding: EdgeInsets.fromLTRB(
-                                              (10 / 392) * screenW,
-                                              (2 / 872) * screenH,
-                                              0,
-                                              0),
-                                          child: Image.asset(
-                                            "assets/images/Notice.png",
-                                            height: (115 / 872) * screenH,
-                                            width: (115 / 392) * screenW,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.fromLTRB(
-                                              (45 / 392) * screenW,
-                                              (115 / 872) * screenH,
-                                              0,
-                                              0),
-                                          child: Text(
-                                            "Notice",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 17),
-                                          ),
-                                        ),
-                                      ]),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          )
-                        : Row(
-                            children: [
-                              SizedBox.fromSize(
-                                size: Size((40 / 392) * screenW,
-                                    ((20 / 872) * screenH)),
-                              ),
-                              Container(
+                            child: Center(
+                              child: Container(
                                 height: (150 / 872) * screenH,
                                 width: (140 / 392) * screenW,
                                 decoration: BoxDecoration(
-                                    color: Colors.grey,
-                                    borderRadius: BorderRadius.circular(14),
+                                    color: Color(0xff77a5b5),
+                                    borderRadius:
+                                    BorderRadius.circular(14),
                                     boxShadow: const [
                                       BoxShadow(
                                         color: Colors.black54,
@@ -438,402 +384,456 @@ class _DashboardState extends State<Dashboard> {
                                 child: Stack(children: [
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(
-                                        (13 / 392) * screenW,
-                                        (8 / 872) * screenH,
-                                        (12 / 392) * screenW,
+                                        (10 / 392) * screenW,
+                                        (2 / 872) * screenH,
+                                        0,
                                         0),
                                     child: Image.asset(
-                                      "assets/images/members.png",
-                                      height: (110 / 872) * screenH,
-                                      width: (110 / 392) * screenW,
+                                      "assets/images/Notice.png",
+                                      height: (115 / 872) * screenH,
+                                      width: (115 / 392) * screenW,
                                     ),
                                   ),
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(
-                                        (30 / 392) * screenW,
-                                        (116 / 872) * screenH,
+                                        (45 / 392) * screenW,
+                                        (115 / 872) * screenH,
                                         0,
                                         0),
                                     child: Text(
-                                      "Members",
+                                      "Notice",
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 17),
                                     ),
                                   ),
-                                  Center(
-                                      child: Icon(
-                                    Icons.lock,
-                                    size: 90,
-                                    color: Colors.black.withOpacity(0.7),
-                                  )),
                                 ]),
                               ),
-                              SizedBox.fromSize(
-                                size: Size((40 / 392) * screenW,
-                                    ((20 / 872) * screenH)),
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                        : Row(
+                      children: [
+                        SizedBox.fromSize(
+                          size: Size((40 / 392) * screenW,
+                              ((20 / 872) * screenH)),
+                        ),
+                        Container(
+                          height: (150 / 872) * screenH,
+                          width: (140 / 392) * screenW,
+                          decoration: BoxDecoration(
+                              color: Colors.grey,
+                              borderRadius: BorderRadius.circular(14),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.black54,
+                                  offset: Offset(0, 7),
+                                  spreadRadius: 0,
+                                  blurRadius: 2,
+                                )
+                              ]),
+                          child: Stack(children: [
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                  (13 / 392) * screenW,
+                                  (8 / 872) * screenH,
+                                  (12 / 392) * screenW,
+                                  0),
+                              child: Image.asset(
+                                "assets/images/members.png",
+                                height: (110 / 872) * screenH,
+                                width: (110 / 392) * screenW,
                               ),
-                              GestureDetector(
-                                onTap: () async {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return Center(
-                                          child: CircularProgressIndicator());
-                                    },
-                                  );
+                            ),
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                  (30 / 392) * screenW,
+                                  (116 / 872) * screenH,
+                                  0,
+                                  0),
+                              child: Text(
+                                "Members",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17),
+                              ),
+                            ),
+                            Center(
+                                child: Icon(
+                                  Icons.lock,
+                                  size: 90,
+                                  color: Colors.black.withOpacity(0.7),
+                                )),
+                          ]),
+                        ),
+                        SizedBox.fromSize(
+                          size: Size((40 / 392) * screenW,
+                              ((20 / 872) * screenH)),
+                        ),
+                        GestureDetector(
+                          onTap: () async {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return Center(
+                                    child: CircularProgressIndicator());
+                              },
+                            );
 
-                                  await Future.delayed(
-                                      Duration(milliseconds: 200));
-                                  Navigator.of(context).pop();
+                            await Future.delayed(
+                                Duration(milliseconds: 200));
+                            Navigator.of(context).pop();
 
-                                  if (widget.role != "Administrator") {
-                                    var token = await FirebaseMessaging.instance
-                                        .getToken();
-                                    FirebaseFirestore.instance
-                                        .collection("Profile")
-                                        .doc(FirebaseAuth
-                                            .instance.currentUser!.uid)
-                                        .update({
-                                      'token': token.toString(),
-                                    });
-                                  }
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => notice(
-                                              widget.code, widget.role)));
-                                },
-                                child: Center(
-                                  child: Container(
-                                    height: (150 / 872) * screenH,
-                                    width: (140 / 392) * screenW,
-                                    decoration: BoxDecoration(
-                                        color: Color(0xff77a5b5),
-                                        borderRadius: BorderRadius.circular(14),
-                                        boxShadow: const [
-                                          BoxShadow(
-                                            color: Colors.black54,
-                                            offset: Offset(0, 7),
-                                            spreadRadius: 0,
-                                            blurRadius: 2,
-                                          )
-                                        ]),
-                                    child: Stack(children: [
-                                      Padding(
-                                        padding: EdgeInsets.fromLTRB(
-                                            (10 / 392) * screenW,
-                                            (2 / 872) * screenH,
-                                            0,
-                                            0),
-                                        child: Image.asset(
-                                          "assets/images/Notice.png",
-                                          height: (115 / 872) * screenH,
-                                          width: (115 / 392) * screenW,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.fromLTRB(
-                                            (45 / 392) * screenW,
-                                            (115 / 872) * screenH,
-                                            0,
-                                            0),
-                                        child: Text(
-                                          "Notice",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 17),
-                                        ),
-                                      ),
-                                    ]),
+                            if (widget.role != "Administrator") {
+                              var token = await FirebaseMessaging.instance
+                                  .getToken();
+                              FirebaseFirestore.instance
+                                  .collection("Profile")
+                                  .doc(FirebaseAuth
+                                  .instance.currentUser!.uid)
+                                  .update({
+                                'token': token.toString(),
+                              });
+                            }
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => notice(
+                                        widget.code, widget.role)));
+                          },
+                          child: Center(
+                            child: Container(
+                              height: (150 / 872) * screenH,
+                              width: (140 / 392) * screenW,
+                              decoration: BoxDecoration(
+                                  color: Color(0xff77a5b5),
+                                  borderRadius: BorderRadius.circular(14),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Colors.black54,
+                                      offset: Offset(0, 7),
+                                      spreadRadius: 0,
+                                      blurRadius: 2,
+                                    )
+                                  ]),
+                              child: Stack(children: [
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                      (10 / 392) * screenW,
+                                      (2 / 872) * screenH,
+                                      0,
+                                      0),
+                                  child: Image.asset(
+                                    "assets/images/Notice.png",
+                                    height: (115 / 872) * screenH,
+                                    width: (115 / 392) * screenW,
                                   ),
                                 ),
-                              )
-                            ],
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                      (45 / 392) * screenW,
+                                      (115 / 872) * screenH,
+                                      0,
+                                      0),
+                                  child: Text(
+                                    "Notice",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 17),
+                                  ),
+                                ),
+                              ]),
+                            ),
                           ),
+                        )
+                      ],
+                    ),
                     SizedBox.fromSize(
                       size: Size((40 / 392) * screenW, ((40 / 872) * screenH)),
                     ),
                     widget.role != "General member"
                         ? Row(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(
-                                    ((40 / 392) * screenW), 0, 0, 0),
-                                child: GestureDetector(
-                                  onTap: ()
-                                      //Loading Screen
-                                      async {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return Center(
-                                            child: CircularProgressIndicator());
-                                      },
-                                    );
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(
+                              ((40 / 392) * screenW), 0, 0, 0),
+                          child: GestureDetector(
+                            onTap: ()
+                            //Loading Screen
+                            async {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return Center(
+                                      child: CircularProgressIndicator());
+                                },
+                              );
 
-                                    await Future.delayed(
-                                        Duration(milliseconds: 200));
-                                    Navigator.of(context).pop();
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                CreatePoll(widget.uid_admin)));
-                                  },
-                                  child: Container(
-                                    height: (150 / 872) * screenH,
-                                    width: (140 / 392) * screenW,
-                                    decoration: BoxDecoration(
-                                        color: Color(0xff77a5b5),
-                                        borderRadius: BorderRadius.circular(14),
-                                        boxShadow: const [
-                                          BoxShadow(
-                                            color: Colors.black54,
-                                            offset: Offset(0, 7),
-                                            spreadRadius: 0,
-                                            blurRadius: 2,
-                                          )
-                                        ]),
-                                    child: Stack(children: [
-                                      Padding(
-                                        padding: EdgeInsets.fromLTRB(
-                                            (9 / 392) * screenW,
-                                            (2 / 872) * screenH,
-                                            0,
-                                            0),
-                                        child: Image.asset(
-                                          "assets/images/poll.png",
-                                          height: (130 / 872) * screenH,
-                                          width: (130 / 392) * screenW,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.fromLTRB(
-                                            (25 / 392) * screenW,
-                                            (115 / 872) * screenH,
-                                            0,
-                                            0),
-                                        child: Text(
-                                          "Create Poll",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 17),
-                                        ),
-                                      ),
-                                    ]),
-                                  ),
-                                ),
-                              ),
-                              SizedBox.fromSize(
-                                size: Size((5 / 392) * screenW,
-                                    ((20 / 872) * screenH)),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(
-                                    ((40 / 392) * screenW), 0, 0, 0),
-                                child: GestureDetector(
-                                  onTap: ()
-                                      //Loading Screen
-                                      async {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return Center(
-                                            child: CircularProgressIndicator());
-                                      },
-                                    );
-
-                                    await Future.delayed(
-                                        Duration(milliseconds: 200));
-                                    Navigator.of(context).pop();
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => ViewPoll(
-                                                  widget.uid_admin,
-                                                )));
-                                  },
-                                  child: Container(
-                                    height: (150 / 872) * screenH,
-                                    width: (140 / 392) * screenW,
-                                    decoration: BoxDecoration(
-                                        color: Color(0xff77a5b5),
-                                        borderRadius: BorderRadius.circular(14),
-                                        boxShadow: const [
-                                          BoxShadow(
-                                            color: Colors.black54,
-                                            offset: Offset(0, 7),
-                                            spreadRadius: 0,
-                                            blurRadius: 2,
-                                          )
-                                        ]),
-                                    child: Stack(children: [
-                                      Padding(
-                                        padding: EdgeInsets.fromLTRB(
-                                            (24 / 392) * screenW,
-                                            (17 / 872) * screenH,
-                                            0,
-                                            0),
-                                        child: Image.asset(
-                                          "assets/images/poll_v.png",
-                                          height: (95 / 872) * screenH,
-                                          width: (95 / 392) * screenW,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.fromLTRB(
-                                            (35 / 392) * screenW,
-                                            (115 / 872) * screenH,
-                                            0,
-                                            0),
-                                        child: Text(
-                                          "View Poll",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 17),
-                                        ),
-                                      ),
-                                    ]),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          )
-                        : Row(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(
-                                    ((40 / 392) * screenW), 0, 0, 0),
-                                child: Container(
-                                  height: (150 / 872) * screenH,
-                                  width: (140 / 392) * screenW,
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey,
-                                      borderRadius: BorderRadius.circular(14),
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          color: Colors.black54,
-                                          offset: Offset(0, 7),
-                                          spreadRadius: 0,
-                                          blurRadius: 2,
-                                        )
-                                      ]),
-                                  child: Stack(children: [
-                                    Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                          (9 / 392) * screenW,
-                                          (2 / 872) * screenH,
-                                          0,
-                                          0),
-                                      child: Image.asset(
-                                        "assets/images/poll.png",
-                                        height: (130 / 872) * screenH,
-                                        width: (130 / 392) * screenW,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                          (25 / 392) * screenW,
-                                          (115 / 872) * screenH,
-                                          0,
-                                          0),
-                                      child: Text(
-                                        "Create Poll",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 17),
-                                      ),
-                                    ),
-                                    Center(
-                                        child: Icon(
-                                      Icons.lock,
-                                      size: 90,
-                                      color: Colors.black.withOpacity(0.7),
-                                    )),
+                              await Future.delayed(
+                                  Duration(milliseconds: 200));
+                              Navigator.of(context).pop();
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          CreatePoll(widget.uid_admin)));
+                            },
+                            child: Container(
+                              height: (150 / 872) * screenH,
+                              width: (140 / 392) * screenW,
+                              decoration: BoxDecoration(
+                                  color: Color(0xff77a5b5),
+                                  borderRadius: BorderRadius.circular(14),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Colors.black54,
+                                      offset: Offset(0, 7),
+                                      spreadRadius: 0,
+                                      blurRadius: 2,
+                                    )
                                   ]),
+                              child: Stack(children: [
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                      (9 / 392) * screenW,
+                                      (2 / 872) * screenH,
+                                      0,
+                                      0),
+                                  child: Image.asset(
+                                    "assets/images/poll.png",
+                                    height: (130 / 872) * screenH,
+                                    width: (130 / 392) * screenW,
+                                  ),
                                 ),
-                              ),
-                              SizedBox.fromSize(
-                                size: Size((5 / 392) * screenW,
-                                    ((20 / 872) * screenH)),
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                      (25 / 392) * screenW,
+                                      (115 / 872) * screenH,
+                                      0,
+                                      0),
+                                  child: Text(
+                                    "Create Poll",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 17),
+                                  ),
+                                ),
+                              ]),
+                            ),
+                          ),
+                        ),
+                        SizedBox.fromSize(
+                          size: Size((5 / 392) * screenW,
+                              ((20 / 872) * screenH)),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(
+                              ((40 / 392) * screenW), 0, 0, 0),
+                          child: GestureDetector(
+                            onTap: ()
+                            //Loading Screen
+                            async {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return Center(
+                                      child: CircularProgressIndicator());
+                                },
+                              );
+
+                              await Future.delayed(
+                                  Duration(milliseconds: 200));
+                              Navigator.of(context).pop();
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ViewPoll(
+                                        widget.uid_admin,
+                                      )));
+                            },
+                            child: Container(
+                              height: (150 / 872) * screenH,
+                              width: (140 / 392) * screenW,
+                              decoration: BoxDecoration(
+                                  color: Color(0xff77a5b5),
+                                  borderRadius: BorderRadius.circular(14),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Colors.black54,
+                                      offset: Offset(0, 7),
+                                      spreadRadius: 0,
+                                      blurRadius: 2,
+                                    )
+                                  ]),
+                              child: Stack(children: [
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                      (24 / 392) * screenW,
+                                      (17 / 872) * screenH,
+                                      0,
+                                      0),
+                                  child: Image.asset(
+                                    "assets/images/poll_v.png",
+                                    height: (95 / 872) * screenH,
+                                    width: (95 / 392) * screenW,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                      (35 / 392) * screenW,
+                                      (115 / 872) * screenH,
+                                      0,
+                                      0),
+                                  child: Text(
+                                    "View Poll",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 17),
+                                  ),
+                                ),
+                              ]),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                        : Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(
+                              ((40 / 392) * screenW), 0, 0, 0),
+                          child: Container(
+                            height: (150 / 872) * screenH,
+                            width: (140 / 392) * screenW,
+                            decoration: BoxDecoration(
+                                color: Colors.grey,
+                                borderRadius: BorderRadius.circular(14),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Colors.black54,
+                                    offset: Offset(0, 7),
+                                    spreadRadius: 0,
+                                    blurRadius: 2,
+                                  )
+                                ]),
+                            child: Stack(children: [
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(
+                                    (9 / 392) * screenW,
+                                    (2 / 872) * screenH,
+                                    0,
+                                    0),
+                                child: Image.asset(
+                                  "assets/images/poll.png",
+                                  height: (130 / 872) * screenH,
+                                  width: (130 / 392) * screenW,
+                                ),
                               ),
                               Padding(
                                 padding: EdgeInsets.fromLTRB(
-                                    ((40 / 392) * screenW), 0, 0, 0),
-                                child: GestureDetector(
-                                  onTap: ()
-                                      //Loading Screen
-                                      async {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return Center(
-                                            child: CircularProgressIndicator());
-                                      },
-                                    );
-
-                                    await Future.delayed(
-                                        Duration(milliseconds: 200));
-                                    Navigator.of(context).pop();
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => ViewPoll(
-                                                  widget.uid_admin,
-                                                )));
-                                  },
-                                  child: Container(
-                                    height: (150 / 872) * screenH,
-                                    width: (140 / 392) * screenW,
-                                    decoration: BoxDecoration(
-                                        color: Color(0xff77a5b5),
-                                        borderRadius: BorderRadius.circular(14),
-                                        boxShadow: const [
-                                          BoxShadow(
-                                            color: Colors.black54,
-                                            offset: Offset(0, 7),
-                                            spreadRadius: 0,
-                                            blurRadius: 2,
-                                          )
-                                        ]),
-                                    child: Stack(children: [
-                                      Padding(
-                                        padding: EdgeInsets.fromLTRB(
-                                            (24 / 392) * screenW,
-                                            (17 / 872) * screenH,
-                                            0,
-                                            0),
-                                        child: Image.asset(
-                                          "assets/images/poll_v.png",
-                                          height: (95 / 872) * screenH,
-                                          width: (95 / 392) * screenW,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.fromLTRB(
-                                            (35 / 392) * screenW,
-                                            (115 / 872) * screenH,
-                                            0,
-                                            0),
-                                        child: Text(
-                                          "View Poll",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 17),
-                                        ),
-                                      ),
-                                    ]),
-                                  ),
+                                    (25 / 392) * screenW,
+                                    (115 / 872) * screenH,
+                                    0,
+                                    0),
+                                child: Text(
+                                  "Create Poll",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17),
                                 ),
                               ),
-                            ],
+                              Center(
+                                  child: Icon(
+                                    Icons.lock,
+                                    size: 90,
+                                    color: Colors.black.withOpacity(0.7),
+                                  )),
+                            ]),
                           ),
+                        ),
+                        SizedBox.fromSize(
+                          size: Size((5 / 392) * screenW,
+                              ((20 / 872) * screenH)),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(
+                              ((40 / 392) * screenW), 0, 0, 0),
+                          child: GestureDetector(
+                            onTap: ()
+                            //Loading Screen
+                            async {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return Center(
+                                      child: CircularProgressIndicator());
+                                },
+                              );
+
+                              await Future.delayed(
+                                  Duration(milliseconds: 200));
+                              Navigator.of(context).pop();
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ViewPoll(
+                                        widget.uid_admin,
+                                      )));
+                            },
+                            child: Container(
+                              height: (150 / 872) * screenH,
+                              width: (140 / 392) * screenW,
+                              decoration: BoxDecoration(
+                                  color: Color(0xff77a5b5),
+                                  borderRadius: BorderRadius.circular(14),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Colors.black54,
+                                      offset: Offset(0, 7),
+                                      spreadRadius: 0,
+                                      blurRadius: 2,
+                                    )
+                                  ]),
+                              child: Stack(children: [
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                      (24 / 392) * screenW,
+                                      (17 / 872) * screenH,
+                                      0,
+                                      0),
+                                  child: Image.asset(
+                                    "assets/images/poll_v.png",
+                                    height: (95 / 872) * screenH,
+                                    width: (95 / 392) * screenW,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                      (35 / 392) * screenW,
+                                      (115 / 872) * screenH,
+                                      0,
+                                      0),
+                                  child: Text(
+                                    "View Poll",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 17),
+                                  ),
+                                ),
+                              ]),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                     SizedBox.fromSize(
                       size: Size((40 / 392) * screenW, ((40 / 872) * screenH)),
                     ),
@@ -843,8 +843,8 @@ class _DashboardState extends State<Dashboard> {
                             ((40 / 392) * screenW), 0, 0, 0),
                         child: GestureDetector(
                           onTap: ()
-                              //Loading Screen
-                              async {
+                          //Loading Screen
+                          async {
                             showDialog(
                               context: context,
                               builder: (context) {
@@ -913,8 +913,8 @@ class _DashboardState extends State<Dashboard> {
                             ((40 / 392) * screenW), 0, 0, 0),
                         child: GestureDetector(
                           onTap: ()
-                              //Loading Screen
-                              async {
+                          //Loading Screen
+                          async {
                             showDialog(
                               context: context,
                               builder: (context) {
@@ -988,8 +988,8 @@ class _DashboardState extends State<Dashboard> {
             right: (20 / 392) * screenW,
             child: GestureDetector(
               onTap: ()
-                  //Loading Screen
-                  async {
+              //Loading Screen
+              async {
                 showDialog(
                   context: context,
                   builder: (context) {
@@ -1070,7 +1070,7 @@ class _DashboardState extends State<Dashboard> {
                                   right: 0.07 * screenW,
                                   child: Padding(
                                     padding:
-                                        const EdgeInsets.fromLTRB(40, 0, 0, 0),
+                                    const EdgeInsets.fromLTRB(40, 0, 0, 0),
                                     child: GestureDetector(
                                         onTap: () {
                                           // profile_info[0]="sdf";
@@ -1115,8 +1115,8 @@ class _DashboardState extends State<Dashboard> {
                                     ),
                                     child: CircleAvatar(
                                       backgroundImage:
-                                          CachedNetworkImageProvider(
-                                              profile_info[0]),
+                                      CachedNetworkImageProvider(
+                                          profile_info[0]),
                                       radius: 60,
                                     ),
                                   ),
@@ -1201,7 +1201,7 @@ class _DashboardState extends State<Dashboard> {
                                     child: Text(profile_info[4],
 
                                         maxLines: 2,
-                                       // textAlign:TextAlign.start,
+                                        // textAlign:TextAlign.start,
                                         overflow: TextOverflow.ellipsis,
                                         style: const TextStyle(
                                             color: Colors.white,
@@ -1240,9 +1240,9 @@ class _DashboardState extends State<Dashboard> {
                     },
                     child: Center(
                         child: const Text(
-                      "Log Out",
-                      style: TextStyle(color: Colors.white),
-                    ))),
+                          "Log Out",
+                          style: TextStyle(color: Colors.white),
+                        ))),
               ),
             ],
           )

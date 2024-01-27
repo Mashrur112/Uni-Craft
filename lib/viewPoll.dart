@@ -28,8 +28,8 @@ class _ViewPollState extends State<ViewPoll> {
         title: Text(
           "View Poll",
           style: TextStyle(
-              //fontSize: 35,
-              ),
+            //fontSize: 35,
+          ),
         ),
       ),
       body: StreamBuilder(
@@ -72,148 +72,148 @@ class _ViewPollState extends State<ViewPoll> {
 
           return v_poll == true && check == true
               ? Card(
-                  elevation: 5.0,
-                  margin: EdgeInsets.all(30.0),
-                  color: Color.fromARGB(255, 120, 179, 147),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      children: [
-                        Text(
-                          caption,
-                          style: TextStyle(fontSize: 22),
-                        ),
-                        SizedBox(
-                            height:
-                                16), // Add some space between the caption and buttons
-                        ElevatedButton(
-                          onPressed: () {
-                            if (poll == true) {
-                              poll = false;
+            elevation: 5.0,
+            margin: EdgeInsets.all(30.0),
+            color: Color.fromARGB(255, 120, 179, 147),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  Text(
+                    caption,
+                    style: TextStyle(fontSize: 22),
+                  ),
+                  SizedBox(
+                      height:
+                      16), // Add some space between the caption and buttons
+                  ElevatedButton(
+                    onPressed: () {
+                      if (poll == true) {
+                        poll = false;
 
-                              poll_id.add(
-                                FirebaseAuth.instance.currentUser!.uid
-                                    .toString(),
-                              );
+                        poll_id.add(
+                          FirebaseAuth.instance.currentUser!.uid
+                              .toString(),
+                        );
 
-                              int temp = int.parse(vote[0]);
-                              temp++;
-                              vote[0] = temp.toString();
-                              FirebaseFirestore.instance
-                                  .collection("Profile")
-                                  .doc(widget.uid)
-                                  .update({
-                                'votes': vote,
-                                'poll_id': poll_id,
-                              });
-                            }
-                          },
-                          child: Text(
-                            option[0],
-                            style: TextStyle(fontSize: 22),
-                          ),
-                        ),
-                        SizedBox(
-                            height: 16), // Add some space between the buttons
-                        ElevatedButton(
-                          onPressed: () {
-                            if (poll == true) {
-                              poll = false;
-
-                              poll_id.add(
-                                FirebaseAuth.instance.currentUser!.uid
-                                    .toString(),
-                              );
-
-                              int temp = int.parse(vote[1]);
-                              temp++;
-                              vote[1] = temp.toString();
-                              FirebaseFirestore.instance
-                                  .collection("Profile")
-                                  .doc(widget.uid)
-                                  .update({
-                                'votes': vote,
-                                'poll_id': poll_id,
-                              });
-                            }
-                          },
-                          child: Text(
-                            option[1],
-                            style: TextStyle(fontSize: 22),
-                          ),
-                        ),
-                        SizedBox(height: 16),
-                        option3 == true
-                            ? ElevatedButton(
-                                onPressed: () {
-                                  if (poll == true) {
-                                    poll = false;
-
-                                    poll_id.add(
-                                      FirebaseAuth.instance.currentUser!.uid
-                                          .toString(),
-                                    );
-
-                                    int temp = int.parse(vote[2]);
-                                    temp++;
-                                    vote[2] = temp.toString();
-                                    FirebaseFirestore.instance
-                                        .collection("Profile")
-                                        .doc(widget.uid)
-                                        .update({
-                                      'votes': vote,
-                                      'poll_id': poll_id,
-                                    });
-                                  }
-                                },
-                                child: Text(
-                                  option[2],
-                                  style: TextStyle(fontSize: 22),
-                                ),
-                              )
-                            : Container(),
-                        SizedBox(height: 16),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                FirebaseFirestore.instance
-                                    .collection("Profile")
-                                    .doc(widget.uid)
-                                    .update({
-                                  'options': FieldValue.delete(),
-                                  'votes': FieldValue.delete(),
-                                  'poll_id': FieldValue.delete(),
-                                });
-                              },
-                              child: Text("Delete Poll"),
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        poll_graph(widget.uid),
-                                  ),
-                                );
-                              },
-                              child: Text("View Poll Graph"),
-                            ),
-                          ],
-                        ),
-                        // Adjust the height as needed
-                      ],
+                        int temp = int.parse(vote[0]);
+                        temp++;
+                        vote[0] = temp.toString();
+                        FirebaseFirestore.instance
+                            .collection("Profile")
+                            .doc(widget.uid)
+                            .update({
+                          'votes': vote,
+                          'poll_id': poll_id,
+                        });
+                      }
+                    },
+                    child: Text(
+                      option[0],
+                      style: TextStyle(fontSize: 22),
                     ),
                   ),
-                )
-              : Center(
-                  child: Text(
-                    "No poll has been created",
-                    style: TextStyle(fontSize: 21),
+                  SizedBox(
+                      height: 16), // Add some space between the buttons
+                  ElevatedButton(
+                    onPressed: () {
+                      if (poll == true) {
+                        poll = false;
+
+                        poll_id.add(
+                          FirebaseAuth.instance.currentUser!.uid
+                              .toString(),
+                        );
+
+                        int temp = int.parse(vote[1]);
+                        temp++;
+                        vote[1] = temp.toString();
+                        FirebaseFirestore.instance
+                            .collection("Profile")
+                            .doc(widget.uid)
+                            .update({
+                          'votes': vote,
+                          'poll_id': poll_id,
+                        });
+                      }
+                    },
+                    child: Text(
+                      option[1],
+                      style: TextStyle(fontSize: 22),
+                    ),
                   ),
-                );
+                  SizedBox(height: 16),
+                  option3 == true
+                      ? ElevatedButton(
+                    onPressed: () {
+                      if (poll == true) {
+                        poll = false;
+
+                        poll_id.add(
+                          FirebaseAuth.instance.currentUser!.uid
+                              .toString(),
+                        );
+
+                        int temp = int.parse(vote[2]);
+                        temp++;
+                        vote[2] = temp.toString();
+                        FirebaseFirestore.instance
+                            .collection("Profile")
+                            .doc(widget.uid)
+                            .update({
+                          'votes': vote,
+                          'poll_id': poll_id,
+                        });
+                      }
+                    },
+                    child: Text(
+                      option[2],
+                      style: TextStyle(fontSize: 22),
+                    ),
+                  )
+                      : Container(),
+                  SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          FirebaseFirestore.instance
+                              .collection("Profile")
+                              .doc(widget.uid)
+                              .update({
+                            'options': FieldValue.delete(),
+                            'votes': FieldValue.delete(),
+                            'poll_id': FieldValue.delete(),
+                          });
+                        },
+                        child: Text("Delete Poll"),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  poll_graph(widget.uid),
+                            ),
+                          );
+                        },
+                        child: Text("View Poll Graph"),
+                      ),
+                    ],
+                  ),
+                  // Adjust the height as needed
+                ],
+              ),
+            ),
+          )
+              : Center(
+            child: Text(
+              "No poll has been created",
+              style: TextStyle(fontSize: 21),
+            ),
+          );
         },
       ),
       backgroundColor: Color(0xffb8d8d8),

@@ -67,17 +67,17 @@ class _study_MaterialsState extends State<study_Materials> {
           actions: [
             widget.r1 == "Administrator"
                 ? IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => uploadFile()));
-                    },
-                    icon: Icon(Icons.file_upload_outlined))
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => uploadFile()));
+                },
+                icon: Icon(Icons.file_upload_outlined))
                 : Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                    child: Icon(Icons.file_upload_off),
-                  ),
+              padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+              child: Icon(Icons.file_upload_off),
+            ),
           ],
           title: Text("Study Materials"),
         ),
@@ -191,7 +191,7 @@ class _study_MaterialsState extends State<study_Materials> {
                                     FirebaseFirestore.instance
                                         .collection("Profile")
                                         .doc(FirebaseAuth
-                                            .instance.currentUser!.uid)
+                                        .instance.currentUser!.uid)
                                         .update({
                                       ((3 * index3)).toString(): "",
                                       ((3 * index3) + 1).toString(): "",
@@ -205,14 +205,14 @@ class _study_MaterialsState extends State<study_Materials> {
                                     FirebaseFirestore.instance
                                         .collection("Profile")
                                         .doc(FirebaseAuth
-                                            .instance.currentUser!.uid)
+                                        .instance.currentUser!.uid)
                                         .update({
                                       ((3 * index3)).toString():
-                                          link[idx_link].toString(),
+                                      link[idx_link].toString(),
                                       ((3 * index3) + 1).toString():
-                                          name[idx_link].toString(),
+                                      name[idx_link].toString(),
                                       ((3 * index3) + 2).toString():
-                                          date1[idx_link].toString(),
+                                      date1[idx_link].toString(),
                                     });
 
                                     index3++;
@@ -229,7 +229,7 @@ class _study_MaterialsState extends State<study_Materials> {
                               0, ((50 / 872) * screenH), 0, 0),
                           child: GridView.builder(
                             gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
+                            SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 3,
                               mainAxisSpacing: 0,
                               crossAxisSpacing: 1,
@@ -249,7 +249,7 @@ class _study_MaterialsState extends State<study_Materials> {
                                     child: GestureDetector(
                                       onTap: () async {
                                         final url =
-                                            Uri.parse(image_link[index]);
+                                        Uri.parse(image_link[index]);
                                         if (!await launchUrl(url))
                                           throw Exception(
                                               'Could not launch $url');
@@ -258,7 +258,7 @@ class _study_MaterialsState extends State<study_Materials> {
                                       child: CachedNetworkImage(
                                         imageUrl: image_link[index],
                                         progressIndicatorBuilder: (context, url,
-                                                downloadProgress) =>
+                                            downloadProgress) =>
                                             Center(
                                                 child: Text(image_name[index])),
                                         errorWidget: (context, url, error) =>
@@ -277,27 +277,27 @@ class _study_MaterialsState extends State<study_Materials> {
                                   // SizedBox.fromSize(size: Size(0,50),),
                                   role == "Administrator"
                                       ? ElevatedButton(
-                                          onPressed: () {
-                                            for (int i = 0; i < count1; i++) {
-                                              if (image_name[index] ==
-                                                  name[i]) {
-                                                index1 = i;
-                                                break;
-                                              }
-                                            }
-                                            // int total=count1-index1-1;
-                                            delete1(index1);
-                                            setState(() {
-                                              del_1 = true;
-                                            });
-                                            // Navigator.push(
-                                            //     context,
-                                            //     MaterialPageRoute(
-                                            //         builder: (context) =>
-                                            //             delete_file(name, link,
-                                            //                 index1, count1)));
-                                          },
-                                          child: Text("Delete"))
+                                      onPressed: () {
+                                        for (int i = 0; i < count1; i++) {
+                                          if (image_name[index] ==
+                                              name[i]) {
+                                            index1 = i;
+                                            break;
+                                          }
+                                        }
+                                        // int total=count1-index1-1;
+                                        delete1(index1);
+                                        setState(() {
+                                          del_1 = true;
+                                        });
+                                        // Navigator.push(
+                                        //     context,
+                                        //     MaterialPageRoute(
+                                        //         builder: (context) =>
+                                        //             delete_file(name, link,
+                                        //                 index1, count1)));
+                                      },
+                                      child: Text("Delete"))
                                       : Container(),
                                 ],
                               );
@@ -395,7 +395,7 @@ class _study_MaterialsState extends State<study_Materials> {
                                     FirebaseFirestore.instance
                                         .collection("Profile")
                                         .doc(FirebaseAuth
-                                            .instance.currentUser!.uid)
+                                        .instance.currentUser!.uid)
                                         .update({
                                       (3 * index3).toString(): "",
                                       ((3 * index3) + 1).toString(): "",
@@ -408,14 +408,14 @@ class _study_MaterialsState extends State<study_Materials> {
                                     FirebaseFirestore.instance
                                         .collection("Profile")
                                         .doc(FirebaseAuth
-                                            .instance.currentUser!.uid)
+                                        .instance.currentUser!.uid)
                                         .update({
                                       (3 * index3).toString():
-                                          link[idx_link].toString(),
+                                      link[idx_link].toString(),
                                       ((3 * index3) + 1).toString():
-                                          name[idx_link].toString(),
+                                      name[idx_link].toString(),
                                       ((3 * index3) + 2).toString():
-                                          date3[idx_link].toString(),
+                                      date3[idx_link].toString(),
                                     });
 
                                     index3++;
@@ -464,26 +464,26 @@ class _study_MaterialsState extends State<study_Materials> {
                                   // SizedBox.fromSize(size: Size(0,50),),
                                   role == "Administrator"
                                       ? ElevatedButton(
-                                          onPressed: () {
-                                            for (int i = 0; i < count1; i++) {
-                                              if (file_name[index] == name[i]) {
-                                                index1 = i;
-                                                break;
-                                              }
-                                            }
-                                            delete1(index1);
-                                            setState(() {
-                                              del_2 = true;
-                                            });
+                                      onPressed: () {
+                                        for (int i = 0; i < count1; i++) {
+                                          if (file_name[index] == name[i]) {
+                                            index1 = i;
+                                            break;
+                                          }
+                                        }
+                                        delete1(index1);
+                                        setState(() {
+                                          del_2 = true;
+                                        });
 
-                                            // Navigator.push(
-                                            //     context,
-                                            //     MaterialPageRoute(
-                                            //         builder: (context) =>
-                                            //             delete_file(name, link,
-                                            //                 index1, count1)));
-                                          },
-                                          child: Text("Delete"))
+                                        // Navigator.push(
+                                        //     context,
+                                        //     MaterialPageRoute(
+                                        //         builder: (context) =>
+                                        //             delete_file(name, link,
+                                        //                 index1, count1)));
+                                      },
+                                      child: Text("Delete"))
                                       : Container(),
                                 ],
                               );
@@ -536,14 +536,14 @@ class _study_MaterialsState extends State<study_Materials> {
                                         snapshot
                                             .data!
                                             .docs[count3]
-                                                ['link' + l1.toString()]
+                                        ['link' + l1.toString()]
                                             .toString());
                                     date4.insert(
                                         count2,
                                         snapshot
                                             .data!
                                             .docs[count3]
-                                                ['link' + l2.toString()]
+                                        ['link' + l2.toString()]
                                             .toString());
 
                                     count2++;
@@ -575,13 +575,13 @@ class _study_MaterialsState extends State<study_Materials> {
                                     FirebaseFirestore.instance
                                         .collection("Profile")
                                         .doc(FirebaseAuth
-                                            .instance.currentUser!.uid)
+                                        .instance.currentUser!.uid)
                                         .update({
                                       'link' + (3 * index3).toString(): "",
                                       'link' + ((3 * index3) + 1).toString():
-                                          "",
+                                      "",
                                       'link' + ((3 * index3) + 2).toString():
-                                          "",
+                                      "",
                                     });
                                     break;
                                   } else {
@@ -590,14 +590,14 @@ class _study_MaterialsState extends State<study_Materials> {
                                     FirebaseFirestore.instance
                                         .collection("Profile")
                                         .doc(FirebaseAuth
-                                            .instance.currentUser!.uid)
+                                        .instance.currentUser!.uid)
                                         .update({
                                       'link' + (3 * index3).toString():
-                                          link_cap[idx_link].toString(),
+                                      link_cap[idx_link].toString(),
                                       'link' + ((3 * index3) + 1).toString():
-                                          link_l[idx_link].toString(),
+                                      link_l[idx_link].toString(),
                                       'link' + ((3 * index3) + 2).toString():
-                                          date4[idx_link].toString(),
+                                      date4[idx_link].toString(),
                                     });
 
                                     index3++;
@@ -623,7 +623,7 @@ class _study_MaterialsState extends State<study_Materials> {
                                 children: [
                                   Card(
                                     elevation:
-                                        5.0, // Adjust the elevation for a shadow effect
+                                    5.0, // Adjust the elevation for a shadow effect
                                     margin: EdgeInsets.symmetric(
                                         vertical: 8.0,
                                         horizontal: 16.0), // Adjust margins
@@ -663,25 +663,25 @@ class _study_MaterialsState extends State<study_Materials> {
                                   // SizedBox.fromSize(size: Size(0,50),),
                                   role == "Administrator"
                                       ? ElevatedButton(
-                                          onPressed: () {
-                                            delete1(index);
-                                            setState(() {
-                                              del_3 = true;
-                                            });
+                                      onPressed: () {
+                                        delete1(index);
+                                        setState(() {
+                                          del_3 = true;
+                                        });
 
-                                            // Navigator.push(
-                                            //     context,
-                                            //     MaterialPageRoute(
-                                            //         builder: (context) =>
-                                            //             delete_link(link_cap, link_l,
-                                            //                 index, count2)));
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            primary: Colors.red,
-                                            onPrimary: Colors.white,
-                                            padding: EdgeInsets.all(8.0),
-                                          ),
-                                          child: Text("Delete"))
+                                        // Navigator.push(
+                                        //     context,
+                                        //     MaterialPageRoute(
+                                        //         builder: (context) =>
+                                        //             delete_link(link_cap, link_l,
+                                        //                 index, count2)));
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Colors.red,
+                                        onPrimary: Colors.white,
+                                        padding: EdgeInsets.all(8.0),
+                                      ),
+                                      child: Text("Delete"))
                                       : Container(),
                                 ],
                               );
