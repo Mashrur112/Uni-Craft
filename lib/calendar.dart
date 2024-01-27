@@ -1,10 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:uni_craft/Stopwatch.dart';
 import 'package:uni_craft/timeplanner.dart';
 
 class Calendar extends StatefulWidget {
-  const Calendar({Key? key}) : super(key: key);
+  var uid_ad;
+   Calendar(this.uid_ad,{Key? key}) : super(key: key);
+
 
   @override
   _CalendarState createState() => _CalendarState();
@@ -14,20 +17,33 @@ class _CalendarState extends State<Calendar> {
   DateTime today = DateTime.now();
   Map<DateTime, List<String>> events = {};
 
-  void _onDaySelected(DateTime day, DateTime focusDay) {
+  void _onDaySelected(var day, DateTime focusDay) {
     setState(() {
       today = day;
     });
   }
 
   void _onEventAdded(String event) {
-    setState(() {
+
+    Map<String, List<String>> e = {};
+
+
+    setState(()  {
+
       events.update(
         today,
             (existingEvents) => [...existingEvents, event],
         ifAbsent: () => [event],
       );
+
+      FirebaseFirestore.instance.collection("Profile").doc(widget.uid_ad).update({
+        "events":events,
+      });
+
     });
+
+
+
   }
 
   void _deleteEvent(String event) {
@@ -38,6 +54,9 @@ class _CalendarState extends State<Calendar> {
           events.remove(today);
         }
       }
+      FirebaseFirestore.instance.collection("Profile").doc(widget.uid_ad).update({
+        "events":events[today],
+      });
     });
   }
 
@@ -63,7 +82,8 @@ class _CalendarState extends State<Calendar> {
           ),
         ],
       ),
-      body: Stack(
+      body:
+      Stack(
         children: [
 
 
@@ -99,15 +119,16 @@ class _CalendarState extends State<Calendar> {
                       titleCentered: true,
                     ),
                     availableGestures: AvailableGestures.all,
-                    selectedDayPredicate: (day) => isSameDay(day, today),
-                    focusedDay: today,
+                    selectedDayPredicate: (day) => isSameDay(day, today ),
+                    focusedDay: today ,
                     firstDay: DateTime.utc(2012, 01, 01),
                     lastDay: DateTime.utc(2050, 01, 01),
                     onDaySelected: _onDaySelected,
                   ),
                   const SizedBox(height: 20),
                   TodoListView(
-                    selectedDate: today,
+                    uid: widget.uid_ad,
+                    selectedDate: today ,
                     events: events[today] ?? [],
                     onEventAdded: _onEventAdded,
                     onDeleteEvent: _deleteEvent,
@@ -118,6 +139,7 @@ class _CalendarState extends State<Calendar> {
           ),
         ],
       ),
+
       backgroundColor: Color(0xffb8d8d8),
     );
   }
@@ -125,15 +147,17 @@ class _CalendarState extends State<Calendar> {
 
 class TodoListView extends StatefulWidget {
   final DateTime selectedDate;
-  final List<String> events;
+   List events=[];
   final Function(String) onEventAdded;
   final Function(String) onDeleteEvent;
+  var uid;
 
-  const TodoListView({
+   TodoListView({
     required this.selectedDate,
     required this.events,
     required this.onEventAdded,
     required this.onDeleteEvent,
+    required this.uid,
     Key? key,
   }) : super(key: key);
 
@@ -157,24 +181,41 @@ class _TodoListViewState extends State<TodoListView> {
           ),
         ),
         const SizedBox(height: 10),
-        ListView.builder(
-          shrinkWrap: true,
-          itemCount: widget.events.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              title: Text(widget.events[index]),
-              trailing: IconButton(
-                icon: Icon(
-                  Icons.delete,
-                  color: Colors.red.withOpacity(0.7),
+        StreamBuilder(stream: FirebaseFirestore.instance.collection("Profile").snapshots(), builder: (context,snapshots){
+          if(snapshots.hasData)
+            {
+              var res=snapshots.data!.docs.toList();
+              for(var r in res)
+                {
+                  if(r['uid']==widget.uid)
+                    {
+                      try{
+                      widget.events=r['events'];}catch(e){};
+                    }
+                }
+
+            }
+          return ListView.builder(
+            shrinkWrap: true,
+            itemCount: widget.events.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(widget.events[index]),
+                trailing: IconButton(
+                  icon: Icon(
+                    Icons.delete,
+                    color: Colors.red.withOpacity(0.7),
+                  ),
+                  onPressed: () {
+                    widget.onDeleteEvent(widget.events[index]);
+                  },
                 ),
-                onPressed: () {
-                  widget.onDeleteEvent(widget.events[index]);
-                },
-              ),
-            );
-          },
-        ),
+              );
+            },
+          );
+        }),
+
+
         const SizedBox(height: 10),
         Padding(
           padding: const EdgeInsets.all(8.0),
@@ -205,11 +246,23 @@ class _TodoListViewState extends State<TodoListView> {
                   color: Colors.black.withOpacity(0.9),
                 ),
                 onPressed: () {
+
                   final newEvent = textController.text;
+                  print(widget.events);
+                  setState(() {
+
+                  });
                   if (newEvent.isNotEmpty) {
+
                     widget.onEventAdded(newEvent);
                     textController.clear();
+
+
+
+
                   }
+
+
                 },
               ),
             ],
