@@ -73,7 +73,7 @@ class _study_MaterialsState extends State<study_Materials> {
                           MaterialPageRoute(
                               builder: (context) => uploadFile(widget.code2)));
                     },
-                    icon: Icon(Icons.file_upload_outlined))
+                    icon: Icon(Icons.file_upload_outlined,color: Colors.white,))
                 : Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
                     child: Icon(Icons.file_upload_off),
@@ -83,11 +83,17 @@ class _study_MaterialsState extends State<study_Materials> {
         ),
         body: Column(
           children: [
-            TabBar(tabs: [
-              Tab(text: "Media", icon: Icon(Icons.photo)),
-              Tab(text: "File", icon: Icon(Icons.file_copy_sharp)),
-              Tab(text: "Link", icon: Icon(Icons.link)),
-            ]),
+            Container(
+              color: Color(0xff99c2c2),
+              height: 0.1*screenH,
+              child: TabBar(
+                  dividerColor: Colors.white,
+                  tabs: [
+                Tab(text: "Media", icon: Icon(Icons.photo)),
+                Tab(text: "File", icon: Icon(Icons.file_copy_sharp)),
+                Tab(text: "Link", icon: Icon(Icons.link)),
+              ]),
+            ),
             Expanded(
               child: TabBarView(children: [
                 Container(
@@ -233,53 +239,54 @@ class _study_MaterialsState extends State<study_Materials> {
                             physics: BouncingScrollPhysics(),
                             itemCount: img_lidx,
                             itemBuilder: (BuildContext context, int index) {
-                              return Card(
-                                elevation: 4,
-                                color: Color.fromARGB(255, 143, 180, 161),
-                                margin: EdgeInsets.symmetric(
-                                    vertical: 6, horizontal: 100),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () async {
-                                        final url =
-                                            Uri.parse(image_link[index]);
-                                        if (!await launchUrl(url))
-                                          throw Exception(
-                                              'Could not launch $url');
-                                      },
-                                      child: CachedNetworkImage(
-                                        imageUrl: image_link[index],
-                                        progressIndicatorBuilder: (context, url,
-                                                downloadProgress) =>
-                                            Center(
-                                                child: Text(image_name[index])),
-                                        errorWidget: (context, url, error) =>
-                                            Icon(Icons.error),
-                                        height: (50 / 95) * screenH,
-                                      ),
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        date2[index],
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.black,
+                                          //fontWeight: FontWeight.bold,
+                                          fontStyle: FontStyle.italic,
+                                          decoration: TextDecoration.underline,
+                                          // backgroundColor: Colors.yellow,
+                                        ),
+                                      )),
+                                  GestureDetector(
+                                    onTap: () async {
+                                      final url = Uri.parse(image_link[index]);
+                                      if (!await launchUrl(url))
+                                        throw Exception(
+                                            'Could not launch $url');
+                                    },
+                                    child: CachedNetworkImage(
+                                      imageUrl: image_link[index],
+                                      progressIndicatorBuilder: (context, url,
+                                              downloadProgress) =>
+                                          Center(
+                                              child: Text(image_name[index])),
+                                      errorWidget: (context, url, error) =>
+                                          Icon(Icons.error),
+                                      height: (50 / 95) * screenH,
                                     ),
-                                    Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          date2[index],
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.blue,
-                                            fontWeight: FontWeight.bold,
-                                            fontStyle: FontStyle.italic,
-                                            decoration:
-                                                TextDecoration.underline,
-                                            backgroundColor: Colors.yellow,
-                                          ),
-                                        )),
-                                    role == "Administrator"
-                                        ? Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Center(
-                                              child: ElevatedButton(
-                                                onPressed: () {
+                                  ),
+                                  role == "Administrator"
+                                      ? Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Center(
+                                            child: Container(
+                                              height: 0.05 * screenH,
+                                              width: 0.3 * screenW,
+                                              decoration: BoxDecoration(
+                                                color: Color(0xffa84747),
+                                                borderRadius:
+                                                    BorderRadius.circular(6),
+                                              ),
+                                              child: GestureDetector(
+                                                onTap: () {
                                                   for (int i = 0;
                                                       i < count1;
                                                       i++) {
@@ -294,18 +301,18 @@ class _study_MaterialsState extends State<study_Materials> {
                                                     del_1 = true;
                                                   });
                                                 },
-                                                style: ElevatedButton.styleFrom(
-                                                  primary: Colors.red,
-                                                  onPrimary: Colors.white,
-                                                  padding: EdgeInsets.all(8.0),
-                                                ),
-                                                child: Text("Delete"),
+                                                child: Center(
+                                                    child: const Text(
+                                                  "Delete",
+                                                  style: TextStyle(
+                                                      color: Colors.white),
+                                                )),
                                               ),
                                             ),
-                                          )
-                                        : Container(),
-                                  ],
-                                ),
+                                          ),
+                                        )
+                                      : Container(),
+                                ],
                               );
                             },
                           ),
@@ -442,41 +449,66 @@ class _study_MaterialsState extends State<study_Materials> {
                             physics: BouncingScrollPhysics(),
                             itemCount: file_lidx,
                             itemBuilder: (BuildContext context, int index) {
-                              return Card(
-                                color: Color.fromARGB(255, 154, 185, 169),
-                                child: ListTile(
-                                  title: GestureDetector(
-                                    onTap: () async {
-                                      final url = Uri.parse(file_link[index]);
-                                      if (!await launchUrl(url))
-                                        throw Exception(
-                                            'Could not launch $url');
-                                    },
-                                    child: Text(file_name[index]),
+                              return Container(
+                                height: 0.09 * screenH,
+                                child: Card(
+                                  elevation: 4,
+                                  color: Color(0xff77a5b5),
+                                  child: ListTile(
+                                    title: GestureDetector(
+                                      onTap: () async {
+                                        final url = Uri.parse(file_link[index]);
+                                        if (!await launchUrl(url))
+                                          throw Exception(
+                                              'Could not launch $url');
+                                      },
+                                      child: Text(
+                                        file_name[index],
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    subtitle: Text(
+                                      date3[index],
+                                      style: TextStyle(
+                                          fontStyle: FontStyle.italic),
+                                    ),
+                                    trailing: role == "Administrator"
+                                        ? Container(
+                                            height: 0.05 * screenH,
+                                            width: 0.2 * screenW,
+                                            decoration: BoxDecoration(
+                                              color: Color(0xffb84747),
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                            ),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                for (int i = 0;
+                                                    i < count1;
+                                                    i++) {
+                                                  if (file_name[index] ==
+                                                      name[i]) {
+                                                    index1 = i;
+                                                    break;
+                                                  }
+                                                }
+                                                delete1(index1);
+                                                setState(() {
+                                                  del_2 = true;
+                                                });
+                                              },
+                                              child: Center(
+                                                  child: Text(
+                                                "Delete",
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              )),
+                                            ),
+                                          )
+                                        : null,
                                   ),
-                                  subtitle: Text(date3[index]),
-                                  trailing: role == "Administrator"
-                                      ? ElevatedButton(
-                                          onPressed: () {
-                                            for (int i = 0; i < count1; i++) {
-                                              if (file_name[index] == name[i]) {
-                                                index1 = i;
-                                                break;
-                                              }
-                                            }
-                                            delete1(index1);
-                                            setState(() {
-                                              del_2 = true;
-                                            });
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            primary: Colors.red,
-                                            onPrimary: Colors.white,
-                                            padding: EdgeInsets.all(8.0),
-                                          ),
-                                          child: Text("Delete"),
-                                        )
-                                      : null,
                                 ),
                               );
                             },
@@ -613,69 +645,93 @@ class _study_MaterialsState extends State<study_Materials> {
                             itemBuilder: (BuildContext context, int index) {
                               return Column(
                                 children: [
-                                  Card(
-                                    color: Color.fromARGB(255, 154, 185, 169),
-                                    elevation:
-                                        5.0, // Adjust the elevation for a shadow effect
-                                    margin: EdgeInsets.symmetric(
-                                        vertical: 8.0,
-                                        horizontal: 16.0), // Adjust margins
-                                    child: ListTile(
-                                      onTap: () async {
-                                        final url = Uri.parse(link_l[index]);
-                                        if (!await launchUrl(url))
-                                          throw Exception(
-                                              'Could not launch $url');
-                                      },
-                                      title: Text(
-                                        // Your title text goes here
+                                  Stack(
+                                    children: [
+                                      Card(
+                                        color: Color(0xff77a5b5),
+                                        elevation:
+                                            5.0, // Adjust the elevation for a shadow effect
+                                        margin: EdgeInsets.symmetric(
+                                            vertical: 8.0,
+                                            horizontal: 14.0), // Adjust margins
+                                        child: ListTile(
+                                          onTap: () async {
+                                            final url =
+                                                Uri.parse(link_l[index]);
+                                            if (!await launchUrl(url))
+                                              throw Exception(
+                                                  'Could not launch $url');
+                                          },
+                                          title: Text(
+                                            // Your title text goes here
 
-                                        link_cap[index],
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16.0,
+                                            link_cap[index],
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16.0,
+                                              color: Colors.white
+                                            ),
+                                          ),
+                                          subtitle: Text(
+                                            // Your subtitle text goes here
+                                            'Timestamp: ${date4[index]}',
+                                            style: TextStyle(
+                                              fontSize: 14.0,
+                                              fontWeight: FontWeight.bold,
+                                              fontStyle: FontStyle.italic,
+
+                                            ),
+                                          ),
+
+                                          // Text(
+                                          //   name[index],
+                                          //   style: TextStyle(
+                                          //       fontSize: 20,
+                                          //       fontWeight: FontWeight.bold),
+                                          // ),
                                         ),
                                       ),
-                                      subtitle: Text(
-                                        // Your subtitle text goes here
-                                        'Timestamp: ${date4[index]}',
-                                        style: TextStyle(
-                                          fontSize: 14.0,
-                                        ),
-                                      ),
+                                      role == "Administrator"
+                                          ? Positioned(
+                                              bottom: 0.03 * screenH,
+                                              right: 0.06 * screenW,
+                                              child: Container(
+                                                height: 0.045 * screenH,
+                                                width: 0.19 * screenW,
+                                                decoration: BoxDecoration(
+                                                  color: Color(0xffb84747),
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                ),
+                                                child: GestureDetector(
+                                                    onTap: () {
+                                                      delete1(index);
+                                                      setState(() {
+                                                        del_3 = true;
+                                                      });
 
-                                      // Text(
-                                      //   name[index],
-                                      //   style: TextStyle(
-                                      //       fontSize: 20,
-                                      //       fontWeight: FontWeight.bold),
-                                      // ),
-                                    ),
+                                                      // Navigator.push(
+                                                      //     context,
+                                                      //     MaterialPageRoute(
+                                                      //         builder: (context) =>
+                                                      //             delete_link(link_cap, link_l,
+                                                      //                 index, count2)));
+                                                    },
+                                                    child: Center(
+                                                        child: Text(
+                                                      "Delete",
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ))),
+                                              ),
+                                            )
+                                          : Container(),
+                                    ],
                                   ),
 
                                   // SizedBox.fromSize(size: Size(0,50),),
-                                  role == "Administrator"
-                                      ? ElevatedButton(
-                                          onPressed: () {
-                                            delete1(index);
-                                            setState(() {
-                                              del_3 = true;
-                                            });
-
-                                            // Navigator.push(
-                                            //     context,
-                                            //     MaterialPageRoute(
-                                            //         builder: (context) =>
-                                            //             delete_link(link_cap, link_l,
-                                            //                 index, count2)));
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            primary: Colors.red,
-                                            onPrimary: Colors.white,
-                                            padding: EdgeInsets.all(8.0),
-                                          ),
-                                          child: Text("Delete"))
-                                      : Container(),
                                 ],
                               );
                             },

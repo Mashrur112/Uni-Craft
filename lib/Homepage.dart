@@ -614,7 +614,7 @@ class _HomepageState extends State<Homepage> {
 
                                       code: x,
                                     );
-                                    await  Future.delayed(Duration(milliseconds: 5000));
+                                    await  Future.delayed(Duration(milliseconds: 2000));
                                     Navigator.of(context).pop();
 
                                     FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
@@ -649,7 +649,7 @@ class _HomepageState extends State<Homepage> {
 
                                       code: y,
                                     );
-                                    await  Future.delayed(Duration(milliseconds: 5000));
+                                    await  Future.delayed(Duration(milliseconds: 2000));
                                     Navigator.of(context).pop();
 
                                   }
@@ -834,7 +834,7 @@ class _HomepageState extends State<Homepage> {
 
                               code: x,
                             );
-                              await  Future.delayed(Duration(milliseconds: 5000));
+                              await  Future.delayed(Duration(milliseconds: 2000));
                               Navigator.of(context).pop();
                             FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
                               '0':"",
@@ -867,7 +867,7 @@ class _HomepageState extends State<Homepage> {
 
                                 code: y,
                               );
-                              await  Future.delayed(Duration(milliseconds: 5000));
+                              await  Future.delayed(Duration(milliseconds: 2000));
                               Navigator.of(context).pop();
 
                             }

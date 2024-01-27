@@ -37,11 +37,11 @@ class poll_graph extends StatelessWidget {
               }
               return Center(
                 child: Container(
-                  width: 400,
-                  height: 400,
+                  width: 600,
+                  height: 600,
                   color: Colors.white,
                   child: PieChart(PieChartData(
-                      centerSpaceRadius: 5,
+                      centerSpaceRadius: 6,
                       borderData: FlBorderData(show: false),
                       sectionsSpace: 2,
                       sections: [

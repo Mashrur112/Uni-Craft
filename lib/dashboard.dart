@@ -133,6 +133,15 @@ class _DashboardState extends State<Dashboard> {
 
                             await Future.delayed(Duration(milliseconds: 200));
                             Navigator.of(context).pop();
+                            var token = await FirebaseMessaging.instance
+                                .getToken();
+                            FirebaseFirestore.instance
+                                .collection('Profile')
+                                .doc(FirebaseAuth
+                                .instance.currentUser!.uid)
+                                .update({
+                              'token': token.toString(),
+                            });
 
                             Navigator.push(
                                 context,
@@ -207,11 +216,20 @@ class _DashboardState extends State<Dashboard> {
                             );
 
                             await Future.delayed(Duration(milliseconds: 200));
+                            var token = await FirebaseMessaging.instance
+                                .getToken();
+                            FirebaseFirestore.instance
+                                .collection('Profile')
+                                .doc(FirebaseAuth
+                                .instance.currentUser!.uid)
+                                .update({
+                              'token': token.toString(),
+                            });
                             Navigator.of(context).pop();
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Calendar()));
+                                    builder: (context) => Calendar(widget.uid_admin)));
                           },
                           child: Container(
                             height: (150 / 872) * screenH,
@@ -276,7 +294,17 @@ class _DashboardState extends State<Dashboard> {
                               );
 
                               await Future.delayed(Duration(milliseconds: 200));
+
                               Navigator.of(context).pop();
+                              var token = await FirebaseMessaging.instance
+                                  .getToken();
+                              FirebaseFirestore.instance
+                                  .collection('Profile')
+                                  .doc(FirebaseAuth
+                                  .instance.currentUser!.uid)
+                                  .update({
+                                'token': token.toString(),
+                              });
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -577,6 +605,15 @@ class _DashboardState extends State<Dashboard> {
                                     await Future.delayed(
                                         Duration(milliseconds: 200));
                                     Navigator.of(context).pop();
+                                    var token = await FirebaseMessaging.instance
+                                        .getToken();
+                                    FirebaseFirestore.instance
+                                        .collection('Profile')
+                                        .doc(FirebaseAuth
+                                        .instance.currentUser!.uid)
+                                        .update({
+                                      'token': token.toString(),
+                                    });
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -650,6 +687,15 @@ class _DashboardState extends State<Dashboard> {
                                     await Future.delayed(
                                         Duration(milliseconds: 200));
                                     Navigator.of(context).pop();
+                                    var token = await FirebaseMessaging.instance
+                                        .getToken();
+                                    FirebaseFirestore.instance
+                                        .collection('Profile')
+                                        .doc(FirebaseAuth
+                                        .instance.currentUser!.uid)
+                                        .update({
+                                      'token': token.toString(),
+                                    });
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -780,6 +826,15 @@ class _DashboardState extends State<Dashboard> {
                                     await Future.delayed(
                                         Duration(milliseconds: 200));
                                     Navigator.of(context).pop();
+                                    var token = await FirebaseMessaging.instance
+                                        .getToken();
+                                    FirebaseFirestore.instance
+                                        .collection('Profile')
+                                        .doc(FirebaseAuth
+                                        .instance.currentUser!.uid)
+                                        .update({
+                                      'token': token.toString(),
+                                    });
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -855,6 +910,15 @@ class _DashboardState extends State<Dashboard> {
 
                             await Future.delayed(Duration(milliseconds: 200));
                             Navigator.of(context).pop();
+                            var token = await FirebaseMessaging.instance
+                                .getToken();
+                            FirebaseFirestore.instance
+                                .collection('Profile')
+                                .doc(FirebaseAuth
+                                .instance.currentUser!.uid)
+                                .update({
+                              'token': token.toString(),
+                            });
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -925,6 +989,15 @@ class _DashboardState extends State<Dashboard> {
 
                             await Future.delayed(Duration(milliseconds: 200));
                             Navigator.of(context).pop();
+                            var token = await FirebaseMessaging.instance
+                                .getToken();
+                            FirebaseFirestore.instance
+                                .collection('Profile')
+                                .doc(FirebaseAuth
+                                .instance.currentUser!.uid)
+                                .update({
+                              'token': token.toString(),
+                            });
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -999,6 +1072,15 @@ class _DashboardState extends State<Dashboard> {
                 await Future.delayed(Duration(milliseconds: 200));
                 Navigator.of(context).pop();
                 //final result = FirebaseAuth.instance.currentUser!.uid;
+                var token = await FirebaseMessaging.instance
+                    .getToken();
+                FirebaseFirestore.instance
+                    .collection('Profile')
+                    .doc(FirebaseAuth
+                    .instance.currentUser!.uid)
+                    .update({
+                  'token': token.toString(),
+                });
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => Chat(FirebaseAuth.instance.currentUser!.uid)));
               },
