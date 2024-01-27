@@ -94,43 +94,50 @@ class _ChatState extends State<Chat> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue.shade200,
-        title: StreamBuilder<CustomUser>(
-          stream: DatabaseService().getUserByUserID(widget.uid),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              CustomUser? customUser = snapshot.data;
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Chat",
-                    style: TextStyle(fontSize: 25),
-                  ),
-                  Row(
+        title: Column(
+          children: [
+
+            StreamBuilder<CustomUser>(
+              stream: DatabaseService().getUserByUserID(widget.uid),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  CustomUser? customUser = snapshot.data;
+
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "${customUser?.name}",
-                        style: TextStyle(fontSize: 18,
-                        color: Colors.black),
+                        "Chat",
+                        style: TextStyle(fontSize: 25),
                       ),
-                      Text(
-                        " (${customUser?.email})",
-                        style: TextStyle(fontSize: 14,
+                      Row(
+                        children: [
+                          Text(
+                            "${customUser?.name}",
+                            style: TextStyle(fontSize: 18,
                             color: Colors.black),
+                          ),
+                          Text(
+                            " (${customUser?.email})",
+                            style: TextStyle(fontSize: 14,
+                                color: Colors.black),
+                          ),
+                        ],
                       ),
                     ],
-                  ),
-                ],
-              );
-            } else {
-              return Text("Chat");
-            }
-          },
+                  );
+                } else {
+                  return Text("Chat");
+                }
+              },
+            ),
+          ],
         ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.of(context).pop();
+
           },
         ),
 

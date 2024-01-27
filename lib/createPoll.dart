@@ -40,76 +40,14 @@ class _CreatePollState extends State<CreatePoll> {
     double screenW = MediaQuery.of(context).size.width;
     double screenH = MediaQuery.of(context).size.height;
     return Scaffold(
-
-        
-          
-
-      backgroundColor: Color(0xffb8d8d8),
-      appBar: AppBar(
-        backgroundColor: Color(0xff7a9e9f),
-        title: Text('Create Poll'),
-      ),
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Caption:',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              TextField(
-                controller: _captionController,
-                decoration: InputDecoration(
-                  hintText: 'Enter poll caption',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              SizedBox(height: 20),
-              Text(
-                'Options:',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 10),
-              _buildOptionTextField(_option1Controller, 'Option 1'),
-              SizedBox(height: 10),
-              _buildOptionTextField(_option2Controller, 'Option 2'),
-              SizedBox(height: 10),
-              _buildOptionTextField(_option3Controller, 'Option 3'),
-              SizedBox(height: 20),
-              Container(
-                alignment: Alignment.center,
-                child: ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      options.clear();
-                      if (_option1Controller.text.isNotEmpty) {
-                        options.add(_option1Controller.text);
-                      }
-                      if (_option2Controller.text.isNotEmpty) {
-                        options.add(_option2Controller.text);
-                      }
-                      if (_option3Controller.text.isNotEmpty) {
-                        options.add(_option3Controller.text);
-                      }
-                    });
-                    _createPoll();
-                  },
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.all(20),
-                  ),
-                  child: Text('Create Poll'),
-                ),
-              ),
-            ],
-          ),
-
+        backgroundColor: Color(0xffb8d8d8),
+        appBar: AppBar(
+          title: Text('Create Poll'),
+          backgroundColor: Color(0xff7a9e9f),
         ),
         body: StreamBuilder(
             stream:
-                FirebaseFirestore.instance.collection("Profile").snapshots(),
+            FirebaseFirestore.instance.collection("Profile").snapshots(),
             builder: (context, snapshots) {
               if (snapshots.hasData) {
                 var code;
@@ -194,9 +132,9 @@ class _CreatePollState extends State<CreatePoll> {
                             },
                             child: Center(
                                 child: const Text(
-                              "Create Poll",
-                              style: TextStyle(color: Colors.white),
-                            )),
+                                  "Create Poll",
+                                  style: TextStyle(color: Colors.white),
+                                )),
                           ),
                         ),
                       ),
@@ -240,7 +178,7 @@ class _CreatePollState extends State<CreatePoll> {
             headers: {
               'Content-Type': 'application/json; charset=UTF-8',
               'Authorization':
-                  'key=AAAA2TCZdvQ:APA91bHvIxfRdJ4yoEJXHDrPKBcMeWmf-VlVcHuh6gvun7QUGwrFiN9dobcO7H8jx1Z7ayt3nXEV2yjnoWB3_VbdranUUy8UNRfuEDOtb9vCWqi-DXxmZk-1Bnul2UfUnX1zhi-pm9vH'
+              'key=AAAA2TCZdvQ:APA91bHvIxfRdJ4yoEJXHDrPKBcMeWmf-VlVcHuh6gvun7QUGwrFiN9dobcO7H8jx1Z7ayt3nXEV2yjnoWB3_VbdranUUy8UNRfuEDOtb9vCWqi-DXxmZk-1Bnul2UfUnX1zhi-pm9vH'
             });
       }
     });
