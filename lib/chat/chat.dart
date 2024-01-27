@@ -25,11 +25,11 @@ class _ChatState extends State<Chat> {
         clipBehavior: Clip.antiAlias,
         margin: EdgeInsets.all(5.0),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(50.0),
+          borderRadius: BorderRadius.circular(20.0),
           side: BorderSide(color: Colors.black, width: 2.0),
         ),
         child: Container(
-          color: Colors.greenAccent.shade100,
+          color: Color(0xff88b5b5),
           height: 59, // Set your desired height (original + 25)
           child: ListTile(
             title: Text(
@@ -52,7 +52,7 @@ class _ChatState extends State<Chat> {
                 }
               },
             ),
-            tileColor: Colors.grey[300],
+            tileColor: Color(0xff88b5b5),
             splashColor: Colors.black38,
             onTap: () {
               Navigator.push(
@@ -93,7 +93,7 @@ class _ChatState extends State<Chat> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue.shade200,
+        backgroundColor: Color(0xff77a5b5),
         title: Column(
           children: [
 
@@ -108,18 +108,18 @@ class _ChatState extends State<Chat> {
                     children: [
                       Text(
                         "Chat",
-                        style: TextStyle(fontSize: 25),
+                        style: TextStyle(fontSize: 20),
                       ),
                       Row(
                         children: [
                           Text(
                             "${customUser?.name}",
-                            style: TextStyle(fontSize: 18,
+                            style: TextStyle(fontSize: 14,
                             color: Colors.black),
                           ),
                           Text(
                             " (${customUser?.email})",
-                            style: TextStyle(fontSize: 14,
+                            style: TextStyle(fontSize: 13,
                                 color: Colors.black),
                           ),
                         ],
@@ -142,32 +142,27 @@ class _ChatState extends State<Chat> {
         ),
 
       ),
-      body: StreamBuilder<CustomUser>(
-        stream: DatabaseService().getUserByUserID(widget.uid),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            CustomUser? customUser = snapshot.data;
-            return Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: ListView(
-                children: [
-                  SizedBox(height: 10),
-                  showUserList(),
-                  //SizedBox(height: 40),
-                  // ElevatedButton(
-                  //   onPressed: () async {
-                  //     await DatabaseService().logoutUser();
-                  //   },
-                  //   child: Text("Logout"),
-                  // ),
-                  // SizedBox(height: 30),
-                ],
-              ),
-            );
-          } else {
-            return Text("Data Not Found");
-          }
-        },
+      body: Container(
+        color: Color(0xffb8d8d8),
+        child: StreamBuilder<CustomUser>(
+          stream: DatabaseService().getUserByUserID(widget.uid),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              CustomUser? customUser = snapshot.data;
+              return Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: ListView(
+                  children: [
+                    SizedBox(height: 10),
+                    showUserList(),
+                  ],
+                ),
+              );
+            } else {
+              return Text("Data Not Found");
+            }
+          },
+        ),
       ),
     );
   }
