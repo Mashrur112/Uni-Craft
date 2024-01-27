@@ -104,7 +104,7 @@ class _MessagePageState extends State<MessagePage> {
           borderRadius: BorderRadius.circular(10),
           color:chatBoxColor
       ),
-      child: Text(message, style: TextStyle(fontSize: 18),),
+      child: Text(message, style: TextStyle(fontSize: 18,color: Colors.white),),
     );
   }
 
@@ -122,7 +122,7 @@ class _MessagePageState extends State<MessagePage> {
       //   current user sent the messages. so his sent messages should be on the right
       alignment = Alignment.centerRight;
       crossAxisAlignment = CrossAxisAlignment.end;
-      chatBoxColor = Colors.blue[300];
+      chatBoxColor = Color(0xff218D97);
 
       if (message.messageSeen == false){
         seenStatus = "unseen";
@@ -159,39 +159,43 @@ class _MessagePageState extends State<MessagePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.receiverEmail),
+        backgroundColor: Color(0xff77a5b5),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            Expanded(
-              flex: 20,
-              child: StreamBuilder<List<Message>>(
-                  stream: messageService.getMessages(_auth.currentUser!.uid, widget.receiverID),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      final messageList = snapshot.data;
-                      return ListView(
-                          reverse: true,
-                          children: messageList!.map((message) => messageItem(message)).toList()
-                      );
-                    } else {
-                      return Text("Data Not found");
+      body: Container(
+        color: Color(0xffb8d8d8),
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            children: [
+              Expanded(
+                flex: 20,
+                child: StreamBuilder<List<Message>>(
+                    stream: messageService.getMessages(_auth.currentUser!.uid, widget.receiverID),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        final messageList = snapshot.data;
+                        return ListView(
+                            reverse: true,
+                            children: messageList!.map((message) => messageItem(message)).toList()
+                        );
+                      } else {
+                        return Text("Data Not found");
+                      }
                     }
-                  }
+                ),
               ),
-            ),
-            // SizedBox(height: screenHeight*0.7,),
-            Divider(
-              height: 30,
-              color: Colors.black,
-              indent: 5,
-              endIndent: 5,
-              thickness: 0.8,
-            ),
-            Expanded(flex: 2, child: textMessgaeForm()),
-          ],
+              // SizedBox(height: screenHeight*0.7,),
+              Divider(
+                height: 30,
+                color: Colors.black,
+                indent: 5,
+                endIndent: 5,
+                thickness: 0.8,
+              ),
+              Expanded(flex: 2, child: textMessgaeForm()),
+            ],
+          ),
         ),
       ),
     );
