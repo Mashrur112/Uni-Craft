@@ -1,9 +1,14 @@
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:uni_craft/chat/service/messageService.dart';
 
+import '../notification.dart';
 import 'model/message.dart';
 
 class MessagePage extends StatefulWidget {
@@ -21,6 +26,7 @@ class _MessagePageState extends State<MessagePage> {
   final MessageService messageService = MessageService();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final formKey = GlobalKey<FormState>();
+  var token;
 
   Widget textMessgaeForm() {
     return Form(
@@ -38,9 +44,50 @@ class _MessagePageState extends State<MessagePage> {
                       hintText: "Enter Text"
                   ),
                 )),
+            StreamBuilder(stream: FirebaseFirestore.instance.collection("Profile").snapshots(), builder: (context,snapshots){
+              if(snapshots.hasData)
+                {
+                  var res =snapshots.data!.docs.toList();
+                  for(var r in res)
+                    {
+                      if(r['uid']==widget.receiverID.toString())
+                        {
+                          token =r['token'];
+                        }
+                    }
+                }
+
+              return Center();
+            }),
             Expanded(
                 flex: 1,
                 child: IconButton(onPressed: () async{
+                  PushNotifications.init().then((value)async{
+
+                    print(token);
+
+                      var data={
+                        'to':token.toString(),
+                        'priority':'high',
+                        'notification':{
+                          'title':widget.receiverEmail.toString(),
+                          'body':messageController.text.toString(),
+                        },
+                        'additional option':{
+                          'channel':'1',
+                        }
+
+                      };
+                      await http.post(Uri.parse('https://fcm.googleapis.com/fcm/send'),
+                          body:jsonEncode(data) ,
+                          headers: {
+                            'Content-Type':'application/json; charset=UTF-8',
+                            'Authorization':'key=AAAA2TCZdvQ:APA91bHvIxfRdJ4yoEJXHDrPKBcMeWmf-VlVcHuh6gvun7QUGwrFiN9dobcO7H8jx1Z7ayt3nXEV2yjnoWB3_VbdranUUy8UNRfuEDOtb9vCWqi-DXxmZk-1Bnul2UfUnX1zhi-pm9vH'
+                          }
+                      );
+
+
+                  });
                   if(messageController.text.isNotEmpty){
                     await messageService.sendMessage(widget.receiverID, widget.receiverEmail, messageController.text);
                     messageController.clear();
