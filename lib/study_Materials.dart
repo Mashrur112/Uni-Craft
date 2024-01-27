@@ -614,6 +614,7 @@ class _study_MaterialsState extends State<study_Materials> {
                               return Column(
                                 children: [
                                   Card(
+                                    color: Color.fromARGB(255, 154, 185, 169),
                                     elevation:
                                         5.0, // Adjust the elevation for a shadow effect
                                     margin: EdgeInsets.symmetric(
