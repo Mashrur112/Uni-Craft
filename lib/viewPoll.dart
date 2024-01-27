@@ -22,15 +22,20 @@ class _ViewPollState extends State<ViewPoll> {
 
   @override
   Widget build(BuildContext context) {
+    double screenW = MediaQuery.of(context).size.width;
+    double screenH = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xff7a9e9f),
+
+
         title: Text(
           "View Poll",
           style: TextStyle(
               //fontSize: 35,
               ),
         ),
+
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
@@ -68,6 +73,10 @@ class _ViewPollState extends State<ViewPoll> {
               v_poll = false;
               check = false;
             }
+
+
+           
+
           }
 
           return v_poll == true && check == true
@@ -87,6 +96,7 @@ class _ViewPollState extends State<ViewPoll> {
                             height:
                                 16), // Add some space between the caption and buttons
                         ElevatedButton(
+
                           onPressed: () {
                             if (poll == true) {
                               poll = false;

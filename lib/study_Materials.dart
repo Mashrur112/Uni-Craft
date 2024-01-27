@@ -10,8 +10,8 @@ import 'package:url_launcher/url_launcher_string.dart';
 import 'package:video_player/video_player.dart';
 
 class study_Materials extends StatefulWidget {
-  var r1;
-  study_Materials(this.r1);
+  var r1,code2;
+  study_Materials(this.r1,this.code2);
 
   @override
   State<study_Materials> createState() => _study_MaterialsState();
@@ -71,7 +71,7 @@ class _study_MaterialsState extends State<study_Materials> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => uploadFile()));
+                              builder: (context) => uploadFile(widget.code2)));
                     },
                     icon: Icon(Icons.file_upload_outlined))
                 : Padding(

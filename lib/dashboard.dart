@@ -138,7 +138,7 @@ class _DashboardState extends State<Dashboard> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        study_Materials(widget.role)));
+                                        study_Materials(widget.role,widget.code)));
                           },
                           child: Padding(
                             padding: EdgeInsets.fromLTRB(

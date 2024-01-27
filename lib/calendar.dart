@@ -24,7 +24,7 @@ class _CalendarState extends State<Calendar> {
     setState(() {
       events.update(
         today,
-        (existingEvents) => [...existingEvents, event],
+            (existingEvents) => [...existingEvents, event],
         ifAbsent: () => [event],
       );
     });
