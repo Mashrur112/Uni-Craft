@@ -1,14 +1,10 @@
-import 'dart:convert';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+
 import 'package:intl/intl.dart';
 import 'package:uni_craft/chat/service/messageService.dart';
-import 'package:uni_craft/notification.dart';
+
 import 'model/message.dart';
-import 'package:http/http.dart' as http;
 
 class MessagePage extends StatefulWidget {
   String receiverID;
@@ -25,7 +21,6 @@ class _MessagePageState extends State<MessagePage> {
   final MessageService messageService = MessageService();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final formKey = GlobalKey<FormState>();
-  var token;
 
   Widget textMessgaeForm() {
     return Form(
@@ -40,19 +35,12 @@ class _MessagePageState extends State<MessagePage> {
                     FocusScope.of(context).requestFocus(FocusNode());
                   },
                   decoration: InputDecoration(
-                    hintText: "Enter your text....",
-
+                      hintText: "Enter Text"
                   ),
                 )),
-
             Expanded(
                 flex: 1,
                 child: IconButton(onPressed: () async{
-
-
-                 // print("token"+" "+token);
-
-
                   if(messageController.text.isNotEmpty){
                     await messageService.sendMessage(widget.receiverID, widget.receiverEmail, messageController.text);
                     messageController.clear();
@@ -61,7 +49,6 @@ class _MessagePageState extends State<MessagePage> {
           ],
         ));
   }
-
 
   Widget chatBox(String message, chatBoxColor){
     return Container(
@@ -124,7 +111,6 @@ class _MessagePageState extends State<MessagePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue.shade200,
         title: Text(widget.receiverEmail),
         centerTitle: true,
       ),
