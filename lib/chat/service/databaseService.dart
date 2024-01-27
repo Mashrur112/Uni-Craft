@@ -9,7 +9,7 @@ class DatabaseService {
 
   // firestore collection reference
   final CollectionReference _userCollection =
-  FirebaseFirestore.instance.collection('users');
+  FirebaseFirestore.instance.collection('Profile');
 
   // create a new document for the user with the uid
   Future createUserDoc(String uid, String name, String email, String role) async {
@@ -36,7 +36,7 @@ class DatabaseService {
 
   // Map snapshot into CustomUser object
   CustomUser userObjectFromSnapshot(DocumentSnapshot snapshot) {
-    return CustomUser(snapshot.id, snapshot.get('name'), snapshot.get('email'),
+    return CustomUser(snapshot.id, snapshot.get('name1'), snapshot.get('email'),
         snapshot.get('role'));
   }
 
@@ -66,7 +66,7 @@ class DatabaseService {
     final userList = snapshot.docs.map(
             (doc) => CustomUser(
             doc.id,
-            doc.get('name'),
+            doc.get('name1'),
             doc.get('email'),
             doc.get('role'))
     ).toList();
