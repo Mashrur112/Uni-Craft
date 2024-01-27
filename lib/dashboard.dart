@@ -998,9 +998,9 @@ class _DashboardState extends State<Dashboard> {
                 );
                 await Future.delayed(Duration(milliseconds: 200));
                 Navigator.of(context).pop();
-                //User? result = FirebaseAuth.instance.currentUser;
+                //final result = FirebaseAuth.instance.currentUser!.uid;
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ChatApp()));
+                    MaterialPageRoute(builder: (context) => Chat(FirebaseAuth.instance.currentUser!.uid)));
               },
               child: Icon(
                 Icons.chat_outlined,
