@@ -7,18 +7,25 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:uni_craft/Stopwatch.dart';
 import 'package:uni_craft/chat.dart';
 import 'package:uni_craft/createPoll.dart';
-
+import 'package:uni_craft/chat/passres.dart';
+import 'package:uni_craft/auth2.dart';
 import 'package:uni_craft/report/add_course.dart';
 import 'package:uni_craft/study_Materials.dart';
 import 'package:uni_craft/viewPoll.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:uni_craft/chat.dart';
+//import 'package:firebase_auth/firebase_auth.dart' as FirebaseAuth;
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'Homepage.dart';
 import 'calendar.dart';
+import 'chat/chat.dart';
 import 'edit_Profile.dart';
 import 'main.dart';
 import 'members.dart';
 import 'notice.dart';
 import 'notification.dart';
+
 
 class Dashboard extends StatefulWidget {
   var role, uid_admin, code;
@@ -45,6 +52,7 @@ class _DashboardState extends State<Dashboard> {
   //
   // }
   final currentUser = FirebaseAuth.instance;
+
   var view_more = false;
   var c = 0;
   var check = true;
@@ -974,6 +982,7 @@ class _DashboardState extends State<Dashboard> {
               ),
             ),
           ),
+
           Positioned(
             bottom: (30 / 872) * screenH,
             right: (20 / 392) * screenW,
@@ -987,11 +996,11 @@ class _DashboardState extends State<Dashboard> {
                     return Center(child: CircularProgressIndicator());
                   },
                 );
-
                 await Future.delayed(Duration(milliseconds: 200));
                 Navigator.of(context).pop();
+                //final result = FirebaseAuth.instance.currentUser!.uid;
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ChatApp()));
+                    MaterialPageRoute(builder: (context) => Chat(FirebaseAuth.instance.currentUser!.uid)));
               },
               child: Icon(
                 Icons.chat_outlined,
@@ -1242,3 +1251,4 @@ class _DashboardState extends State<Dashboard> {
     );
   }
 }
+

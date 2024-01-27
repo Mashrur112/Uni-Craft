@@ -63,7 +63,7 @@ class _study_MaterialsState extends State<study_Materials> {
       child: Scaffold(
         backgroundColor: Color(0xffb8d8d8),
         appBar: AppBar(
-          backgroundColor: Color(0xffc9d9e9),
+          backgroundColor: Color(0xff7a9e9f),
           actions: [
             widget.r1 == "Administrator"
                 ? IconButton(
@@ -107,7 +107,7 @@ class _study_MaterialsState extends State<study_Materials> {
                           img_lidx = 0;
 
                           final res = snapshot.data!.docs.toList();
-                          for (var r in res!) {
+                          for (var r in res) {
                             if (r['uid'] ==
                                 FirebaseAuth.instance.currentUser!.uid) {
                               join_code = r['code'];
@@ -116,7 +116,7 @@ class _study_MaterialsState extends State<study_Materials> {
                               break;
                             }
                           }
-                          for (var r in res!) {
+                          for (var r in res) {
                             if (r['code'] == join_code.toString() &&
                                 r['role'] == "Administrator") {
                               //print(count1);
@@ -180,7 +180,7 @@ class _study_MaterialsState extends State<study_Materials> {
                         if (del_1 == true) {
                           int idx_link = index3;
                           final res = snapshot.data!.docs.toList();
-                          for (var r in res!) {
+                          for (var r in res) {
                             if (r['uid'] ==
                                 FirebaseAuth.instance.currentUser!.uid) {
                               while (true) {
@@ -226,27 +226,22 @@ class _study_MaterialsState extends State<study_Materials> {
 
                         return Padding(
                           padding: EdgeInsets.fromLTRB(
-                              0, ((50 / 872) * screenH), 0, 0),
-                          child: GridView.builder(
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                              mainAxisSpacing: 0,
-                              crossAxisSpacing: 1,
-                              childAspectRatio: 1.8 / 3,
-                            ),
-
+                              0, ((50 / 1300) * screenH), 0, 0),
+                          child: ListView.builder(
                             scrollDirection: Axis.vertical,
                             shrinkWrap: false,
                             physics: BouncingScrollPhysics(),
-                            //padding: EdgeInsets.all(21),
                             itemCount: img_lidx,
                             itemBuilder: (BuildContext context, int index) {
-                              return Column(
-                                children: [
-                                  Container(
-                                    height: (120 / 872) * screenH,
-                                    child: GestureDetector(
+                              return Card(
+                                elevation: 4,
+                                color: Color.fromARGB(255, 143, 180, 161),
+                                margin: EdgeInsets.symmetric(
+                                    vertical: 6, horizontal: 100),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    GestureDetector(
                                       onTap: () async {
                                         final url =
                                             Uri.parse(image_link[index]);
@@ -254,7 +249,6 @@ class _study_MaterialsState extends State<study_Materials> {
                                           throw Exception(
                                               'Could not launch $url');
                                       },
-
                                       child: CachedNetworkImage(
                                         imageUrl: image_link[index],
                                         progressIndicatorBuilder: (context, url,
@@ -263,43 +257,48 @@ class _study_MaterialsState extends State<study_Materials> {
                                                 child: Text(image_name[index])),
                                         errorWidget: (context, url, error) =>
                                             Icon(Icons.error),
+                                        height: (50 / 95) * screenH,
                                       ),
-
-                                      // Text(
-                                      //   name[index],
-                                      //   style: TextStyle(
-                                      //       fontSize: 20,
-                                      //       fontWeight: FontWeight.bold),
-                                      // ),
                                     ),
-                                  ),
-                                  Text(date2[index]),
-                                  // SizedBox.fromSize(size: Size(0,50),),
-                                  role == "Administrator"
-                                      ? ElevatedButton(
-                                          onPressed: () {
-                                            for (int i = 0; i < count1; i++) {
-                                              if (image_name[index] ==
-                                                  name[i]) {
-                                                index1 = i;
-                                                break;
-                                              }
-                                            }
-                                            // int total=count1-index1-1;
-                                            delete1(index1);
-                                            setState(() {
-                                              del_1 = true;
-                                            });
-                                            // Navigator.push(
-                                            //     context,
-                                            //     MaterialPageRoute(
-                                            //         builder: (context) =>
-                                            //             delete_file(name, link,
-                                            //                 index1, count1)));
-                                          },
-                                          child: Text("Delete"))
-                                      : Container(),
-                                ],
+                                    Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          date2[index],
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.blue,
+                                            fontWeight: FontWeight.bold,
+                                            fontStyle: FontStyle.italic,
+                                            decoration:
+                                                TextDecoration.underline,
+                                            backgroundColor: Colors.yellow,
+                                          ),
+                                        )),
+                                    role == "Administrator"
+                                        ? Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: ElevatedButton(
+                                              onPressed: () {
+                                                for (int i = 0;
+                                                    i < count1;
+                                                    i++) {
+                                                  if (image_name[index] ==
+                                                      name[i]) {
+                                                    index1 = i;
+                                                    break;
+                                                  }
+                                                }
+                                                delete1(index1);
+                                                setState(() {
+                                                  del_1 = true;
+                                                });
+                                              },
+                                              child: Text("Delete"),
+                                            ),
+                                          )
+                                        : Container(),
+                                  ],
+                                ),
                               );
                             },
                           ),
@@ -332,7 +331,7 @@ class _study_MaterialsState extends State<study_Materials> {
                               break;
                             }
                           }
-                          for (var r in res!) {
+                          for (var r in res) {
                             if (r['code'] == join_code.toString() &&
                                 r['role'] == "Administrator") {
                               //print(count1);
@@ -384,7 +383,7 @@ class _study_MaterialsState extends State<study_Materials> {
                         if (del_2 == true) {
                           int idx_link = index3;
                           final res = snapshot.data!.docs.toList();
-                          for (var r in res!) {
+                          for (var r in res) {
                             if (r['uid'] ==
                                 FirebaseAuth.instance.currentUser!.uid) {
                               while (true) {
@@ -621,18 +620,35 @@ class _study_MaterialsState extends State<study_Materials> {
                             itemBuilder: (BuildContext context, int index) {
                               return Column(
                                 children: [
-                                  Container(
-                                    height: (70 / 872) * screenH,
-                                    child: GestureDetector(
+                                  Card(
+                                    elevation:
+                                        5.0, // Adjust the elevation for a shadow effect
+                                    margin: EdgeInsets.symmetric(
+                                        vertical: 8.0,
+                                        horizontal: 16.0), // Adjust margins
+                                    child: ListTile(
                                       onTap: () async {
                                         final url = Uri.parse(link_l[index]);
-
                                         if (!await launchUrl(url))
                                           throw Exception(
                                               'Could not launch $url');
                                       },
+                                      title: Text(
+                                        // Your title text goes here
 
-                                      child: Text(link_cap[index]),
+                                        link_cap[index],
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16.0,
+                                        ),
+                                      ),
+                                      subtitle: Text(
+                                        // Your subtitle text goes here
+                                        'Timestamp: ${date4[index]}',
+                                        style: TextStyle(
+                                          fontSize: 14.0,
+                                        ),
+                                      ),
 
                                       // Text(
                                       //   name[index],
@@ -642,7 +658,7 @@ class _study_MaterialsState extends State<study_Materials> {
                                       // ),
                                     ),
                                   ),
-                                  Text(date4[index]),
+
                                   // SizedBox.fromSize(size: Size(0,50),),
                                   role == "Administrator"
                                       ? ElevatedButton(
@@ -659,6 +675,11 @@ class _study_MaterialsState extends State<study_Materials> {
                                             //             delete_link(link_cap, link_l,
                                             //                 index, count2)));
                                           },
+                                          style: ElevatedButton.styleFrom(
+                                            primary: Colors.red,
+                                            onPrimary: Colors.white,
+                                            padding: EdgeInsets.all(8.0),
+                                          ),
                                           child: Text("Delete"))
                                       : Container(),
                                 ],

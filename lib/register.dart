@@ -5,6 +5,7 @@ import 'package:uni_craft/Homepage.dart';
 import 'package:uni_craft/auth-page.dart';
 
 import 'LoginPage.dart';
+import 'chat/service/databaseService.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -12,6 +13,7 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  DatabaseService _databaseService = DatabaseService();
   Future<UserCredential> signInWithGoogle() async {
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -340,6 +342,7 @@ class _RegisterState extends State<Register> {
               GestureDetector(
                 onTap: Signin,
                 child: Container(
+
                   margin: EdgeInsets.fromLTRB(0, (15 / 872.72) * screenH, 0, 0),
                   padding: EdgeInsets.fromLTRB(
                       (32 / 392.72) * screenW,
