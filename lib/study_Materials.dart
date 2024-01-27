@@ -10,8 +10,8 @@ import 'package:url_launcher/url_launcher_string.dart';
 import 'package:video_player/video_player.dart';
 
 class study_Materials extends StatefulWidget {
-  var r1,code2;
-  study_Materials(this.r1,this.code2);
+  var r1, code2;
+  study_Materials(this.r1, this.code2);
 
   @override
   State<study_Materials> createState() => _study_MaterialsState();
@@ -277,23 +277,30 @@ class _study_MaterialsState extends State<study_Materials> {
                                     role == "Administrator"
                                         ? Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: ElevatedButton(
-                                              onPressed: () {
-                                                for (int i = 0;
-                                                    i < count1;
-                                                    i++) {
-                                                  if (image_name[index] ==
-                                                      name[i]) {
-                                                    index1 = i;
-                                                    break;
+                                            child: Center(
+                                              child: ElevatedButton(
+                                                onPressed: () {
+                                                  for (int i = 0;
+                                                      i < count1;
+                                                      i++) {
+                                                    if (image_name[index] ==
+                                                        name[i]) {
+                                                      index1 = i;
+                                                      break;
+                                                    }
                                                   }
-                                                }
-                                                delete1(index1);
-                                                setState(() {
-                                                  del_1 = true;
-                                                });
-                                              },
-                                              child: Text("Delete"),
+                                                  delete1(index1);
+                                                  setState(() {
+                                                    del_1 = true;
+                                                  });
+                                                },
+                                                style: ElevatedButton.styleFrom(
+                                                  primary: Colors.red,
+                                                  onPrimary: Colors.white,
+                                                  padding: EdgeInsets.all(8.0),
+                                                ),
+                                                child: Text("Delete"),
+                                              ),
                                             ),
                                           )
                                         : Container(),
@@ -433,35 +440,22 @@ class _study_MaterialsState extends State<study_Materials> {
                             scrollDirection: Axis.vertical,
                             shrinkWrap: false,
                             physics: BouncingScrollPhysics(),
-                            //padding: EdgeInsets.all(21),
                             itemCount: file_lidx,
                             itemBuilder: (BuildContext context, int index) {
-                              return Column(
-                                children: [
-                                  Container(
-                                    height: (40 / 872) * screenH,
-                                    child: GestureDetector(
-                                      onTap: () async {
-                                        final url = Uri.parse(file_link[index]);
-                                        if (!await launchUrl(url))
-                                          throw Exception(
-                                              'Could not launch $url');
-                                      },
-
-                                      child: Text(file_name[index]),
-                                      //SizedBox.fromSize(size: Size(((50/392)*screenW),0)),
-
-                                      // Text(
-                                      //   name[index],
-                                      //   style: TextStyle(
-                                      //       fontSize: 20,
-                                      //       fontWeight: FontWeight.bold),
-                                      // ),
-                                    ),
+                              return Card(
+                                color: Color.fromARGB(255, 154, 185, 169),
+                                child: ListTile(
+                                  title: GestureDetector(
+                                    onTap: () async {
+                                      final url = Uri.parse(file_link[index]);
+                                      if (!await launchUrl(url))
+                                        throw Exception(
+                                            'Could not launch $url');
+                                    },
+                                    child: Text(file_name[index]),
                                   ),
-                                  Text(date3[index]),
-                                  // SizedBox.fromSize(size: Size(0,50),),
-                                  role == "Administrator"
+                                  subtitle: Text(date3[index]),
+                                  trailing: role == "Administrator"
                                       ? ElevatedButton(
                                           onPressed: () {
                                             for (int i = 0; i < count1; i++) {
@@ -474,17 +468,16 @@ class _study_MaterialsState extends State<study_Materials> {
                                             setState(() {
                                               del_2 = true;
                                             });
-
-                                            // Navigator.push(
-                                            //     context,
-                                            //     MaterialPageRoute(
-                                            //         builder: (context) =>
-                                            //             delete_file(name, link,
-                                            //                 index1, count1)));
                                           },
-                                          child: Text("Delete"))
-                                      : Container(),
-                                ],
+                                          style: ElevatedButton.styleFrom(
+                                            primary: Colors.red,
+                                            onPrimary: Colors.white,
+                                            padding: EdgeInsets.all(8.0),
+                                          ),
+                                          child: Text("Delete"),
+                                        )
+                                      : null,
+                                ),
                               );
                             },
                           ),
