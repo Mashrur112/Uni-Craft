@@ -9,11 +9,11 @@ class DatabaseService {
 
   // firestore collection reference
   final CollectionReference _userCollection =
-  FirebaseFirestore.instance.collection('users');
+      FirebaseFirestore.instance.collection("Profile");
 
   // create a new document for the user with the uid
   Future createUserDoc(String uid, String name, String email, String role) async {
-    final docUser = _userCollection.doc(uid);
+    final docUser = _userCollection.doc(FirebaseAuth.instance.currentUser!.uid);
     final CustomUser customUser = CustomUser(uid, name, email, role);
 
     final jsonUser = customUser.toJson();
