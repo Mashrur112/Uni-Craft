@@ -24,11 +24,14 @@ class _ViewPollState extends State<ViewPoll> {
 
   @override
   Widget build(BuildContext context) {
+    double screenW = MediaQuery.of(context).size.width;
+    double screenH = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xff7a9e9f),
         title: Text(" View Poll",
         style: TextStyle(
+
           //fontSize: 35,
         ),),
       ),
@@ -75,9 +78,19 @@ class _ViewPollState extends State<ViewPoll> {
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        caption,
-                        style: TextStyle(fontSize: 22),
+                      Container(
+                        height: 0.07*screenH,
+                        width: 0.7*screenW,
+                        decoration: BoxDecoration(
+                          color: Color(0xff77a5b5),
+                        ),
+                        child: Center(
+                          child: Text(
+                            
+                            caption,
+                            style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold,color: Colors.white),
+                          ),
+                        ),
                       ),
                       ElevatedButton(
                           onPressed: () {

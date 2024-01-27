@@ -59,7 +59,7 @@ class _add_noticeState extends State<add_notice> {
       StreamBuilder(stream: FirebaseFirestore.instance.collection('Profile').snapshots(), builder: (context,snapshots){
         if(snapshots.hasData)
           {
-            print("fsd");
+            //print("fsd");
             var res=snapshots.data!.docs.toList();
             to.clear();
 
@@ -76,7 +76,7 @@ class _add_noticeState extends State<add_notice> {
 
                   }
               }
-            print(to);
+           //print(to);
           }
 
         return SingleChildScrollView(

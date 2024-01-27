@@ -47,6 +47,7 @@ class _noticeState extends State<notice> {
       backgroundColor: Color(0xffb8d8d8),
       appBar: AppBar(
         title: Text("Notice"),
+
         // backgroundColor: Color(0xff77a5b5),
         backgroundColor: Color(0xff7a9e9f),
         actions: [
