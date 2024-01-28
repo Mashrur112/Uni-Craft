@@ -14,12 +14,12 @@ class Calendar extends StatefulWidget {
 }
 
 class _CalendarState extends State<Calendar> {
-  DateTime today = DateTime.now();
+  DateTime today = DateTime.timestamp();
   Map<DateTime, List<String>> events = {};
  Map<String, dynamic>e = {};
  List b=[];
 
-  void _onDaySelected(var day, DateTime focusDay) {
+  void _onDaySelected(DateTime day, DateTime focusDay) {
     setState(() {
       today = day;
     });
@@ -47,6 +47,7 @@ class _CalendarState extends State<Calendar> {
         "events":e,
       });
 
+
     });
 
 
@@ -54,18 +55,23 @@ class _CalendarState extends State<Calendar> {
   }
 
   void _deleteEvent(String event) {
+
     setState(() {
+
       if (events.containsKey(today)) {
         events[today]!.remove(event);
-        e[today.toString()]!.remove(event);
+
         if (events[today]!.isEmpty) {
           events.remove(today);
-          e.remove(today.toString());
+
         }
       }
+      print(today.toString());
+      e.remove(today.toString());
       FirebaseFirestore.instance.collection("Profile").doc(widget.uid_ad).update({
         "events":e,
       });
+
     });
   }
 
@@ -105,8 +111,12 @@ class _CalendarState extends State<Calendar> {
                 {
 
 
+try{
                     e=r['events'];
-                    print("tes");
+
+                    print(e);}
+catch(e){};
+
                   ;
 
                 }
@@ -238,6 +248,9 @@ class _TodoListViewState extends State<TodoListView> {
                   ),
                   onPressed: () {
                     widget.onDeleteEvent(widget.events[index]);
+                    setState(() {
+
+                    });
                   },
                 ),
               );
