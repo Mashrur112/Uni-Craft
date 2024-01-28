@@ -58,8 +58,7 @@ class poll_graph extends StatelessWidget {
                         sections: [
                           votes[0] != '0'
                               ? PieChartSectionData(
-                                  //title: options[0] + (":") + votes[0] + "votes",
-                                  title: "Yes",
+                                  title: options[0] + ("[") + votes[0] +("]"),//+ "votes",
                                   value: ((int.parse(votes[0]) / total) * 100),
                                   color: Color(0xff218D97),
                                   radius: 100)
@@ -69,8 +68,7 @@ class poll_graph extends StatelessWidget {
                                   radius: 100),
                           votes[1] != '0'
                               ? PieChartSectionData(
-                                  //title: options[1] + (":") + votes[1] + "votes",
-                                 title: "NO",
+                                  title: options[1] + ("[") + votes[1] +("]"),//+ "votes",
                                   value: ((int.parse(votes[1]) / total) * 100),
                                   color: Color(0xff196B72),
                                   radius: 100)
