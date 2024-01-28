@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:uni_craft/Credit.dart';
 import 'package:uni_craft/Stopwatch.dart';
 import 'package:uni_craft/chat.dart';
 import 'package:uni_craft/createPoll.dart';
@@ -1303,7 +1304,30 @@ class _DashboardState extends State<Dashboard> {
                 ),
               ),
               SizedBox.fromSize(
-                size: Size(0, 0.1 * screenH),
+                size: Size(0, 0.03 * screenH),
+              ),
+              Container(
+                height: 0.05 * screenH,
+                width: 0.3 * screenW,
+                decoration: BoxDecoration(
+                  color: Color(0xff33678a),
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: GestureDetector(
+                    onTap: () {
+                      // profile_info[0]="sdf";
+                      //print(profile_info.length);
+
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>credit()));
+                    },
+                    child: Center(
+                        child: const Text(
+                          "Credits",
+                          style: TextStyle(color: Colors.white),
+                        ))),
+              ),
+              SizedBox.fromSize(
+                size: Size(0, 0.03 * screenH),
               ),
 
               Container(
