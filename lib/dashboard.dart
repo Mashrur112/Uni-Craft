@@ -230,7 +230,7 @@ class _DashboardState extends State<Dashboard> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Calendar(widget.uid_admin)));
+                                    builder: (context) => Calendar(widget.uid_admin,widget.role)));
                           },
                           child: Container(
                             height: (150 / 872) * screenH,
@@ -701,7 +701,8 @@ class _DashboardState extends State<Dashboard> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) => ViewPoll(
-                                                  widget.uid_admin,
+                                                  widget.uid_admin,widget.role
+
                                                 )));
                                   },
                                   child: Container(
@@ -840,7 +841,7 @@ class _DashboardState extends State<Dashboard> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) => ViewPoll(
-                                                  widget.uid_admin,
+                                                  widget.uid_admin,widget.role
                                                 )));
                                   },
                                   child: Container(

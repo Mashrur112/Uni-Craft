@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:uni_craft/poll_graph.dart';
 
 class ViewPoll extends StatefulWidget {
-  var uid;
+  var uid,role;
 
-  ViewPoll(this.uid);
+  ViewPoll(this.uid,this.role);
 
   @override
   State<ViewPoll> createState() => _ViewPollState();
@@ -242,9 +242,11 @@ class _ViewPollState extends State<ViewPoll> {
                                 )
                               : Container(),
                           SizedBox(height: 0.04*screenH),
+
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
+                              widget.role=="Administrator"?
                               Container(
                                 height: 0.05*screenH,
                                 width: 0.3*screenW,
@@ -265,7 +267,7 @@ class _ViewPollState extends State<ViewPoll> {
                                   },
                                   child: Center(child: Text("Delete Poll",style: TextStyle(color: Colors.white),)),
                                 ),
-                              ),
+                              ):Center(),
                               SizedBox.fromSize(size: Size(0.02*screenW,0),),
                               Container(
                                 height: 0.05*screenH,

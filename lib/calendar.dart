@@ -11,8 +11,8 @@ import 'package:http/http.dart' as http;
 import 'notification.dart';
 
 class Calendar extends StatefulWidget {
-  var uid_ad;
-  Calendar(this.uid_ad, {Key? key}) : super(key: key);
+  var uid_ad,role;
+  Calendar(this.uid_ad, this.role,{Key? key}) : super(key: key);
 
   @override
   _CalendarState createState() => _CalendarState();
@@ -165,6 +165,7 @@ class _CalendarState extends State<Calendar> {
                   ),
                   const SizedBox(height: 20),
                   TodoListView(
+                    role: widget.role,
                     to: token,
                     uid: widget.uid_ad,
                     selectedDate: today,
@@ -189,6 +190,7 @@ class TodoListView extends StatefulWidget {
   final Function(String) onEventAdded;
   final Function(String) onDeleteEvent;
   var uid,to;
+  var role;
 
   TodoListView({
     required this.selectedDate,
@@ -197,6 +199,7 @@ class TodoListView extends StatefulWidget {
     required this.onDeleteEvent,
     required this.uid,
     required this.to,
+    required this.role,
     Key? key,
   }) : super(key: key);
 
@@ -283,6 +286,7 @@ class _TodoListViewState extends State<TodoListView> {
                       color: Colors.black), // Color of the entered text
                 ),
               ),
+              widget.role=="Administrator"?
               IconButton(
                 icon: Icon(
                   Icons.add,
@@ -323,7 +327,7 @@ class _TodoListViewState extends State<TodoListView> {
                     textController.clear();
                   }
                 },
-              ),
+              ):Center(),
             ],
           ),
         ),
