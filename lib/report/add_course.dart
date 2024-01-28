@@ -62,12 +62,22 @@ class _add_courseState extends State<add_course> {
                       showDialog(
                         context: context,
                         builder: (ctx) => AlertDialog(
-        
+                        content: ConstrainedBox(
+                          constraints: BoxConstraints(
+                            maxHeight: 200.0, // Set the maximum height as per your requirement
+                          ),),
+                        backgroundColor: Color(0xffABCDD0),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.0),
+                          ),
+                          //ABCDD0 //B7D9DC
                           actions: <Widget>[
                             TextField(
                               controller:course_n ,
                             ),
-                            ElevatedButton(onPressed: (){
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(primary: Color(0xffA0DCE2)),
+                                onPressed: (){
                               var map={};
                               map['Name']=course_n.text.toString();
                               map['quiz']=0;
@@ -80,10 +90,10 @@ class _add_courseState extends State<add_course> {
                               setState(() {
                                 Navigator.pop(context);
                               });
-        
-        
+
+
                             }, child: Text("Add"))
-        
+
                           ],
                         ),
                       );
@@ -104,7 +114,15 @@ class _add_courseState extends State<add_course> {
                     shrinkWrap: true,
                       itemCount:course_name.length,
                       itemBuilder: (context,index){
-                        return ElevatedButton(onPressed: (){
+                        return ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xff4E9CA3),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0), // Adjust the radius as needed
+                              ),
+                              fixedSize: Size.fromHeight(42.0),
+                            ),
+                            onPressed: (){
                           int idx=index;
                           List temp=[];
                           temp.add(course_name);
@@ -112,22 +130,27 @@ class _add_courseState extends State<add_course> {
                           Navigator.push(context, MaterialPageRoute(builder: (context)=>marks_sec(temp)));
         
                         }, child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                           Text(course_name[index]['Name']),
-        
+                           Text(course_name[index]['Name'],
+                             style: TextStyle(
+                                 color:Colors.white,
+                                 fontSize: 20,
+                                 fontWeight: FontWeight.bold,
+                             ),),
+
                             GestureDetector(
                                 onTap: (){
                                   course_name.removeAt(index);
                                   FirebaseFirestore.instance.collection("Profile").doc(FirebaseAuth.instance.currentUser!.uid).update({
                                     'course':course_name,
-        
+
                                   });
                                   setState(() {
-        
+
                                   });
                                 },
-                                child: Icon(Icons.delete,size: 20,)),
+                                child: Icon(Icons.delete,size: 20,color: Color(0xffBB4848),)),
                           ],
                         ));
                       }),
