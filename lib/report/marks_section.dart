@@ -66,178 +66,181 @@ class _marks_secState extends State<marks_sec> {
               return Container(
                 color: Color(0xffb8d8d8),
                 //height:0.01*screenH,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (ctx) => AlertDialog(
-                            content: ConstrainedBox(
-                              constraints: BoxConstraints(
-                                maxHeight: 200.0, // Set the maximum height as per your requirement
-                              ),),
-                            backgroundColor: Color(0xffABCDD0),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16.0),
+                child: SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (ctx) => AlertDialog(
+                              content: ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  maxHeight: 200.0, // Set the maximum height as per your requirement
+                                ),),
+                              backgroundColor: Color(0xffABCDD0),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16.0),
+                              ),
+
+                              actions: <Widget>[
+                                TextField(
+                                  controller: quiz,
+                                  keyboardType: TextInputType.number,
+                                ),
+                                ElevatedButton(
+                                    style: ElevatedButton.styleFrom(primary: Color(0xffA0DCE2)),
+                                    onPressed: () {
+                                      widget.temp[0][widget.temp[1]]['quiz'] =
+                                          quiz.text.toString();
+                                      FirebaseFirestore.instance
+                                          .collection("Profile")
+                                          .doc(FirebaseAuth
+                                              .instance.currentUser!.uid)
+                                          .update({
+                                        'course': widget.temp[0],
+                                      });
+
+                                      setState(() {
+                                        Navigator.pop(context);
+                                      });
+                                    },
+                                    child: Text("Add"))
+                              ],
                             ),
+                          );
+                        },
 
-                            actions: <Widget>[
-                              TextField(
-                                controller: quiz,
-                                keyboardType: TextInputType.number,
-                              ),
-                              ElevatedButton(
-                                  style: ElevatedButton.styleFrom(primary: Color(0xffA0DCE2)),
-                                  onPressed: () {
-                                    widget.temp[0][widget.temp[1]]['quiz'] =
-                                        quiz.text.toString();
-                                    FirebaseFirestore.instance
-                                        .collection("Profile")
-                                        .doc(FirebaseAuth
-                                            .instance.currentUser!.uid)
-                                        .update({
-                                      'course': widget.temp[0],
-                                    });
-
-                                    setState(() {
-                                      Navigator.pop(context);
-                                    });
-                                  },
-                                  child: Text("Add"))
-                            ],
-                          ),
-                        );
-                      },
-
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Color(0xff218D97),
-                          borderRadius: BorderRadius.circular((20))
-                        ),
-                        height: 0.15 * screenH,
-                        width: screenW,
-                        child: Center(
-                            child: Text(
-                          "Quiz marks    $quiz_m",
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                        )),
-                      ),
-                    ),
-                    Divider(color: Colors.white,
-                      thickness: 2, // Customizing divider thickness
-                      indent: 20, // Left indentation
-                      endIndent: 20,),
-                    GestureDetector(
-                      onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (ctx) => AlertDialog(
-                            content: ConstrainedBox(
-                              constraints: BoxConstraints(
-                                maxHeight: 200.0, // Set the maximum height as per your requirement
-                              ),),
-                            backgroundColor: Color(0xffABCDD0),
-                            actions: <Widget>[
-                              TextField(
-                                controller: mid,
-                                keyboardType: TextInputType.number,
-                              ),
-                              ElevatedButton(
-                                  style: ElevatedButton.styleFrom(primary: Color(0xffA0DCE2)),
-                                  onPressed: () {
-                                    widget.temp[0][widget.temp[1]]['mid'] =
-                                        mid.text.toString();
-                                    FirebaseFirestore.instance
-                                        .collection("Profile")
-                                        .doc(FirebaseAuth
-                                            .instance.currentUser!.uid)
-                                        .update({
-                                      'course': widget.temp[0],
-                                    });
-
-                                    setState(() {
-                                      Navigator.pop(context);
-                                    });
-                                  },
-                                  child: Text("Add"))
-                            ],
-                          ),
-                        );
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Color(0xff196B72),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Color(0xff218D97),
                             borderRadius: BorderRadius.circular((20))
-                        ),
-                        height: 0.15 * screenH,
-                        width: screenW,
-                        //color: Color(0xff196B72),
-                        child: Center(
-                            child: Text(
-                          "Mid marks    $mid_m",
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                        )),
-                      ),
-                    ),
-                    Divider(color: Colors.white,
-                      thickness: 2, // Customizing divider thickness
-                      indent: 20, // Left indentation
-                      endIndent: 20,),
-                    GestureDetector(
-                      onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (ctx) => AlertDialog(
-                            content: ConstrainedBox(
-                              constraints: BoxConstraints(
-                                maxHeight: 200.0, // Set the maximum height as per your requirement
-                              ),),
-                            backgroundColor: Color(0xffABCDD0),
-                            actions: <Widget>[
-                              TextField(
-                                controller: fina,
-                                keyboardType: TextInputType.number,
-                              ),
-                              ElevatedButton(
-                                  style: ElevatedButton.styleFrom(primary: Color(0xffA0DCE2)),
-                                  onPressed: () {
-                                    widget.temp[0][widget.temp[1]]['final'] =
-                                        fina.text.toString();
-                                    FirebaseFirestore.instance
-                                        .collection("Profile")
-                                        .doc(FirebaseAuth
-                                            .instance.currentUser!.uid)
-                                        .update({
-                                      'course': widget.temp[0],
-                                    });
-
-                                    setState(() {
-                                      Navigator.pop(context);
-                                    });
-                                  },
-                                  child: Text("Add"))
-                            ],
                           ),
-                        );
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Color(0xff14545A),
-                            borderRadius: BorderRadius.circular((20))
+                          height: 0.15 * screenH,
+                          width: screenW,
+                          child: Center(
+                              child: Text(
+                            "Quiz marks    $quiz_m",
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          )),
                         ),
-                        height: 0.15 * screenH,
-                        width: screenW,
-                        //color: Color(0xff14545A),
-                        child: Center(
-                            child: Text(
-                          "Final marks    $final_m",
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                        )),
                       ),
-                    )
-                  ],
+                      Divider(color: Colors.white,
+                        thickness: 2, // Customizing divider thickness
+                        indent: 20, // Left indentation
+                        endIndent: 20,),
+                      GestureDetector(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (ctx) => AlertDialog(
+                              content: ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  maxHeight: 200.0, // Set the maximum height as per your requirement
+                                ),),
+                              backgroundColor: Color(0xffABCDD0),
+                              actions: <Widget>[
+                                TextField(
+                                  controller: mid,
+                                  keyboardType: TextInputType.number,
+                                ),
+                                ElevatedButton(
+                                    style: ElevatedButton.styleFrom(primary: Color(0xffA0DCE2)),
+                                    onPressed: () {
+                                      widget.temp[0][widget.temp[1]]['mid'] =
+                                          mid.text.toString();
+                                      FirebaseFirestore.instance
+                                          .collection("Profile")
+                                          .doc(FirebaseAuth
+                                              .instance.currentUser!.uid)
+                                          .update({
+                                        'course': widget.temp[0],
+                                      });
+
+                                      setState(() {
+                                        Navigator.pop(context);
+                                      });
+                                    },
+                                    child: Text("Add"))
+                              ],
+                            ),
+                          );
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Color(0xff196B72),
+                              borderRadius: BorderRadius.circular((20))
+                          ),
+                          height: 0.15 * screenH,
+                          width: screenW,
+                          //color: Color(0xff196B72),
+                          child: Center(
+                              child: Text(
+                            "Mid marks    $mid_m",
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          )),
+                        ),
+                      ),
+                      Divider(color: Colors.white,
+                        thickness: 2, // Customizing divider thickness
+                        indent: 20, // Left indentation
+                        endIndent: 20,),
+                      GestureDetector(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (ctx) => AlertDialog(
+                              content: ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  maxHeight: 200.0, // Set the maximum height as per your requirement
+                                ),),
+                              backgroundColor: Color(0xffABCDD0),
+                              actions: <Widget>[
+                                TextField(
+                                  controller: fina,
+                                  keyboardType: TextInputType.number,
+                                ),
+                                ElevatedButton(
+                                    style: ElevatedButton.styleFrom(primary: Color(0xffA0DCE2)),
+                                    onPressed: () {
+                                      widget.temp[0][widget.temp[1]]['final'] =
+                                          fina.text.toString();
+                                      FirebaseFirestore.instance
+                                          .collection("Profile")
+                                          .doc(FirebaseAuth
+                                              .instance.currentUser!.uid)
+                                          .update({
+                                        'course': widget.temp[0],
+                                      });
+
+                                      setState(() {
+                                        Navigator.pop(context);
+                                      });
+                                    },
+                                    child: Text("Add"))
+                              ],
+                            ),
+                          );
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Color(0xff14545A),
+                              borderRadius: BorderRadius.circular((20))
+                          ),
+                          height: 0.15 * screenH,
+                          width: screenW,
+                          //color: Color(0xff14545A),
+                          child: Center(
+                              child: Text(
+                            "Final marks    $final_m",
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          )),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
                // color: Color(0xffb8d8d8),
               );
