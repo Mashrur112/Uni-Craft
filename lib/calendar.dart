@@ -16,6 +16,8 @@ class Calendar extends StatefulWidget {
 class _CalendarState extends State<Calendar> {
   DateTime today = DateTime.now();
   Map<DateTime, List<String>> events = {};
+ Map<String, dynamic>e = {};
+ List b=[];
 
   void _onDaySelected(var day, DateTime focusDay) {
     setState(() {
@@ -25,7 +27,7 @@ class _CalendarState extends State<Calendar> {
 
   void _onEventAdded(String event) {
 
-    Map<String, List<String>> e = {};
+
 
 
     setState(()  {
@@ -35,9 +37,14 @@ class _CalendarState extends State<Calendar> {
             (existingEvents) => [...existingEvents, event],
         ifAbsent: () => [event],
       );
+      e.update(
+        today.toString(),
+            (existingEvents) => [...existingEvents, event],
+        ifAbsent: () => [event],
+      );
 
       FirebaseFirestore.instance.collection("Profile").doc(widget.uid_ad).update({
-        "events":events,
+        "events":e,
       });
 
     });
@@ -50,12 +57,14 @@ class _CalendarState extends State<Calendar> {
     setState(() {
       if (events.containsKey(today)) {
         events[today]!.remove(event);
+        e[today.toString()]!.remove(event);
         if (events[today]!.isEmpty) {
           events.remove(today);
+          e.remove(today.toString());
         }
       }
       FirebaseFirestore.instance.collection("Profile").doc(widget.uid_ad).update({
-        "events":events[today],
+        "events":e,
       });
     });
   }
@@ -67,24 +76,45 @@ class _CalendarState extends State<Calendar> {
         title: const Text("Academic Calendar"),
         backgroundColor: Color(0xff7a9e9f),//Colors.black.withOpacity(0.35),
         actions: [
-          IconButton(
-            icon: Icon(Icons.calendar_view_week),
-            onPressed: () {
-              // Navigate to the TimePlanner page
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      TimePlannerPage(), // Replace with your TimePlanner page widget
-                ),
-              );
-            },
-          ),
+
+          // IconButton(
+          //   icon: Icon(Icons.calendar_view_week),
+          //   onPressed: () {
+          //     // Navigate to the TimePlanner page
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //         builder: (context) =>
+          //             TimePlannerPage(), // Replace with your TimePlanner page widget
+          //       ),
+          //     );
+          //   },
+          // ),
         ],
       ),
       body:
       Stack(
         children: [
+          StreamBuilder(stream: FirebaseFirestore.instance.collection("Profile").snapshots(), builder: (context,snapshots){
+            if(snapshots.hasData)
+            {
+              var res=snapshots.data!.docs.toList();
+              for(var r in res)
+              {
+                if(r['uid']==widget.uid_ad)
+                {
+
+
+                    e=r['events'];
+                    print("tes");
+                  ;
+
+                }
+              }
+
+            }
+            return Center();
+          }),
 
 
           Container(
@@ -190,7 +220,7 @@ class _TodoListViewState extends State<TodoListView> {
                   if(r['uid']==widget.uid)
                     {
                       try{
-                      widget.events=r['events'];}catch(e){};
+                      widget.events=r['events'][widget.selectedDate.toString()];}catch(e){};
                     }
                 }
 

@@ -43,16 +43,20 @@ class _ViewPollState extends State<ViewPoll> {
           if (snapshot.hasData) {
             int i;
             try {
+
               poll_id = snapshot.data?.docs[0]['poll_id'];
               for (i = 0; i < poll_id.length; i++) {
+
                 if (snapshot.data?.docs[0]['poll_id'][i] ==
                     FirebaseAuth.instance.currentUser!.uid.toString()) {
+
                   break;
                 }
               }
-              i = 0;
+
               if (i == poll_id.length) {
                 poll = true;
+
               }
 
               option = snapshot.data?.docs[0]['options'];
@@ -67,6 +71,7 @@ class _ViewPollState extends State<ViewPoll> {
               }
               check = true;
             } catch (e) {
+
               v_poll = false;
               check = false;
             }
@@ -116,6 +121,9 @@ class _ViewPollState extends State<ViewPoll> {
                               color: Color(0xff218D97),
                               child: GestureDetector(
                                 onTap: () {
+                                  print("Op1");
+
+
                                   if (poll == true) {
                                     poll = false;
 
@@ -135,6 +143,7 @@ class _ViewPollState extends State<ViewPoll> {
                                       'poll_id': poll_id,
                                     });
                                   }
+
                                 },
                                 child: Center(
                                   child: Text(
@@ -158,6 +167,7 @@ class _ViewPollState extends State<ViewPoll> {
                               color: Color(0xff196B72),
                               child: GestureDetector(
                                 onTap: () {
+                                  print("op2");
                                   if (poll == true) {
                                     poll = false;
 
@@ -176,6 +186,7 @@ class _ViewPollState extends State<ViewPoll> {
                                       'votes': vote,
                                       'poll_id': poll_id,
                                     });
+
                                   }
                                 },
                                 child: Center(
@@ -218,6 +229,7 @@ class _ViewPollState extends State<ViewPoll> {
                                             'poll_id': poll_id,
                                           });
                                         }
+
                                       },
                                       child: Center(
                                         child: Text(
